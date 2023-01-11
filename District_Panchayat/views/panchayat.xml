@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_country_state_district_panchayat_tree" model="ir.ui.view">
+        <field name="name">res.country.state.district.panchayat.tree</field>
+        <field name="model">res.country.state.district.panchayat</field>
+        <field name="arch" type="xml">
+            <tree string="State" editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="district_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_country_state_district_panchayat_form" model="ir.ui.view">
+        <field name="name">res.country.state.district.panchayat.form</field>
+        <field name="model">res.country.state.district.panchayat</field>
+        <field name="arch" type="xml">
+            <form string="Panchayat">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="district_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_country_state_district_panchayat" model="ir.actions.act_window">
+        <field name="name">Panchayat</field>
+        <field name="res_model">res.country.state.district.panchayat</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Panchayat
+            </p>
+        </field>
+    </record>
+    <menuitem id="res_country_state_district_panchayat_menu" name="Panchayats"
+              action="action_country_state_district_panchayat" parent="contacts.menu_localisation"
+              sequence="2"/>
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_country_state_district,res.country.state.district,model_res_country_state_district,,1,1,1,1
+access_res_country_state_district_panchayat,res.country.state.district.panchayat,model_res_country_state_district_panchayat,,1,1,1,1

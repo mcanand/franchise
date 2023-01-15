@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_web_links,web.links,model_web_links,,1,1,1,1
+access_web_links_categories,web.links.categories,model_web_links_categories,,1,1,1,1
+access_franchise_application_partner,franchise.application.partner,model_franchise_application_partner,,1,1,1,1

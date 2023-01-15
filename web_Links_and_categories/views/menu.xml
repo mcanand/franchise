@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_franchisee" name="Franchise">
+        <menuitem name="Applications"
+                  sequence="0"
+                  id="menu_franchise_applications_partners"
+                  action="action_view_franchise_application"
+        />
+        <menuitem id="menu_franchisee_web" name="website">
+            <menuitem id="menu_view_web_links_category" action="action_view_web_links_category"
+                      name="Links Categories"/>
+            <menuitem id="menu_view_web_links" action="action_view_web_links" name="Links"/>
+        </menuitem>
+    </menuitem>
+
+</odoo>

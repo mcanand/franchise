@@ -37,8 +37,8 @@ class FranchiseApplicationPartners(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
+        if vals.get('application_sequence', 'New') == 'New':
+            vals['application_sequence'] = self.env['ir.sequence'].next_by_code(
                 'franchise.application.partner') or 'New'
         result = super(FranchiseApplicationPartners, self).create(vals)
         return result

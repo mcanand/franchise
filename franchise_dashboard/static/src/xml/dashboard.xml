@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="franchise_dashboard">
+        <div class="f_dash row">
+            <div class="col-3 p-2">
+                <div class="row">
+                    <div class="col-4"><img></img></div>
+                    <div class="col-8"><h2>ANAND MC</h2></div>
+                </div>
+            </div>
+            <div class="col-9"></div>
+        </div>
+    </t>
+</templates>

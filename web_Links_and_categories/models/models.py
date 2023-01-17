@@ -23,7 +23,8 @@ class FranchiseApplicationPartners(models.Model):
     _name = 'franchise.application.partner'
     _description = 'user application for franchise'
 
-    application_sequence = fields.Char(string="Application Number", readonly=True, required=True, copy=False, default='New')
+    application_sequence = fields.Char(string="Application Number", readonly=True, required=True, copy=False,
+                                       default='New')
     name = fields.Char(string="Applicant Name")
     district_id = fields.Many2one('res.country.state.district', string="District")
     mobile = fields.Char(string="Mobile")
@@ -32,7 +33,7 @@ class FranchiseApplicationPartners(models.Model):
     location = fields.Char(string="Location prefered")
     known_by = fields.Char(string="Known through")
     status = fields.Selection(
-        [('draft', "Draft"),('progress','In Progress'), ('done', 'Approved')], default='draft')
+        [('draft', "Draft"), ('progress', 'In Progress'), ('done', 'Approved')], default='draft')
     color = fields.Integer('Color', compute='_get_color', store=True)
 
     @api.model
@@ -52,3 +53,8 @@ class FranchiseApplicationPartners(models.Model):
                 rec.color = 7
             elif rec.status == 'done':
                 rec.color = 10
+
+
+
+
+

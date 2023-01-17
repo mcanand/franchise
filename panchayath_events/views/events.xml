@@ -59,7 +59,7 @@
                 <field name="district_id"/>
                 <field name="panchayat_id"/>
                 <field name="panchayath_assis"/>
-                <field name="image" class="o_kanban_image_full" widget="image"/>
+                <field name="image" class="oe_avatar" widget="image"/>
                 <field name="schedule_date"/>
                 <field name="category"/>
                 <field name="priority"/>

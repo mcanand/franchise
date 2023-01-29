@@ -4,14 +4,15 @@
     'summary': """franchise user dashboard""",
     'description': """""",
     'author': 'ANAND MC',
-    'depends': [],
+    'depends': ['base','contacts','sale'],
     'data': [
-        'views/franchise_dash.xml'
+        'views/franchise_dash.xml',
     ],
     'assets': {
         'web.assets_backend': [
-            '/franchise_dashboard/static/src/js/dashboard.js',
-            '/franchise_dashboard/static/src/css/main.scss',
+            '/franchise_dashboard/static/src/js/*.js',
+            'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap',
+            '/franchise_dashboard/static/src/css/*.css',
         ],
         'web.assets_qweb': [
             '/franchise_dashboard/static/src/xml/dashboard.xml',

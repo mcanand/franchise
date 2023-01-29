@@ -13,43 +13,310 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
     console.log('hai');
     var utils = require('web.utils');
 
-
-
     var FranchiseDashboard = AbstractAction.extend({
         template: "franchise_dashboard",
         events: {
-
+            'click .home_run' : '_render_dash_home',
+            'click .menu_item' : '_render_links_space',
+            'click .harmburger': '_click_side_nav_open',
+            'click .link_select': '_click_link_select',
+            'click .user_detail_form button': '_click_submit_values',
+            'click .link_pop_up_close': '_click_popup_close',
+            'click .link_pop_up_check': '_click_popup_check',
+            'click .button_space_move': '_click_button_space_move',
+            'click .continue_session': '_click_continue_session',
+            'click .delete_order_line': '_click_delete_order_line',
+            'click .delete_order': '_click_delete_current_order',
+            'click .confirm_button': '_click_order_confirm',
         },
         init: function(parent, context) {
-            console.log('happy')
             this._super(parent, context);
             this.login_employee = true;
             this._super(parent, context);
         },
-
         start: function() {
             var self = this;
-            qweb.render('franchise_dashboard', {widget: self});
-        },
-            /*this._rpc({
-                model: 'franchise.dashboard',
-                method: 'get_value',
-                args: [],
-            }).then(function(result) {
-                console.log('result', result);
-                QWeb.render('franchise_dashboard', {
+            qweb.render('franchise_dashboard', {
                     widget: self
-                });*/
-                // if(self.login_employee.dashboard_access == 'admin'){
-//                console.log("admin");
-//                $('.o_hr_dashboard').prepend(QWeb.render('LoginEmployeeDetails', {
-//                    widget: self
-//                }));
-//                self.draw_bar_chart_manager();
-//                self.draw_bar_chart_manager_product();
-            /*return this._super().then(function() {
-                self.$el.parent().addClass('oe_background_grey');
-            });*/
+                });
+            this._rpc({
+                model: 'res.users',
+                method: 'get_values',
+                args: [[]],
+            }).then(function(result) {
+                self.user = result[0]
+                self.categories = result[1]
+                self.current_order_detail = false
+                console.log(self.categories)
+                $('.f_dash').prepend(qweb.render('dash_board', {
+                    widget: self
+                }))
+                self._render_dash_home()
+            });
+
+            setInterval(function() {
+              var status = navigator.onLine
+              if(status == true){
+                    $('.active_status').removeClass('background_red')
+                    $('.active_status').addClass('background_green')
+              }
+              else{
+                    $('.active_status').removeClass('background_green')
+                    $('.active_status').addClass('background_red')
+              }
+        }, 2000);
+        },
+        _render_dash_home:function(){
+             var self = this
+             console.log('home render 2' , this.current_order_detail)
+             if(this.current_order_detail != false){
+                console.log('home render',self)
+                this._rpc({
+                    model: 'sale.order',
+                    method: 'get_sale_order_details',
+                    args: [[],self.current_order_detail],
+                }).then(function(result) {
+                     if(result){
+                         self.order = result.order
+                         self.order_lines = result.lines
+                         self.line_length = result.lines.length
+                         self.active_order = true
+                         $('.action_space').html('')
+                         $('.action_space').prepend(qweb.render('dash_home', {
+                                widget: self
+                         }))
+                     }
+                });
+             }
+             else{
+                this._rpc({
+                    model: 'sale.order',
+                    method: 'get_active_order',
+                    args: [[]],
+                }).then(function(result) {
+                    if(result != false){
+                        self.order = result.order
+                         self.order_lines = result.lines
+                         self.line_length = result.lines.length
+                         self.active_order = true
+                         $('.action_space').html('')
+                         $('.action_space').prepend(qweb.render('dash_home', {
+                                widget: self
+                         }))
+                    }
+                    else{
+                        self.active_order = false
+                         $('.action_space').html('')
+                         $('.action_space').prepend(qweb.render('dash_home', {
+                                widget: self
+                         }))
+                    }
+                });
+
+             }
+
+
+
+        },
+        _render_links_space:function(events){
+            var self = this
+            var category_id = $(events.target).parents('li').val()
+            if(category_id){
+                this._rpc({
+                    model: 'res.users',
+                    method: 'get_products',
+                    args: [[],category_id],
+                }).then(function(result) {
+                    if(result){
+                          self.products = result
+                         $('.action_space').html('')
+                         $('.action_space').prepend(qweb.render('dash_links', {
+                                widget: self
+                         }))
+                    }
+
+                });
+            }
+        },
+        _click_side_nav_open:function(){
+            if($('#mySidenav').hasClass('opened')){
+                $('.user_detail').animate({opacity:'0'})
+                $('#mySidenav').removeClass('opened')
+                $('.menu_text').hide()
+                $('.user_detail').animate({height:'0%'})
+                setTimeout(function(){
+                    $('#mySidenav').css({'width':'53px'})
+                    $('#main').css({'margin-left':'53px'})
+                },500)
+            }
+            else{
+                $('#mySidenav').addClass('opened')
+                setTimeout(function(){
+                    $('.menu_text').css({'display':'contents'})
+                    $('.user_detail').animate({height:'30%'})
+                    $('.user_detail').animate({opacity:'1'})
+                },500)
+
+                $('#mySidenav').css({'width':'250px'})
+                $('#main').css({'margin-left':'250px'})
+            }
+        },
+        _click_link_select:function(event){
+            var self = this
+            console.log('link_select',self.current_order_detail)
+            var product_id = $(event.target).parents('.link_select').children().children('input').val()
+            if(this.current_order_detail != false){
+                /*if current_order_detail present*/
+                var vals = this.current_order_detail
+                vals['product_id'] = product_id
+                console.log('linlk select if',self.current_products)
+                self.current_product_id = product_id
+                self.current_products.push(product_id)
+                this._rpc({
+                    model: 'product.template',
+                    method: 'get_product_create_line',
+                    args: [[],vals],
+                }).then(function(result) {
+                    if(result != false){
+                         $('.dash_link_popup').prepend(qweb.render('link_pop_up', {
+                            widget: self
+                        }));
+                        $('.content_load').children().remove()
+                        $('.content_load').append('<iframe src="'+result.url+'"></iframe>')
+                        $('.link_pop_up_check').removeClass('d-none')
+                        $('.continue_session').removeClass('d-none')
+                    }
+                });
+            }
+            else{
+               self.current_products = []
+               self.current_products.push(product_id)
+               self.current_product_id = product_id
+               console.log('link select else', self)
+               $('.dash_link_popup').prepend(qweb.render('link_pop_up', {
+                        widget: self
+               }));
+            }
+        },
+        _click_submit_values:function(){
+            var name = $("input[name='name']").val()
+            var mobile = $("input[name='mobile']").val()
+            var address = $("input[name='address']").val()
+            var age = $("input[name='age']").val()
+            var zip = $("input[name='zip']").val()
+            var location = $("input[name='location']").val()
+            var street = $("input[name='street']").val()
+            var self = this
+            var vals = {name:name,
+                        mobile:mobile,
+                        address:address,
+                        age:age,
+                        zip:zip,
+                        location:location,
+                        street:street}
+            if(!name || !mobile || !street || !zip){
+                $('.errors').html('Please Fill up the fields')
+            }
+            else{
+                vals['product_id'] = self.current_product_id
+                console.log('sadsad',vals)
+                this._rpc({
+                    route: '/save/customer/create/order',
+                    params: {vals: vals}
+                }).then(function(result) {
+                    if(result != false){
+                        self.current_order_detail = result
+                        $('.customer_id').val(result.customer_id)
+                        $('.content_load').children().remove()
+                        $('.content_load').append('<iframe src="'+result.product_url+'"></iframe>')
+                        $('.link_pop_up_check').removeClass('d-none')
+                        $('.continue_session').removeClass('d-none')
+                    }
+                });
+            }
+        },
+        _click_popup_close:function(){
+            if(this.current_order_detail != false){
+                this.delete_current_order(this.current_order_detail.order_id)
+                this.current_products = false
+                this.current_order_detail = false
+                $('.dash_link_popup').children().remove()
+            }
+            else{
+                $('.dash_link_popup').children().remove()
+                this.current_products = false
+                this.current_order_detail = false
+            }
+        },
+        _click_button_space_move:function(){
+            if($('.buttons_space').hasClass('moved')){
+                $('.buttons_space').animate({right: "-=400px"},400)
+                $('.buttons_space').removeClass('moved')
+                $('.button_space_move').children().remove()
+                $('.button_space_move').append("<i class='fa fa-angle-left'/>")
+            }
+            else{
+                $('.buttons_space').animate({right: "+=400px"},400)
+                $('.buttons_space').addClass('moved')
+                $('.button_space_move').children().remove()
+                $('.button_space_move').append("<i class='fa fa-angle-right'/>")
+            }
+        },
+        _click_popup_check:function(event){
+               $('.dash_link_popup').children().remove()
+                this._render_dash_home()
+        },
+        _click_continue_session:function(){
+            $('.dash_link_popup').children().remove()
+
+        },
+        delete_current_order:function(order_id){
+            var self = this
+                this._rpc({
+                    model: 'sale.order',
+                    method: 'delete_current_order',
+                    args: [[],order_id],
+                });
+        },
+        _click_delete_order_line:function(event){
+            var line_id = $(event.target).attr('data-id')
+            var self = this
+            console.log('line_id',line_id)
+            this._rpc({
+                    model: 'sale.order.line',
+                    method: 'delete_order_line',
+                    args: [[],line_id],
+                }).then(function(result) {
+                     if(result){
+                        self._render_dash_home()
+                     }
+                });
+        },
+        _click_delete_current_order:function(){
+           var self = this
+           this._rpc({
+                    model: 'sale.order',
+                    method: 'delete_current_order',
+                    args: [[],self.current_order_detail.order_id],
+                }).then(function(result){
+                    if(result){
+                        self.current_products = false
+                        self.current_order_detail = false
+                        self._render_dash_home()
+                    }
+                });
+
+        },
+        _click_order_confirm:function(){
+            order_id = $(event.target).attr('data-id')
+            this._rpc({
+                    model: 'sale.order',
+                    method: 'confirm_order',
+                    args: [[],order_id],
+                }).then(function(result) {
+
+                });
+        }
     });
 
     core.action_registry.add('franchise_dashboard_tag', FranchiseDashboard);

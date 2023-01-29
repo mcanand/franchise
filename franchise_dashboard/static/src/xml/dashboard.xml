@@ -1,14 +1,363 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
     <t t-name="franchise_dashboard">
-        <div class="f_dash row">
-            <div class="col-3 p-2">
-                <div class="row">
-                    <div class="col-4"><img></img></div>
-                    <div class="col-8"><h2>ANAND MC</h2></div>
+        <div class="f_dash">
+
+        </div>
+    </t>
+    <t t-name="dash_board">
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&amp;display=swap')
+        </style>
+        <div class="row">
+            <div class="col p-3 sidenav" id="mySidenav">
+                <span class="harmburger"><i class="fa fa-bars"/></span>
+                <!--                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>-->
+                <!--                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>-->
+                <div class="row user_detail">
+                    <div class="col-12 text-center">
+                        <img class="rounded-circle user_avatar"
+                            t-attf-src="data:image/png;base64,{{widget['user'].image}}"
+                        />
+                        <span class="active_status"></span>
+                    </div>
+                    <div class="col-12 p-0 text-center">
+
+                        <div class="poppins_400"><t t-esc="widget['user'].email"/></div>
+                        <div class="poppins_400"><t t-esc="widget['user'].panchayat"/></div>
+                    </div>
+                </div>
+                <ul class="">
+                        <li class="p-1 d-block home_run menu_item">
+                            <div class="categ_menu active p-2">
+                            <span class="pr-3"><i class="fa fa-home"/></span>
+                                <span class="menu_text">Home</span></div>
+                        </li>
+                    <t t-foreach="widget['categories']" t-as="categories">
+                            <li class="d-block p-1 menu_item" t-att-value="categories.id">
+                                <div class="categ_menu active p-2">
+                                    <span class="pr-3"><i t-att-class="categories.icon"/></span>
+                                    <span class="menu_text"><t t-esc="categories.name"/></span>
+                                </div>
+                            </li>
+                        </t>
+                    <li class="p-1 d-block menu_item">
+                            <div class="categ_menu active p-2">
+                            <span class="pr-3"><i class="fa fa-gear"/></span>
+                                <span class="menu_text">Settings</span></div>
+                        </li>
+                    </ul>
+            </div>
+            <div class="col action_space" id="main">
+
+            </div>
+        </div>
+    </t>
+    <t t-name="dash_home">
+        <div class="dash_home p-3">
+            <div class="row p-3">
+                <div class="col-8 p-2">
+                    <div class="home_left bg-white">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="content_card">asd
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                             <div class="col-md-4 align-self-center text-center poppins_500">
+                                <div class="content_card" style="background:#FF0022;color:white;">
+                                    <i class="fa fa-line-chart"/>
+                                    <p class="mt-2">Service Provided</p>
+                                    <h1>1500</h1>
+                                </div>
+                            </div>
+                            <div class="col-md-4 align-self-center text-center poppins_500">
+                                <div class="content_card" style="background:#2A7221;color:white;">
+                                    <i class="fa fa-user"/>
+                                    <p class="mt-2">Customers</p>
+                                    <h1>1500</h1>
+                                </div>
+                            </div>
+                            <div class="col-md-4 align-self-center text-center poppins_500">
+                                <div class="content_card" style="background:darkslategray;color:white;">
+                                    <!--<i class="fa fa-user"/>
+                                    <p class="mt-2">Customers</p>
+                                    <h1>1500</h1>-->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 p-2">
+                    <div class="home_right bg-white">
+                        <t t-if="widget['active_order'] != false ">
+                        <div class="row poppins_400">
+                            <div class="col-12 content_card_right">
+                                    <div class="" style="line-height:7px;">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h1><t t-esc="widget['order'].order_name"/></h1>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn bg-danger float-right delete_order" t-att-data-id="widget['order'].id">
+                                                    <i t-att-data-id="widget['order'].id" class="fa fa-trash"/>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <p class="mt-5" style="font-size:18px;"><t t-esc="widget['order'].c_name"/> </p>
+                                        <p><t t-esc="widget['order'].c_street"/></p>
+                                        <t t-if="widget['order'].c_street2"><p><t t-esc="widget['order'].c_street2"/></p></t>
+                                        <p><t t-esc="widget['order'].c_zip"/></p>
+                                        <p><t t-esc="widget['order'].c_mobile"/></p>
+                                    </div>
+                                    <h3 class="mt-5">Services</h3>
+                                    <div class="order_line mt-4">
+                                        <t t-foreach="widget['line_length']" t-as="l">
+                                            <div class="row line mt-2">
+                                                <div class="col-6"><t t-esc="widget['order_lines'][l].product_name"/></div>
+                                                <div class="col-2 text-right">₹<t t-esc="widget['order_lines'][l].price"/></div>
+                                                <div class="col-2 p-0 text-right"><t t-esc="widget['order_lines'][l].tax"/></div>
+                                                <div class="col-2 text-right">
+                                                    <button id="delete_order_line" class="btn bg-danger delete_order_line" t-att-data-id="widget['order_lines'][l].id">
+                                                        <i t-att-data-id="widget['order_lines'][l].id" class="fa fa-trash"/>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="row total_amount">
+                                        <div class="col-md-6">Amount untaxed</div>
+                                        <div class="col-md-6 text-right"><t t-esc="widget['order'].amount_untaxed"/></div>
+                                        <div class="col-md-6">Amount Tax</div>
+                                        <div class="col-md-6 text-right"><t t-esc="widget['order'].amount_tax"/></div>
+                                        <div class="col-md-6">Amount Total</div>
+                                        <div class="col-md-6 text-right"><t t-esc="widget['order'].amount_total"/></div>
+                                    </div>
+                                <button t-att-data-id="widget['order'].id" class="btn bg-success confirm_button">Confirm</button>
+                            </div>
+                        </div>
+                        </t>
+                        <t t-else="">
+                            <div class="row poppins_400">
+                                <div class="col-12 text-center content_card_right no_order">
+                                    <h1>proceed with services</h1>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
                 </div>
             </div>
-            <div class="col-9"></div>
         </div>
+    </t>
+    <t t-name="dash_links">
+        <div class="container dash_home">
+            <div class="p-1 row">
+                <t t-foreach="widget['products']" t-as="product">
+                    <div class="col-md-3 mb-3 link_select p-4">
+                        <div class="row p-2 bg-dark border_radius_20">
+                            <input type="hidden" t-att-value="product.id"/>
+                            <div class="col-6 p-0">
+                                <img class="link_image border_radius_20"
+                                     t-attf-src="data:image/png;base64,{{product.image}}"/>
+                            </div>
+                            <div class="col-6 link_text align-self-center">
+                                <h4><t t-esc="product.name"/></h4>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+        <div class="dash_link_popup"/>
+    </t>
+    <t t-name="link_pop_up">
+        <div id="LinkPopUp" class="modal">
+          <div class="modal-content">
+              <div class="buttons_space">
+                  <button class="button_space_move">
+                      <i class="fa fa-angle-left"/>
+                  </button>
+                  <button class="link_pop_up_close">
+                      <i class="fa fa-times"/> cancel
+                  </button>
+                  <button class="link_pop_up_check d-none">
+                      <i class="fa fa-check"/> done
+                      <input type="hidden" class="customer_id"/>
+                  </button>
+                  <button class="continue_session d-none">
+                      continue session
+                  </button>
+              </div>
+              <div class="content_load">
+                  <div class="user_detail_form p-5">
+                      <h1 class="text-center poppins_400">Enter Customer Details</h1>
+                      <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group pt-2">
+                                    <input type="text" name="name" id="name"
+                                           class="form-control"
+                                           placeholder="name..."/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group pt-2">
+                                    <input type="text" name="mobile" id="mobile"
+                                           class="form-control"
+                                           placeholder="mobile..."/>
+                                </div>
+                            </div>
+                          <div class="col-md-6">
+                                <div class="form-group pt-2">
+                                    <input type="text" name="location" id="location"
+                                           class="form-control"
+                                           placeholder="location..."/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group pt-2">
+                                    <input type="text" name="street" id="street"
+                                           class="form-control"
+                                           placeholder="street..."/>
+                                </div>
+                            </div>
+                          <div class="col-md-6">
+                                <div class="form-group pt-2">
+                                    <input type="text" name="zip" id="zip"
+                                           class="form-control"
+                                           placeholder="Zip code..."/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group pt-2">
+                                    <input type="text" name="age" id="age"
+                                           class="form-control"
+                                           placeholder="Age..."/>
+                                </div>
+                            </div>
+                          <div class="col-md-12">
+                              <div class="errors text-danger"></div>
+                          </div>
+                          <div class="col-md-12">
+                              <div class="pt-2">
+                                <button class="btn btn-secondary border_radius_20 p-2 w-100">Next <i class="ml-2 fa fa-arrow-right"/> </button>
+                              </div>
+                          </div>
+                        </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <style>
+            <!--.content_load{
+                background-image:url("/franchise_dashboard/static/src/image/5172658.jpg");
+            }-->
+            .buttons_space{
+                position:fixed;
+                top:3px;
+                right:0;
+                background:inherit;
+                padding:10px;
+                border-radius:10px;
+            }
+            .buttons_space button{
+                border-radius:10px;
+                border:none;
+                background:#333;
+                color:white
+            }
+            .buttons_space button:focus{
+                border:0px;
+                outline:none;
+            }
+            .user_detail_form {
+                margin: auto;
+                width: 75%;
+                padding: 46px;
+                margin-top: 16vw;
+                border-radius: 20px;
+                box-shadow: 2px 4px 7px -2px;
+            }
+            .user_detail_form input {
+                padding: 14px;
+                font-size: 18px;
+                border-radius:20px;
+                <!--background: #f5f7f9;-->
+            }
+            .user_detail_form input:focus{
+                background:#f5f7f9;
+                <!--border-bottom:0px;-->
+                <!--box-shadow: 0px 0px 0px 0px;-->
+                box-shadow: 3px 2px 7px -5px;
+            }
+            .modal {
+              display: block; /* Hidden by default */
+              position: fixed; /* Stay in place */
+              z-index: 1; /* Sit on top */
+              padding-top: 0px; /* Location of the box */
+              left: 0;
+              top: 0;
+              width: 100%; /* Full width */
+              height: 100%; /* Full height */
+              overflow: auto; /* Enable scroll if needed */
+              background-color: rgb(0,0,0); /* Fallback color */
+              background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+            .modal-content {
+              background-color: #fefefe;
+              margin: auto;
+              border: 1px solid #888;
+              width: 100%;
+              height:100vh;
+              border-radius:0px;
+            }
+            .close {
+                color: white;
+                float: right;
+                position: absolute;
+                right: 40px;
+                height: 25px;
+                width: 25px;
+                font-size: 16px;
+                top:10px;
+                background: #ffc0c0;
+                border-radius: 40px;
+                padding: 2px 0px 0px 5px;
+                opacity: 2;
+                font-weight: normal;
+            }
+            .close:hover,
+            .close:focus {
+              color: white;
+              background: red;
+              text-decoration: none;
+              cursor: pointer;
+            }
+            .check {
+                color: white;
+                float: right;
+                position: absolute;
+                right: 10px;
+                height: 25px;
+                width: 25px;
+                font-size: 19px;
+                top:10px;
+                background: green;
+                border-radius: 40px;
+                padding: 2px 0px 0px 5px;
+                opacity: 2;
+                font-weight: normal;
+            }
+            .check:hover,
+            .check:focus {
+              color: white;
+              background: green;
+              text-decoration: none;
+              cursor: pointer;
+            }
+
+
+        </style>
     </t>
 </templates>

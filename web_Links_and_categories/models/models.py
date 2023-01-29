@@ -1,22 +1,14 @@
 from odoo import fields, models, api
 
+class ProductCategory(models.Model):
+    _inherit= 'product.category'
 
-class WebLinks(models.Model):
-    _name = 'web.links'
-    _description = 'website links'
+    icon = fields.Char(string='Icon')
 
-    name = fields.Char(string="Website Name", required=True)
-    url = fields.Text(string="Website url", required=True)
-    image = fields.Binary(string="")
-    link_category_id = fields.Many2one('web.links.categories', string="Link Category", required=True)
-    active = fields.Boolean(string="Active")
+class ProductTemplateInherit(models.Model):
+    _inherit = 'product.template'
 
-
-class WebLinksCategories(models.Model):
-    _name = 'web.links.categories'
-    _description = 'website links categories'
-
-    name = fields.Char(string="Category Name", required=True)
+    link_url = fields.Text(string='Link url')
 
 
 class FranchiseApplicationPartners(models.Model):

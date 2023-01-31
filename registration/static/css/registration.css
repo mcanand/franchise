@@ -1,0 +1,22 @@
+.fran-application-form input{
+    background-color:rgba(255,255,255,0.9);
+    padding:20px;
+}
+.fran-application-form h3{
+   text-align:center;
+}
+.s_website_form_label input{
+    width:200px;
+}
+.s_row_frst input{
+    padding:20px;
+}
+.cf-s-contailner{
+    background-color:rgba(255,255,255,0.9);
+    padding:20px;
+}
+.oe_login_form input:focus{
+    box-shadow:none;
+    outline:none
+    border: 1px solid #087db480 !important;
+}

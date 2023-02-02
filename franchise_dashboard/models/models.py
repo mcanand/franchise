@@ -62,7 +62,7 @@ class ProductTemplateInherit(models.Model):
 class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
 
-    active = fields.Boolean(string='active')
+    active_order = fields.Boolean(string='active')
 
     def delete_current_order(self, order_id):
         """delete current sale order"""
@@ -74,19 +74,43 @@ class SaleOrderInherit(models.Model):
     def get_sale_order_details(self, vals):
         user_id = self.env.user.id
         order = self.env['sale.order'].search([('id', '=', int(vals.get('order_id'))), ('user_id', '=', user_id)])
-        partner = order.partner_id
         value = {}
-        orders = {'id': order.id,
-                  'order_name': order.name,
-                  'amount_untaxed': order.amount_untaxed,
-                  'amount_tax': order.amount_tax,
-                  'amount_total': order.amount_total,
-                  'c_name': partner.name,
-                  'c_street': partner.street,
-                  'c_street2': partner.street2,
-                  'c_mobile': partner.mobile,
-                  'c_zip': partner.zip}
-        value['order'] = orders
+        if order:
+            orders = self.get_order_vals(order)
+            value['order'] = orders
+            invoice_vals = self.get_invoice_vals(order)
+            value['invoice'] = invoice_vals
+            if order.order_line:
+                lines = self.get_order_lines(order)
+                print(lines)
+                value['lines'] = lines
+            return value
+        else:
+            return False
+
+    def get_invoice_vals(self, order):
+        invoice = order.invoice_ids
+        return {'id': invoice.id if invoice else False,
+                'pay_state': invoice.payment_state if invoice else 'draft' ,
+                'html': invoice.get_portal_url(report_type='html') if invoice else False,
+                'download_url': invoice.get_portal_url(report_type='pdf', download=True) if invoice else False,
+                'print_url': invoice.get_portal_url(report_type='pdf') if invoice else False}
+
+    def get_order_vals(self, order):
+        partner = order.partner_id
+        return {'id': order.id,
+                'state': order.state,
+                'order_name': order.name,
+                'amount_untaxed': order.amount_untaxed,
+                'amount_tax': order.amount_tax,
+                'amount_total': order.amount_total,
+                'c_name': partner.name,
+                'c_street': partner.street,
+                'c_street2': partner.street2,
+                'c_mobile': partner.mobile,
+                'c_zip': partner.zip}
+
+    def get_order_lines(self, order):
         lines = []
         for rec in order.order_line:
             line = {'id': rec.id,
@@ -94,34 +118,21 @@ class SaleOrderInherit(models.Model):
                     'price': rec.price_unit,
                     'tax': rec.tax_id.name}
             lines.append(line)
-        value['lines'] = lines
-        return value
+        return lines
 
     def get_active_order(self):
         user_id = self.env.user.id
-        order = self.env['sale.order'].search([('active', '=', True), ('user_id', '=', user_id)], limit=1)
+        order = self.env['sale.order'].search([('active_order', '=', True), ('user_id', '=', user_id)], limit=1)
+        value = {}
         if order:
-            partner = order.partner_id
-            value = {}
-            orders = {'id': order.id,
-                      'order_name': order.name,
-                      'amount_untaxed': order.amount_untaxed,
-                      'amount_tax': order.amount_tax,
-                      'amount_total': order.amount_total,
-                      'c_name': partner.name,
-                      'c_street': partner.street,
-                      'c_street2': partner.street2,
-                      'c_mobile': partner.mobile,
-                      'c_zip': partner.zip}
+            orders = self.get_order_vals(order)
             value['order'] = orders
-            lines = []
-            for rec in order.order_line:
-                line = {'id': rec.id,
-                        'product_name': rec.product_id.name,
-                        'price': rec.price_unit,
-                        'tax': rec.tax_id.name}
-                lines.append(line)
-            value['lines'] = lines
+            invoice_vals = self.get_invoice_vals(order)
+            value['invoice'] = invoice_vals
+            if order.order_line:
+                lines = self.get_order_lines(order)
+                print(lines)
+                value['lines'] = lines
             return value
         else:
             return False
@@ -131,12 +142,58 @@ class SaleOrderInherit(models.Model):
         order = self.search([('id', '=', int(order_id)), ('user_id', '=', user_id)])
         if order:
             order.action_confirm()
-            order.write({'active':False})
-            invoice = order._create_invoices()
-            invoice.action_post()
+            if order.invoice_ids:
+                order.invoice_ids.button_draft()
+                order.invoice_ids.unlink()
+                invoice = order._create_invoices()
+                invoice.action_post()
+            else:
+                invoice = order._create_invoices()
+                invoice.action_post()
             return True
         else:
             return False
+
+    def order_cancel(self, order_id):
+        user_id = self.env.user.id
+        order = self.search([('id', '=', int(order_id)), ('user_id', '=', user_id)])
+        if order:
+            order.action_cancel()
+            return True
+        return False
+
+    def order_set_quotation(self, order_id):
+        user_id = self.env.user.id
+        order = self.search([('id', '=', int(order_id)), ('user_id', '=', user_id)])
+        if order:
+            order.action_draft()
+            return True
+        return False
+
+    def complete_order(self,order_id):
+        user_id = self.env.user.id
+        order = self.search([('id', '=', int(order_id)), ('user_id', '=', user_id)])
+        order.write({'active_order': False})
+        return True
+
+
+class AccountMoveInherit(models.Model):
+    _inherit = 'account.move'
+
+    def order_paid(self, invoice_id):
+        invoice = self.env['account.move'].search([('id', '=', int(invoice_id))])
+        if invoice.payment_state != 'paid':
+            journal_id = self.env['account.journal'].search([('type', '=', 'bank')]).id
+            vals = {'journal_id': journal_id,
+                    'amount': invoice.amount_total,
+                    'payment_date': invoice.invoice_date,
+                    'communication': invoice.name}
+            payment_register = self.env['account.payment.register']
+            payments = payment_register.with_context(active_model='account.move', active_ids=invoice.id).create(
+                vals)._create_payments()
+            invoice.write({'payment_state': 'paid'})
+            return True
+        return False
 
 
 class SaleOrderLineInherit(models.Model):

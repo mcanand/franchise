@@ -13,11 +13,11 @@ class SaveCustomerOrderCreation(http.Controller):
         product_url = product.search([('id', '=', int(vals.get('product_id')))]).link_url
         sale_order = request.env['sale.order'].sudo()
         order_line = request.env['sale.order.line'].sudo()
-        active_order = sale_order.search([('active', '=', True)])
+        active_order = sale_order.search([('active_order', '=', True)])
         if active_order:
-            active_order.write({'active':False})
+            active_order.write({'active_order': False})
         if customer_id:
-            order = sale_order.create({'partner_id': customer_id, 'active': True})
+            order = sale_order.create({'partner_id': customer_id, 'active_order': True})
             order_line.create({'product_id': int(vals.get('product_id')), 'order_id': order.id})
             return {'customer_id': customer_id, 'order_id': order.id, 'product_url': product_url}
         else:

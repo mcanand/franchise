@@ -6,7 +6,11 @@
         <field name="arch" type="xml">
             <form string="Franchise Application" create="false">
                 <header>
-                    <!--                    add buttom to change state to inprogress visibility-->
+                    <button name="check" string="Check" type="object" class="oe_highlight" attrs="{'invisible': ['|',('status', '=', 'progress'),('status','=','done')]}" />
+                    <button name="approve" string="Approve" type="object" class="oe_highlight" attrs="{'invisible': ['|',('status', '=', 'draft'),('status','=','done')]}"/>
+                    <button name="cancel" string="Cancel" type="object" class="oe_highlight" attrs="{'invisible': ['|',('status', '=', 'draft'),('status','=','progress')]}"/>
+
+<!--                    add buttom to change state to inprogress visibility-->
                     <field name="status" widget="statusbar" statusbar_visible="draft,progress,done"/>
                 </header>
                 <sheet>
@@ -22,6 +26,8 @@
                             <field name="mobile"/>
                             <field name="email"/>
                             <field name="known_by"/>
+                            <field name="dob"/>
+                            <field name="related_users_id"/>
                         </group>
                     </group>
                 </sheet>

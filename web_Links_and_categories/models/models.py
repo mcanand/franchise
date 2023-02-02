@@ -19,7 +19,7 @@ class FranchiseApplicationPartners(models.Model):
     name = fields.Char(string="Applicant Name")
     district_id = fields.Many2one('res.country.state.district', string="District")
     dob = fields.Date(string="Date of Birth", required=True)
-    related_users_id = fields.Many2one('res.users', string="Related Users")
+    related_users_id = fields.Integer(string="Related Users")
     age = fields.Integer(string="AGE", compute="_check_age", store=True)
     mobile = fields.Char(string="Mobile")
     email = fields.Char(string="Email")
@@ -74,16 +74,11 @@ class FranchiseApplicationPartners(models.Model):
             'panchayat_id': self.panchayat_id.id,
 
         })
-        res_users.id = self.write({'related_users_id':res_users})
-
-        # return super(FranchiseApplicationPartners, self).create(res_users)
+        self.write({'related_users_id':res_users.id})
         if self.status == 'progress':
             self.status = 'done'
-        # return super(FranchiseApplicationPartners, self).create(res_users)
-
 
     def cancel(self):
-        print("dfsda")
         if self.status == 'done':
             self.status = 'draft'
 

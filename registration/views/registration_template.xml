@@ -7,7 +7,9 @@
                     <section class="s_website_form" data-vcss="001" data-snippet="s_website_form">
                         <div class="container fran-application-form">
                             <form action="/registration/franchise" method="post" enctype="multipart/form-data"
-                                  class="o_mark_required s_website_form_input" data-mark="*" data-model_name="" data-success-page=""><br/>
+                                  class="o_mark_required s_website_form_input" id="form_input_id" data-mark="*" data-model_name=""
+                                  data-success-page="">
+                                <br/>
                                 <h3>e-Mithram Registration</h3>
                                 <br/>
                                 <br/>
@@ -92,9 +94,17 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-12 text-center" data-name="Submit Button" onclick="datas()">
+                                    <div id="myModal" class="popup-modal">
+                                        <!-- Modal content -->
+                                        <div class="modal-content">
+                                            <span class="close"><i class="fa fa-times"></i></span>
+                                            <p><h6 id="msg-cls">Email/Phone is Alredy Exist</h6></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-12 text-center" data-name="Submit Button">
                                         <div class="s_website_form_label"/>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="button" class="btn btn-primary btn-form-submit">Submit</button>
                                     </div>
 
                                     <p class="alert alert-danger" t-if="error" role="alert">

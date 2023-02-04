@@ -1,0 +1,47 @@
+/* Popup container - can be anything you want */
+
+/*.main-div-cls {font-family: Arial, Helvetica, sans-serif;}*/
+
+/* The Modal (background) */
+.popup-modal {
+  display: none;  /*Hidden by default */
+  position: fixed;
+  z-index: 1;
+  padding-top: 270px;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Enable scroll if needed */
+ /* background-color: rgb(0,0,0); /*Fallback color */
+  /*background-color: rgba(0,0,0,0.4); /*Black w/ opacity */
+  background-color: #ffffff;
+  background-color: #ffffff00;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 2px none #ffffff;
+    width: 35%;
+    height: auto;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
+
+/* The Close Button */
+.close {
+  text-align: right;
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -8,6 +8,8 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
     events:{
         'change select[name="district"]': '_onChangeDistrict',
         'change select[name="local_body"]': '_onChangeDistrict',
+        'click .btn-form-submit': '_checkpartner',
+        'click .close': '_onClickClosePopup'
     },
     start:function(){
         var district = $('select[name="district"] :selected').val()
@@ -17,9 +19,13 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
                     _.each(result, function(result) {
                         $('select[name="panchayat"]').append("<option value="+result.id+">"+result.name+"</option>")
                     });
-                                 console.log("resulttt", result)
-
                 });
+    },
+    show_popup: function(){
+         $("#myModal").show()
+    },
+    _onClickClosePopup:function(){
+         $("#myModal").hide()
     },
     _onChangeDistrict:function(){
          var district = $('select[name="district"] :selected').val()
@@ -33,5 +39,36 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
                     });
                 });
     },
+
+    _checkpartner:function(){
+        var self = this;
+        var email = $('input[name="email"]').val()
+        var phone = $('input[name="phone"]').val()
+        var msg = $('#msg-cls')
+        var checkatsymbol = email.includes("@");
+        var checkdotsymbol = email.includes(".");
+        if ($('input[name="name"]').val() == "" || $('input[name="dob"]').val() =="" || phone=="" ||
+            $('input[name="location"]').val() == "" || email==""){
+                    msg.html("Required Details Not Filled")
+                    self.show_popup()
+            }
+        else if (checkatsymbol==false || checkdotsymbol==false){
+            msg.html("please enter valid email")
+            this.show_popup()
+        }
+        else{
+            ajax.jsonRpc('/check/user', 'call', {'email': email, 'phone': phone})
+              .then(function (result) {
+                  if(result != false){
+                      msg.html("Email/Phone is Alredy Exist")
+                      self.show_popup()
+                  }
+                  else{
+                        $("#form_input_id").submit();
+                  }
+              });
+        }
+    },
+
     });
 });

@@ -28,27 +28,17 @@ class RegistrationController(http.Controller):
                 "districts": district,
             })
             return request.render("registration.franchise_registration", value)
-        else:
-            RAP = request.env['franchise.application.partner'].sudo().search(['|', ('mobile', '=', args.get('phone')),
-                                                                              ('email', '=', args.get('email'))])
-            if not RAP:
-                request.env['franchise.application.partner'].sudo().create({
-                    "name": args.get('name'),
-                    "dob": args.get('dob'),
-                    "email": args.get('email'),
-                    "mobile": args.get('phone'),
-                    "local_body": args.get('local_body'),
-                    "district_id": args.get('district'),
-                    "panchayat_id": args.get('panchayat'),
-                    "location": args.get('location'),
-                    "known_by": args.get('known_by'),
-                })
-            # values = {}
-            # values['error'] = _("Email or phone alredy exist")
-            # return request.render('registration.franchise_registration', values)
-            # return request.render('http_routing.http_error', {
-            #     'status_code': _('Oops'),
-            #     'status_message': _("""The requested page is invalid, or doesn't exist anymore.""")})
+        request.env['franchise.application.partner'].sudo().create({
+            "name": args.get('name'),
+            "dob": args.get('dob'),
+            "email": args.get('email'),
+            "mobile": args.get('phone'),
+            "local_body": args.get('local_body'),
+            "district_id": args.get('district'),
+            "panchayat_id": args.get('panchayat'),
+            "location": args.get('location'),
+            "known_by": args.get('known_by'),
+        })
 
     @http.route('/get/panchayats', type='json', auth="public")
     def get_panchayat(self, **kwargs):
@@ -65,5 +55,15 @@ class RegistrationController(http.Controller):
         for value in values:
             datas.append({'id': value.id, 'name': value.name})
         return datas
+
+    @http.route('/check/user', type='json', auth="public")
+    def user_checking(self, **args):
+        application_user = request.env['franchise.application.partner'].search(
+            ['|', ('email', '=', args.get('email')), ('mobile', '=', args.get('phone'))]
+        )
+        if not application_user:
+            return False
+        return True
+
 
 

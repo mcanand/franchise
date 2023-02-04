@@ -14,6 +14,7 @@
     'assets': {
         'web.assets_frontend': [
             '/registration/static/css/registration.css',
+            '/registration/static/css/popup.css',
             '/registration/static/js/panchayath_selection.js',
         ],
     },

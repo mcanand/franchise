@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'web links and categories',
+    'name': 'Franchise',
     'version': '15.0.0.1',
     'website': '',
     'category': '',

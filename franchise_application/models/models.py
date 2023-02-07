@@ -19,8 +19,8 @@ class FranchiseApplicationPartners(models.Model):
     name = fields.Char(string="Applicant Name")
     district_id = fields.Many2one('res.country.state.district', string="District")
     dob = fields.Date(string="Date of Birth", required=True)
-    related_users_id = fields.Integer(string="Related Users")
-    age = fields.Integer(string="AGE", compute="_check_age", store=True)
+    related_users_id = fields.Many2one('res.users', string="Related Users")
+    age = fields.Integer(string="AGE", store=True)
     mobile = fields.Char(string="Mobile")
     email = fields.Char(string="Email")
     panchayat_id = fields.Many2one('res.country.state.district.panchayat', string="Panchayat")
@@ -31,11 +31,11 @@ class FranchiseApplicationPartners(models.Model):
     color = fields.Integer('Color', compute='_get_color', store=True)
     local_body = fields.Selection([("panchayath", "Panchayath"), (" municipality", "Municipality"), ("corporation", "Corporation")])
 
-    @api.depends('dob')
-    def _check_age(self):
-        today = fields.date.today()
-        age = today.year - self.dob.year - ((today.month, today.day) < (self.dob.month, self.dob.day))
-        print('age', age)
+    # @api.depends('dob')
+    # def _check_age(self):
+    #     today = fields.date.today()
+    #     age = today.year - self.dob.year - ((today.month, today.day) < (self.dob.month, self.dob.day))
+    #     print('age', age)
 
 
     @api.model

@@ -14,19 +14,6 @@
                 <span class="harmburger"><i class="fa fa-bars"/></span>
                 <!--                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>-->
                 <!--                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>-->
-                <div class="row user_detail">
-                    <div class="col-12 text-center">
-                        <img class="rounded-circle user_avatar"
-                             t-attf-src="data:image/png;base64,{{widget['user'].image}}"
-                        />
-                        <span class="active_status"></span>
-                    </div>
-                    <div class="col-12 p-0 text-center">
-
-                        <div class="poppins_400"><t t-esc="widget['user'].email"/></div>
-                        <div class="poppins_400"><t t-esc="widget['user'].panchayat"/></div>
-                    </div>
-                </div>
                 <ul class="">
                         <li class="p-1 d-block home_run menu_item">
                             <div class="categ_menu active p-2">
@@ -56,41 +43,55 @@
     <t t-name="dash_home">
         <div class="dash_home p-3">
             <div class="row p-3">
-                <div class="col-8 p-2">
-                    <div class="home_left bg-white">
-                        <div class="row">
+                <div class="col-md-6 home_left p-2">
+                        <h1 class="poppins_400">Hey <b class="clr_com"><t t-esc="widget['user'].name"/></b></h1>
+                        <div class="row mt-5">
+                            <div class="col-md-6 p-3">
+                                <table class="w-100 poppins_500 text-center">
+                                    <tr>
+                                        <td class="">
+                                            <i class="f_50 clr_com p-3 fa fa-line-chart"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Services</td>
+                                    </tr>
+                                    <tr>
+                                        <td><h1 class="clr_com">214</h1></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6 p-3 ">
+                                <table class="w-100 poppins_500 text-center">
+                                    <tr>
+                                        <td>
+                                            <i class="f_50 clr_com p-3 fa fa-users"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Customers</td>
+                                    </tr>
+                                    <tr>
+                                        <td><h1 class="clr_com">200</h1></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-4 align-self-center mt-3">
+                                <button class="w-100 f_15 clr_com">Customer</button>
+                            </div>
+                            <div class="col-md-4 align-self-center mt-3">
+                                    <button class="w-100 f_15 clr_com">Sales</button>
+                            </div>
+                            <div class="col-md-4 align-self-center mt-3">
+                                <button class="w-100 f_15 clr_com">Invoices</button>
+                            </div>
                             <div class="col-md-12">
-                                <div class="content_card">asd
+                                <div class="content_card mt-4" style="background-image:url('/franchise_dashboard/static/src/image/20667.jpg')">
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-3">
-                             <div class="col-md-4 align-self-center text-center poppins_500">
-                                <div class="content_card" style="background:#FF0022;color:white;">
-                                    <i class="fa fa-line-chart"/>
-                                    <p class="mt-2">Service Provided</p>
-                                    <h1>1500</h1>
-                                </div>
-                            </div>
-                            <div class="col-md-4 align-self-center text-center poppins_500">
-                                <div class="content_card" style="background:#2A7221;color:white;">
-                                    <i class="fa fa-user"/>
-                                    <p class="mt-2">Customers</p>
-                                    <h1>1500</h1>
-                                </div>
-                            </div>
-                            <div class="col-md-4 align-self-center text-center poppins_500">
-                                <div class="content_card" style="background:darkslategray;color:white;">
-                                    <!--<i class="fa fa-user"/>
-                                    <p class="mt-2">Customers</p>
-                                    <h1>1500</h1>-->
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div class="col-4 p-2">
+                <div class="col-md-6 p-2">
                     <div class="home_right bg-white">
                         <t t-if="widget['active_order'] != false ">
                         <div class="row poppins_400">
@@ -212,10 +213,16 @@
         </div>
     </t>
     <t t-name="dash_links">
-        <div class="container dash_home">
-            <div class="p-1 row">
+        <div class="dash_home p-5">
+            <div class="row">
                 <t t-foreach="widget['products']" t-as="product">
-                    <div class="col-md-3 mb-3 link_select p-4">
+                    <div class="col-md-3 mt-3">
+                        <button class="w-100 clr_com f_15 link_select" t-att-value="product.id">
+                            <span><i class="fa fa-link"/></span>
+                            <t t-esc="product.name"/>
+                        </button>
+                    </div>
+                    <!--<div class="col-md-3 mb-3 link_select p-4">
                         <div class="row p-2 bg-dark border_radius_20">
                             <input type="hidden" t-att-value="product.id"/>
                             <div class="col-6 p-0">
@@ -226,7 +233,8 @@
                                 <h4><t t-esc="product.name"/></h4>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
+
                 </t>
             </div>
         </div>

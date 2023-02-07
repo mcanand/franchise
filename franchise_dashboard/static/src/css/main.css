@@ -48,6 +48,27 @@ body{
     font-family: 'poppins', sans-serif;
     font-weight:700;
 }
+.clr_com{
+    color:#087db4 !important;
+}
+.f_20{
+    font-size:20px;
+}
+.f_50{
+    font-size:50px;
+}
+.home_left button {
+    height: 10vh;
+    outline: none;
+    border: none;
+    border-radius:50px;
+}
+
+.bg_com{
+    background:#087db4 !important;
+    background-color:#087db4 !important;
+    color:white !important;
+}
 .f_menu p{
     line-height:3px;
 }
@@ -140,14 +161,20 @@ body{
     height:87vh;
     padding:20px;
 }
+.content_detail_row{
+    height:20vh;
+}
 .content_card {
     width: 100%;
-    height: 25vh;
-    background: white;
-    border-radius: 5px;
+    height: 33vh;
+    background: #eee;
     padding:10px;
     transition:0.3s;
-    box-shadow: 2px 2px 7px -3px #9f9f9f;
+    border-radius:20px;
+
+}
+.f_15{
+    font-size:15px;
 }
 .no_order{
     display: grid;
@@ -204,8 +231,14 @@ body{
 
 /*links*/
 .link_image{
-    width:100px;
-    height:100px;
+    width:70px;
+    height:70px;
+    padding:3px;
+    border-radius:10px;
+    display:flow-root;
+}
+.link_content{
+
 }
 .link_text{
     word-break: break-all;
@@ -218,7 +251,14 @@ body{
 .link_select{
     cursor:pointer;
 }
+.link_select{
+    height: 10vh;
+    outline: none;
+    border:none;
+    border-radius:50px;
+    transition:0.3s;
+}
 .link_select:hover{
-    box-shadow:0px 3px 7px -5px #333;
-    border-radius:20px;
+    transition:0.3s;
+    box-shadow:3px 3px 7px -3px #333;
 }

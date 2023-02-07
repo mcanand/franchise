@@ -7,7 +7,7 @@
     'summary': 'panchayath admin',
     'description': """register the users in emithram""",
     'category': '',
-    'depends': ['website', 'District_Panchayat', 'web', 'muncipality_corparation', 'web_Links_and_categories'],
+    'depends': ['website', 'District_Panchayat', 'web', 'muncipality_corparation', 'franchise_application'],
     'data': [
         'views/registration_template.xml',
     ],

@@ -151,9 +151,7 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
         },
         _click_link_select:function(event){
             var self = this
-            console.log('link_select',self.current_order_detail)
-            var product_id = $(event.target).parents('.link_select').children().children('input').val()
-            console.log(product_id)
+            var product_id = $(event.target).val()
             if(this.order != false){
                 /*if current_order_detail present*/
                 var vals = {'order_id':this.order.id,'product_id':product_id}

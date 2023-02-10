@@ -91,7 +91,7 @@ class SaleOrderInherit(models.Model):
     def get_invoice_vals(self, order):
         invoice = order.invoice_ids
         return {'id': invoice.id if invoice else False,
-                'pay_state': invoice.payment_state if invoice else 'draft' ,
+                'pay_state': invoice.payment_state if invoice else 'draft',
                 'html': invoice.get_portal_url(report_type='html') if invoice else False,
                 'download_url': invoice.get_portal_url(report_type='pdf', download=True) if invoice else False,
                 'print_url': invoice.get_portal_url(report_type='pdf') if invoice else False}
@@ -176,6 +176,20 @@ class SaleOrderInherit(models.Model):
         order.write({'active_order': False})
         return True
 
+    def get_values(self, val):
+        user_id = self.env.user.id
+        if int(val) == 1:
+            partners = self.env['res.partner'].search_read([('user_id', '=', user_id)])
+            return partners
+        elif int(val) == 2:
+            sales = self.env['sale.order'].search_read([('user_id', '=', user_id)])
+            return sales
+        elif int(val) == 3:
+            invoices = self.env['account.move'].search_read([('invoice_user_id', '=', user_id)])
+            return invoices
+        else:
+            return False
+
 
 class AccountMoveInherit(models.Model):
     _inherit = 'account.move'
@@ -205,19 +219,9 @@ class SaleOrderLineInherit(models.Model):
         return True if val else False
 
 
-class FranchiseCustomers(models.Model):
-    _name = 'franchise.customers'
+class ResPartnerInherit(models.Model):
+    _inherit = 'res.partner'
 
-    # def save_user_details(self, vals):
-    #     customer = self.env['res.partner'].create({'name': vals.get('name'),
-    #                                                        'mobile': vals.get('mobile'),
-    #                                                        'address': vals.get('address'),
-    #                                                        'age': vals.get('age')
-    #                                                        })
-    #
-    #     return {'id': customer.id} if customer else False
-    #
-    # def change_user_state(self, id):
-    #     customer = self.env['res.partner'].browse(id)
-    #     change = customer.write({'state': 'done'})
-    #     return True if change else False
+    def update_partner(self, vals, customer_id):
+        partner = self.env['res.partner'].search([('id', '=', int(customer_id))])
+        return True if partner.write(vals) else False

@@ -251,6 +251,9 @@ body{
 .link_select{
     cursor:pointer;
 }
+.c_pointer{
+    cursor:pointer;
+}
 .link_select{
     height: 10vh;
     outline: none;
@@ -261,4 +264,10 @@ body{
 .link_select:hover{
     transition:0.3s;
     box-shadow:3px 3px 7px -3px #333;
+}
+
+/*customers view*/
+.customers_view input{
+    border:none;
+    outline:none;
 }

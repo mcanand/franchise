@@ -33,6 +33,9 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
             'click .order_paid':'_click_order_paid',
             'click .order_invoice_print': '_click_invoice_print',
             'click .order_complete': '_click_complete_order',
+            'click .home_menu':'_click_home_menu',
+            'click .customer_edit': '_click_edit_customer',
+            'click .customer_save': '_click_save_customer',
         },
         init: function(parent, context) {
             this._super(parent, context);
@@ -359,7 +362,57 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                     }
                 });
         },
+        _click_home_menu:function(event){
+            var val = $(event.target).val()
+            var self = this
+            this._rpc({
+                model: 'sale.order',
+                method: 'get_values',
+                args: [[],val],
+            }).then(function(result){
+                if(result != false){
+                    if(val == '1'){
+                        self.menu_val = val
+                        $('.action_space').html('')
+                        $('.action_space').prepend(qweb.render('show_details_layout', {
+                            widget: self
+                        }))
+                        self.customers = result
+                        $('.show_details_space').prepend(qweb.render('customer_view', {
+                            widget: self
+                        }))
+                    }
+                }
+            });
+        },
+        _click_edit_customer:function(event){
+            var customer_id = $(event.target).attr('data-id')
+            $('.customer_' + customer_id + ' input').removeAttr('readonly')
+            $('.customer_' + customer_id + ' input').css({'border-bottom':'1px solid blue'})
+            $(event.target).addClass('d-none')
+            $(event.target).siblings('i').removeClass('d-none')
+        },
+        _click_save_customer:function(event){
+            var vals = {}
+            var customer_id = $(event.target).attr('data-id')
+            _.each($('.customer_' + customer_id + ' input'),function(result){
+                vals[$(result).attr('name')] = $(result).val()
+            })
+            var self = this
+            this._rpc({
+                model: 'res.partner',
+                method: 'update_partner',
+                args: [[],vals,customer_id],
+            }).then(function(result){
+                if(result != false){
+                    $('.customer_' + customer_id + ' input').css({'border-bottom':'0px'})
+                    $('.customer_' + customer_id + ' input').attr('readonly','readonly')
+                    $(event.target).addClass('d-none')
+                    $(event.target).siblings('i').removeClass('d-none')
+                }
+            });
 
+        },
     });
 
     core.action_registry.add('franchise_dashboard_tag', FranchiseDashboard);

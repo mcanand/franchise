@@ -77,13 +77,13 @@
                                 </table>
                             </div>
                             <div class="col-md-4 align-self-center mt-3">
-                                <button class="w-100 f_15 clr_com">Customer</button>
+                                <button class="w-100 f_15 clr_com home_menu" t-att-value="1">Customer</button>
                             </div>
                             <div class="col-md-4 align-self-center mt-3">
-                                    <button class="w-100 f_15 clr_com">Sales</button>
+                                <button class="w-100 f_15 clr_com home_menu" t-att-value="2">Sales</button>
                             </div>
                             <div class="col-md-4 align-self-center mt-3">
-                                <button class="w-100 f_15 clr_com">Invoices</button>
+                                <button class="w-100 f_15 clr_com home_menu" t-att-value="3">Invoices</button>
                             </div>
                             <div class="col-md-12">
                                 <div class="content_card mt-4" style="background-image:url('/franchise_dashboard/static/src/image/20667.jpg')">
@@ -222,19 +222,6 @@
                             <t t-esc="product.name"/>
                         </button>
                     </div>
-                    <!--<div class="col-md-3 mb-3 link_select p-4">
-                        <div class="row p-2 bg-dark border_radius_20">
-                            <input type="hidden" t-att-value="product.id"/>
-                            <div class="col-6 p-0">
-                                <img class="link_image border_radius_20"
-                                     t-attf-src="data:image/png;base64,{{product.image}}"/>
-                            </div>
-                            <div class="col-6 link_text align-self-center">
-                                <h4><t t-esc="product.name"/></h4>
-                            </div>
-                        </div>
-                    </div>-->
-
                 </t>
             </div>
         </div>
@@ -430,5 +417,52 @@
 
 
         </style>
+    </t>
+    <t t-name="show_details_layout">
+        <div class="dash_home p-5">
+            <div class="row">
+                <div class="col-6 text-right">
+                    <i class="fa fa-search"/>
+                </div>
+                <div class="col-6 text-right">
+                    <input type="text"
+                           class=" poppins_400"
+                           style="border:none;border-bottom:1px solid blue;"
+                           id="customer_search"
+                           placeholder="Search..."/>
+                </div>
+            </div>
+            <div class="mt-5">
+                <div class="col-12 show_details_space"/>
+            </div>
+        </div>
+    </t>
+    <t t-name="customer_view">
+        <table class="table-responsive table poppins_400 customers_view">
+                <tr class="clr_com">
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                </tr>
+                <t t-foreach="widget['customers']" t-as="customer">
+                    <tr t-att-class="'customer_' + customer.id">
+                        <td><input name="name" t-att-value="customer.name" readonly="readonly"/></td>
+                        <td>
+                            <input name="street" t-att-value="customer.street" readonly="readonly"/>
+                            <input name="street2" t-att-value="customer.street2" readonly="readonly"/>
+                            <input name="city" t-att-value="customer.city" readonly="readonly"/>
+                        </td>
+                        <td><input name="mobile" t-att-value="customer.mobile" readonly="readonly"/> </td>
+                        <td><input name="email" t-att-value="customer.email" readonly="readonly"/> </td>
+                        <td>
+                            <i t-att-data-id="customer.id" class="fa fa-pencil clr_com customer_edit c_pointer"/>
+                            <i t-att-data-id="customer.id" class="fa fa-upload clr_com customer_save c_pointer d-none"/>
+                        </td>
+
+                    </tr>
+                </t>
+
+            </table>
     </t>
 </templates>

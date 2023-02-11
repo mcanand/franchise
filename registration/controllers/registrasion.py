@@ -33,6 +33,7 @@ class RegistrationController(http.Controller):
             })
             return request.render("registration.franchise_registration", value)
         referal_code = self.get_referal_code()
+        print('referal_code', referal_code)
         request.env['franchise.application.partner'].sudo().create({
             "name": args.get('name'),
             "dob": args.get('dob'),

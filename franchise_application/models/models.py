@@ -50,6 +50,7 @@ class FranchiseApplicationPartners(models.Model):
     color = fields.Integer('Color', compute='_get_color', store=True)
     local_body = fields.Selection(
         [("panchayath", "Panchayath"), (" municipality", "Municipality"), ("corporation", "Corporation")])
+    my_referal = fields.Char()
 
     # @api.depends('dob')
     # def _check_age(self):
@@ -81,7 +82,6 @@ class FranchiseApplicationPartners(models.Model):
             self.status = 'progress'
 
     def approve(self):
-        print("hhjj")
         res_users = self.env['res.users'].create({
             'name': self.name,
             'login': self.mobile,
@@ -89,6 +89,7 @@ class FranchiseApplicationPartners(models.Model):
             'panchayat_admin': True,
             'district_id': self.district_id.id,
             'panchayat_id': self.panchayat_id.id,
+            'reference': self.my_referal,
 
         })
         self.write({'related_users_id': res_users.id})

@@ -9,6 +9,7 @@
                 <group>
                     <field name="panchayat_admin" string="Panchayat Admin"/>
                     <field name="district_id"/>
+                    <field name="reference"/>
                 </group>
             </field>
         </field>

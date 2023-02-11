@@ -9,7 +9,9 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
         'change select[name="district"]': '_onChangeDistrict',
         'change select[name="local_body"]': '_onChangeDistrict',
         'click .btn-form-submit': '_checkpartner',
-        'click .close': '_onClickClosePopup'
+        'click .close': '_onClickClosePopup',
+        'keyup .referd-by': '_onKeyUpSearch',
+        'keydown .referd-by': '_onKeydownSearch',
     },
     start:function(){
         var district = $('select[name="district"] :selected').val()
@@ -44,6 +46,7 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
         var self = this;
         var email = $('input[name="email"]').val()
         var phone = $('input[name="phone"]').val()
+        var referal = $('input[name="referd_by"]').val()
         var msg = $('#msg-cls')
         var checkatsymbol = email.includes("@");
         var checkdotsymbol = email.includes(".");
@@ -69,6 +72,20 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
               });
         }
     },
-
+    _onKeyUpSearch:function(event){
+        $(".referd-by").css("color", "red");
+        var referal_code = $(".referd-by").val()
+        if(referal_code == 8){
+            ajax.jsonRpc('/check/referal', 'call', {'referal': referal_code})
+            .then(function(result){
+                if(result){
+                    $(".referd-by").css("color", "green");
+                }
+            })
+        }
+    },
+    _onKeydownSearch:function(event){
+        $(".referd-by").css("color", "red");
+    },
     });
 });

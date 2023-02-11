@@ -94,6 +94,15 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-6">
+                                        <div class="mb-3 field-referal">
+                                            <input type="text" name="referd_by" id="referd_by"
+                                                   class="form-control form-control-sm referd-by"
+                                                   autofocus="autofocus" placeholder="Referal Code:"
+                                                   autocapitalize="off" maxlength="8"/>
+                                        </div>
+                                    </div>
+
                                     <div id="myModal" class="popup-modal">
                                         <!-- Modal content -->
                                         <div class="modal-content">

@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_res_country_state_district_municipality,res.country.state.municipality,model_res_country_state_district_municipality,,1,1,1,1
-access_res_country_state_district_corparation,res.country.state.district.corparation,model_res_country_state_district_corparation,,1,1,1,1

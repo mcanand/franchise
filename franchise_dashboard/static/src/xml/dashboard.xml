@@ -57,7 +57,9 @@
                                         <td>Total Services</td>
                                     </tr>
                                     <tr>
-                                        <td><h1 class="clr_com">214</h1></td>
+                                        <td><h1 class="clr_com">
+                                            <t t-esc="widget['total_services']"/>
+                                        </h1></td>
                                     </tr>
                                 </table>
                             </div>
@@ -72,18 +74,20 @@
                                         <td>Total Customers</td>
                                     </tr>
                                     <tr>
-                                        <td><h1 class="clr_com">200</h1></td>
+                                        <td><h1 class="clr_com">
+                                            <t t-esc="widget['total_customers']"/>
+                                        </h1></td>
                                     </tr>
                                 </table>
                             </div>
                             <div class="col-md-4 align-self-center mt-3">
-                                <button class="w-100 f_15 clr_com home_menu" t-att-value="1">Customer</button>
+                                <button class="w-100 f_15 clr_com home_menu" value="partner">Customer</button>
                             </div>
                             <div class="col-md-4 align-self-center mt-3">
-                                <button class="w-100 f_15 clr_com home_menu" t-att-value="2">Sales</button>
+                                <button class="w-100 f_15 clr_com home_menu" value="sales">Sales</button>
                             </div>
                             <div class="col-md-4 align-self-center mt-3">
-                                <button class="w-100 f_15 clr_com home_menu" t-att-value="3">Invoices</button>
+                                <button class="w-100 f_15 clr_com home_menu" value="invoice">Invoices</button>
                             </div>
                             <div class="col-md-12">
                                 <div class="content_card mt-4" style="background-image:url('/franchise_dashboard/static/src/image/20667.jpg')">
@@ -93,7 +97,7 @@
                 </div>
                 <div class="col-md-6 p-2">
                     <div class="home_right bg-white">
-                        <t t-if="widget['active_order'] != false ">
+                        <t t-if="widget['order'] != false ">
                         <div class="row poppins_400">
                             <div class="col-12 content_card_right">
                                     <div class="" style="line-height:7px;">
@@ -164,9 +168,9 @@
                                     <t t-else="">
                                             <div class="order_info">
                                         <p class="mt-5" style="font-size:18px;"><t t-esc="widget['order'].c_name"/> </p>
-                                        <p><t t-esc="widget['order'].c_street"/></p>
-                                        <t t-if="widget['order'].c_street2"><p><t t-esc="widget['order'].c_street2"/></p></t>
-                                        <p><t t-esc="widget['order'].c_zip"/></p>
+                                        <p><t t-esc="widget['order'].c_street"/>,
+                                        <t t-if="widget['order'].c_street2"><t t-esc="widget['order'].c_street2"/></t>
+                                        ,<t t-esc="widget['order'].c_zip"/></p>
                                         <p><t t-esc="widget['order'].c_mobile"/></p>
                                         <h3 class="mt-4">Services</h3>
                                         <div class="order_line mt-4">
@@ -440,10 +444,10 @@
     <t t-name="customer_view">
         <table class="table-responsive table poppins_400 customers_view">
                 <tr class="clr_com">
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Mobile</th>
-                    <th>Email</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Email</th>
                 </tr>
                 <t t-foreach="widget['customers']" t-as="customer">
                     <tr t-att-class="'customer_' + customer.id">
@@ -459,10 +463,83 @@
                             <i t-att-data-id="customer.id" class="fa fa-pencil clr_com customer_edit c_pointer"/>
                             <i t-att-data-id="customer.id" class="fa fa-upload clr_com customer_save c_pointer d-none"/>
                         </td>
-
                     </tr>
                 </t>
+            </table>
+    </t>
+    <t t-name="sales_view">
+        <table class="table poppins_400">
+                <tr class="clr_com">
+                    <th scope="col">Name</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Services</th>
+                </tr>
+                <t t-foreach="widget['sale_orders']" t-as="order">
+                    <tr t-att-class="'sale_order_' + order.id">
+                        <td><t t-esc="order.name"/></td>
+                        <td>
+                            <t t-esc="order.partner_id"/>
+                        </td>
+                        <td><t t-esc="order.date_order"/></td>
+                        <td><t t-esc="order.amount_total"/> </td>
+                        <td>
+                            <t t-esc="order.order_line.length"/>
+                        </td>
+                        <td><i t-att-data-id="order.id" class="c_pointer sale_line_view clr_com fa fa-plus"/> </td>
+                    </tr>
+                </t>
+            </table>
+            <div class="order_line_pop_up_space">
 
+            </div>
+
+    </t>
+    <t t-name="order_line_pop_up">
+        <div class="order_line_pop_up">
+        <t t-if="widget['sale_view_lines']">
+                <table class="table poppins_400">
+                    <tr>
+                        <th>Service Name</th>
+                        <th>Price</th>
+                        <th>Tax</th>
+                    </tr>
+                    <t t-foreach="widget['sale_view_lines']" t-as="line">
+                        <tr>
+                            <td><t t-esc="line.product_id[1]"/></td>
+                            <td><t t-esc="line.price_unit"/></td>
+                            <td><t t-esc="line.tax_id"/></td>
+                        </tr>
+                    </t>
+                </table>
+                </t>
+        </div>
+    </t>
+    <t t-name="invoice_view">
+        <table class="table poppins_400">
+                <tr class="clr_com">
+                    <th scope="col">Name</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Total Services</th>
+                    <th scope="col">Origin</th>
+                </tr>
+                <t t-foreach="widget['invoice_details']" t-as="invoice">
+                    <tr t-att-class="'invoice_' + invoice.id">
+                        <td><t t-esc="invoice.name"/></td>
+                        <td>
+                            <t t-esc="invoice.partner_id[1]"/>
+                        </td>
+                        <td><t t-esc="invoice.invoice_date"/></td>
+                        <td><t t-esc="invoice.amount_total"/> </td>
+                        <td>
+                            <t t-esc="invoice.invoice_line_ids.length"/>
+                        </td>
+                        <td><t t-esc="invoice.invoice_origin"/> </td>
+                    </tr>
+                </t>
             </table>
     </t>
 </templates>

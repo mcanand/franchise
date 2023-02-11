@@ -120,10 +120,22 @@ class SaleOrderInherit(models.Model):
             lines.append(line)
         return lines
 
+    def get_total_customers(self):
+        user_id = self.env.user.id
+        customers = self.env['res.partner'].search([('user_id','=',user_id)])
+        return len(customers)
+
+    def get_total_orders(self):
+        user_id = self.env.user.id
+        order = self.env['sale.order'].search([('user_id','=',user_id)])
+        return len(order)
+
     def get_active_order(self):
         user_id = self.env.user.id
         order = self.env['sale.order'].search([('active_order', '=', True), ('user_id', '=', user_id)], limit=1)
         value = {}
+        value['total_customers'] = self.get_total_customers()
+        value['total_service'] = self.get_total_orders()
         if order:
             orders = self.get_order_vals(order)
             value['order'] = orders
@@ -133,9 +145,14 @@ class SaleOrderInherit(models.Model):
                 lines = self.get_order_lines(order)
                 print(lines)
                 value['lines'] = lines
+            else:
+                value['lines'] = False
             return value
         else:
-            return False
+            value['order'] = False
+            value['invoice'] = False
+            value['lines'] = False
+            return value
 
     def confirm_order(self, order_id):
         user_id = self.env.user.id
@@ -178,17 +195,22 @@ class SaleOrderInherit(models.Model):
 
     def get_values(self, val):
         user_id = self.env.user.id
-        if int(val) == 1:
+        print(val)
+        if val == 'partner':
             partners = self.env['res.partner'].search_read([('user_id', '=', user_id)])
             return partners
-        elif int(val) == 2:
+        elif val == 'sales':
             sales = self.env['sale.order'].search_read([('user_id', '=', user_id)])
             return sales
-        elif int(val) == 3:
+        elif val == 'invoice':
             invoices = self.env['account.move'].search_read([('invoice_user_id', '=', user_id)])
             return invoices
         else:
             return False
+
+    def get_sale_order_lines(self,order_id):
+        lines = self.env['sale.order.line'].search_read([('order_id','=',int(order_id))])
+        return lines
 
 
 class AccountMoveInherit(models.Model):

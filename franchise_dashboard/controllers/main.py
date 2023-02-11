@@ -25,7 +25,7 @@ class SaveCustomerOrderCreation(http.Controller):
 
     def create_customer(self, vals):
         contact = request.env['res.partner'].sudo()
-        partner = contact.search([('mobile', '=', vals.get('mobile'))])
+        partner = contact.search([('mobile', '=', vals.get('mobile'))],limit=1)
         if partner:
             return partner.id
         else:
@@ -36,5 +36,6 @@ class SaveCustomerOrderCreation(http.Controller):
                                        'street2': vals.get('location'),
                                        'street': vals.get('street'),
                                        'type': 'invoice',
+                                       'user_id':request.env.user.id
                                        })
             return customer.id if customer else False

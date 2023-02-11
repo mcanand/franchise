@@ -4,7 +4,7 @@
     'summary': """franchise user dashboard""",
     'description': """""",
     'author': 'ANAND MC',
-    'depends': ['base','contacts','sale'],
+    'depends': ['base', 'contacts', 'sale'],
     'data': [
         'views/franchise_dash.xml',
     ],

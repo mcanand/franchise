@@ -7,7 +7,7 @@
     'author': 'ANAND MC',
     'summary': 'signing up with district and panchayat',
     'description': """sign up with panchayat""",
-    'depends': ['base', 'contacts', 'auth_signup', 'website', 'District_Panchayat'],
+    'depends': ['base', 'contacts', 'auth_signup', 'website', 'country_locations'],
     'data': [
         'views/sign_up.xml',
         'views/res_partner.xml',

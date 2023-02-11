@@ -271,3 +271,15 @@ body{
     border:none;
     outline:none;
 }
+.order_line_pop_up{
+    position: fixed;
+    background: #E7F2F8;
+    width: 50%;
+    height: auto;
+    padding:20px;
+    left:25%;
+    top: 35%;
+    border:1px solid #087db4;
+    margin: auto;
+    border-radius: 10px;
+}

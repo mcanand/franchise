@@ -36,6 +36,8 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
             'click .home_menu':'_click_home_menu',
             'click .customer_edit': '_click_edit_customer',
             'click .customer_save': '_click_save_customer',
+            'mouseover .sale_line_view': '_hover_sale_line_view',
+            'mouseout .sale_line_view': '_hoverout_sale_line_view',
         },
         init: function(parent, context) {
             this._super(parent, context);
@@ -82,9 +84,12 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                     args: [[]],
                 }).then(function(result) {
                     if(result != false){
+                         self.total_customers = result.total_customers
+                         self.total_services = result.total_service
                          self.order = result.order
                          self.order_lines = result.lines
                          self.invoice = result.invoice
+                         console.log('anand',self)
                          if(result.lines != false){
                             self.line_length = result.lines.length
                          }
@@ -155,9 +160,12 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
         _click_link_select:function(event){
             var self = this
             var product_id = $(event.target).val()
+            console.log('product_id',product_id)
             if(this.order != false){
                 /*if current_order_detail present*/
-                var vals = {'order_id':this.order.id,'product_id':product_id}
+
+                self.current_product_id = product_id
+                var vals = {'order_id':this.current_order_detail.order_id,'product_id':product_id}
                 this._rpc({
                     model: 'product.template',
                     method: 'get_product_create_line',
@@ -251,6 +259,7 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                 this._render_dash_home()
         },
         _click_continue_session:function(){
+            this.order = true
             $('.dash_link_popup').children().remove()
 
         },
@@ -365,25 +374,59 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
         _click_home_menu:function(event){
             var val = $(event.target).val()
             var self = this
+            console.log('sadasd',val)
             this._rpc({
                 model: 'sale.order',
                 method: 'get_values',
                 args: [[],val],
             }).then(function(result){
+                self.menu_val = val
                 if(result != false){
-                    if(val == '1'){
-                        self.menu_val = val
-                        $('.action_space').html('')
-                        $('.action_space').prepend(qweb.render('show_details_layout', {
-                            widget: self
-                        }))
+                    $('.action_space').html('')
+                    $('.action_space').prepend(qweb.render('show_details_layout', {
+                        widget: self
+                    }))
+                    if(val == 'partner'){
                         self.customers = result
                         $('.show_details_space').prepend(qweb.render('customer_view', {
                             widget: self
                         }))
                     }
+                    else if(val == 'sales'){
+                        self.sale_orders = result
+                        $('.show_details_space').html('')
+                        $('.show_details_space').prepend(qweb.render('sales_view', {
+                            widget: self
+                        }))
+                    }
+                    else if(val == 'invoice'){
+                        self.invoice_details = result
+                        $('.show_details_space').html('')
+                        $('.show_details_space').prepend(qweb.render('invoice_view', {
+                            widget: self
+                        }))
+                    }
                 }
             });
+        },
+        _hover_sale_line_view:function(event){
+            var order_id = $(event.target).attr('data-id')
+            var self = this
+            this._rpc({
+                model: 'sale.order',
+                method: 'get_sale_order_lines',
+                args: [[],order_id],
+            }).then(function(result){
+                self.sale_view_lines = result
+                $('.order_line_pop_up_space').html('')
+                $('.order_line_pop_up_space').prepend(qweb.render('order_line_pop_up', {
+                    widget: self
+                }))
+            });
+        },
+        _hoverout_sale_line_view:function(event){
+            $('.order_line_pop_up_space').html('')
+
         },
         _click_edit_customer:function(event){
             var customer_id = $(event.target).attr('data-id')

@@ -24,7 +24,7 @@ class FranchiseDashboard(models.Model):
 
     def get_products(self, category_id):
         print(category_id)
-        products = self.env['product.template'].search([('sale_ok', '=', True),
+        products = self.env['product.product'].search([('sale_ok', '=', True),
                                                         ('categ_id', '=', category_id)])
         product_vals = []
         for val in products:
@@ -44,7 +44,7 @@ class ProductTemplateInherit(models.Model):
 
     def get_product_create_line(self, vals):
         """get product details and create order line for the current order"""
-        product = self.env['product.template'].search([('id', '=', int(vals.get('product_id')))], limit=1)
+        product = self.env['product.product'].search([('id', '=', int(vals.get('product_id')))], limit=1)
         if product:
             self.env['sale.order.line'].create({'product_id': product.id, 'order_id': int(vals.get('order_id'))})
             vals = {

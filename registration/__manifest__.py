@@ -7,7 +7,7 @@
     'summary': 'panchayath admin',
     'description': """register a franchise in emithram(form)""",
     'category': '',
-    'depends': ['website', 'country_locations', 'web', 'franchise_application'],
+    'depends': ['website', 'country_locations', 'web', 'franchise_application','em_frontend'],
     'data': [
         'views/registration_template.xml',
     ],

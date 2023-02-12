@@ -1,0 +1,21 @@
+@media only screen and (max-width: 600px) {
+    section.s_title.o_colored_level {
+        padding-top: 40px !important;
+        padding-bottom: 40px !important;
+    }
+    .s_text_image h2,a {
+	    text-align: center;
+    }
+    .s_text_image p{
+        text-align: justify;
+    }
+    .d_mob_none{
+        display:none;
+    }
+}
+.four_column{
+    background-color:inherit;
+}
+.four_column img{
+    height:350px;
+}

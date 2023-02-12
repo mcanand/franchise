@@ -14,14 +14,18 @@ from odoo.tools import exception_to_unicode
 _logger = logging.getLogger(__name__)
 
 # Shared parameters for all login/signup flows
-SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error', 'scope', 'mode',
-                          'redirect', 'redirect_hostname', 'email', 'name', 'partner_id',
-                          'password', 'confirm_password', 'city', 'country_id', 'lang', 'phone'}
+SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error',
+                          'scope', 'mode',
+                          'redirect', 'redirect_hostname', 'email', 'name',
+                          'partner_id',
+                          'password', 'confirm_password', 'city', 'country_id',
+                          'lang', 'phone'}
 
 
 class RegistrationController(http.Controller):
-    @http.route('/registration/franchise', type="http", auth="public", website=True)
-    def registration_franchise(self,  **args):
+    @http.route('/registration/franchise', type="http", auth="public",
+                website=True)
+    def registration_franchise(self, **args):
         """
         register franhchise application users
         """
@@ -33,7 +37,7 @@ class RegistrationController(http.Controller):
             })
             return request.render("registration.franchise_registration", value)
         referal_code = self.get_referal_code()
-        print('referal_code', referal_code)
+        get_ref = args.get("referd_by")
         request.env['franchise.application.partner'].sudo().create({
             "name": args.get('name'),
             "dob": args.get('dob'),
@@ -45,6 +49,7 @@ class RegistrationController(http.Controller):
             "location": args.get('location'),
             "known_by": args.get('known_by'),
             "my_referal": referal_code,
+            "referd_by": get_ref
         })
 
     def get_referal_code(self):
@@ -63,13 +68,16 @@ class RegistrationController(http.Controller):
         district.
         """
         if kwargs.get('local_body') == 'panchayath':
-            values = request.env['res.country.state.district.panchayat'].sudo().search(
+            values = request.env[
+                'res.country.state.district.panchayat'].sudo().search(
                 [('district_id', '=', int(kwargs.get('district')))])
         if kwargs.get('local_body') == 'municipality':
-            values = request.env['res.country.state.district.municipality'].sudo().search(
+            values = request.env[
+                'res.country.state.district.municipality'].sudo().search(
                 [('district_id', '=', int(kwargs.get('district')))])
         if kwargs.get('local_body') == 'corporation':
-            values = request.env['res.country.state.district.corparation'].sudo().search(
+            values = request.env[
+                'res.country.state.district.corparation'].sudo().search(
                 [('district_id', '=', int(kwargs.get('district')))])
         datas = []
         for value in values:
@@ -82,7 +90,8 @@ class RegistrationController(http.Controller):
         check user alredy exist or not
         """
         application_user = request.env['franchise.application.partner'].search(
-            ['|', ('email', '=', args.get('email')), ('mobile', '=', args.get('phone'))]
+            ['|', ('email', '=', args.get('email')),
+             ('mobile', '=', args.get('phone'))]
         )
         if not application_user:
             return False
@@ -99,6 +108,3 @@ class RegistrationController(http.Controller):
         if not application_user:
             return False
         return True
-
-
-

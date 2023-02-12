@@ -73,18 +73,29 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
         }
     },
     _onKeyUpSearch:function(event){
+        var msg = $('#msg-cls')
+        var self = this;
         $(".referd-by").css("color", "red");
         var referal_code = $(".referd-by").val()
-        console.log("referal code", referal_code)
-        if(referal_code.length == 8){
-            console.log("enterdddddddd")
-            ajax.jsonRpc('/check/referal', 'call', {'referal': referal_code})
-            .then(function(result){
-                if(result){
-                    console.log("in function this")
-                    $(".referd-by").css("color", "green");
-                }
-            })
+        if(referal_code){
+            if(referal_code.length == 8){
+                console.log("enterdddddddd")
+                ajax.jsonRpc('/check/referal', 'call', {'referal': referal_code})
+                .then(function(result){
+                    if(result){
+                        console.log("in function this")
+                        $(".referd-by").css("color", "green");
+                    }
+                    else{
+                        msg.html("Referd user deos not exist");
+                        self.show_popup();
+                    }
+                })
+            }
+            else{
+                msg.html("referal code must be 8 character");
+                self.show_popup();
+            }
         }
     },
     _onKeydownSearch:function(event){

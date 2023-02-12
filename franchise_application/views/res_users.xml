@@ -10,6 +10,7 @@
                     <field name="panchayat_admin" string="Panchayat Admin"/>
                     <field name="district_id"/>
                     <field name="reference"/>
+                    <field name="referd_by_id"/>
                 </group>
             </field>
         </field>

@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 
 
 class ProductCategory(models.Model):
@@ -66,17 +66,12 @@ class FranchiseApplicationPartners(models.Model):
     my_referal = fields.Char()
     referd_by = fields.Char()
 
-    # @api.depends('dob')
-    # def _check_age(self):
-    #     today = fields.date.today()
-    #     age = today.year - self.dob.year - ((today.month, today.day) < (self.dob.month, self.dob.day))
-    #     print('age', age)
-
     @api.model
     def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'registration.application.partner') or 'New'
+        if vals.get('application_sequence', _('New')) == _('New'):
+            vals['application_sequence'] = self.env[
+                                               'ir.sequence'].next_by_code(
+                'franchise.application.partner') or _('New')
         result = super(FranchiseApplicationPartners, self).create(vals)
         return result
 

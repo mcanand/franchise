@@ -50,14 +50,22 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
         var msg = $('#msg-cls')
         var checkatsymbol = email.includes("@");
         var checkdotsymbol = email.includes(".");
+        if(!this.isEmail(email)){
+            msg.html("Check your email address")
+            self.show_popup()
+        }
+        if(phone.length < 10){
+            msg.html("Check your mobile number")
+            self.show_popup()
+        }
+        else if (checkatsymbol==false || checkdotsymbol==false){
+            msg.html("please enter valid email")
+            this.show_popup()
+        }
         if ($('input[name="name"]').val() == "" || $('input[name="dob"]').val() =="" || phone=="" ||
             $('input[name="location"]').val() == "" || email==""){
                     msg.html("Required Details Not Filled")
                     self.show_popup()
-            }
-        else if (checkatsymbol==false || checkdotsymbol==false){
-            msg.html("please enter valid email")
-            this.show_popup()
         }
         else{
             ajax.jsonRpc('/check/user', 'call', {'email': email, 'phone': phone})
@@ -72,14 +80,16 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
               });
         }
     },
+    isEmail: function(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    },
     _onKeyUpSearch:function(event){
         var msg = $('#msg-cls')
         var self = this;
-        $(".referd-by").css("color", "red");
         var referal_code = $(".referd-by").val()
         if(referal_code){
             if(referal_code.length == 8){
-                console.log("enterdddddddd")
                 ajax.jsonRpc('/check/referal', 'call', {'referal': referal_code})
                 .then(function(result){
                     if(result){
@@ -87,19 +97,20 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
                         $(".referd-by").css("color", "green");
                     }
                     else{
+                        $(".referd-by").css("color", "red");
                         msg.html("Referd user deos not exist");
                         self.show_popup();
                     }
                 })
             }
-            else{
-                msg.html("referal code must be 8 character");
-                self.show_popup();
-            }
+//            else{
+//                msg.html("referal code must be 8 character");
+//                self.show_popup();
+//            }
         }
     },
     _onKeydownSearch:function(event){
-        $(".referd-by").css("color", "red");
+        $(".referd-by").css("color", "black");
     },
     });
 });

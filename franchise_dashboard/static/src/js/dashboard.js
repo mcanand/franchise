@@ -188,6 +188,7 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                $('.dash_link_popup').prepend(qweb.render('link_pop_up', {
                         widget: self
                }));
+               /*next button goes to _click_submit_values*/
             }
         },
         _click_submit_values:function(){

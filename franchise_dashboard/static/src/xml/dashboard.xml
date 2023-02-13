@@ -22,9 +22,9 @@
                         </li>
                     <t t-foreach="widget['categories']" t-as="categories">
                             <li class="d-block p-1 menu_item" t-att-value="categories.id">
-                                <div class="categ_menu active p-2">
-                                    <span class="pr-3"><i t-att-class="categories.icon"/></span>
-                                    <span class="menu_text"><t t-esc="categories.name"/></span>
+                                <div class="categ_menu active p-2" t-att-value="categories.id">
+                                    <span class="pr-3" t-att-value="categories.id"><i t-att-class="categories.icon"/></span>
+                                    <span class="menu_text" t-att-value="categories.id"><t t-esc="categories.name"/></span>
                                 </div>
                             </li>
                         </t>

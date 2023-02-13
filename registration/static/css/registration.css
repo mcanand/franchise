@@ -1,6 +1,6 @@
 .fran-application-form input{
     background-color:rgba(255,255,255,0.9);
-    padding:20px;
+
 }
 .fran-application-form h3{
    text-align:center;
@@ -9,7 +9,7 @@
     width:200px;
 }
 .s_row_frst input{
-    padding:20px;
+    font-size:17px;
 }
 .cf-s-contailner{
     background-color:rgba(255,255,255,0.9);

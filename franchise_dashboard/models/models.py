@@ -23,7 +23,6 @@ class FranchiseDashboard(models.Model):
         return user, categories
 
     def get_products(self, category_id):
-        print(category_id)
         products = self.env['product.product'].search([('sale_ok', '=', True),
                                                         ('categ_id', '=', category_id)])
         product_vals = []
@@ -82,7 +81,6 @@ class SaleOrderInherit(models.Model):
             value['invoice'] = invoice_vals
             if order.order_line:
                 lines = self.get_order_lines(order)
-                print(lines)
                 value['lines'] = lines
             return value
         else:
@@ -143,7 +141,6 @@ class SaleOrderInherit(models.Model):
             value['invoice'] = invoice_vals
             if order.order_line:
                 lines = self.get_order_lines(order)
-                print(lines)
                 value['lines'] = lines
             else:
                 value['lines'] = False
@@ -195,7 +192,6 @@ class SaleOrderInherit(models.Model):
 
     def get_values(self, val):
         user_id = self.env.user.id
-        print(val)
         if val == 'partner':
             partners = self.env['res.partner'].search_read([('user_id', '=', user_id)])
             return partners

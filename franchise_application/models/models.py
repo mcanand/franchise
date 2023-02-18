@@ -91,6 +91,9 @@ class FranchiseApplicationPartners(models.Model):
             self.status = 'progress'
 
     def approve(self):
+        invoice = self.env.ref("account.group_account_manager")
+        sale = self.env.ref("sales_team.group_sale_manager")
+        action = self.env['ir.actions.actions'].browse(336)
         res_users = self.env['res.users'].create({
             'name': self.name,
             'login': self.mobile,
@@ -99,6 +102,8 @@ class FranchiseApplicationPartners(models.Model):
             'district_id': self.district_id.id,
             'panchayat_id': self.panchayat_id.id,
             'reference': self.my_referal,
+            'groups_id': [(4, invoice.id), (4, sale.id)],
+            'action_id': action.id,
         })
         if self.referd_by:
             referense_user = self.env['res.users'].search(

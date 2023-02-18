@@ -51,7 +51,7 @@ class RegistrationController(http.Controller):
             "my_referal": referal_code,
             "referd_by": get_ref
         })
-        return request.redirect('/')
+        # return request.redirect('/')
 
     def get_referal_code(self):
         """create referal code for users"""

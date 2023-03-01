@@ -6,12 +6,23 @@
         <field name="arch" type="xml">
             <form string="Franchise Application" create="false">
                 <header>
-                    <button name="check" string="Check" type="object" class="oe_highlight" attrs="{'invisible': ['|',('status', '=', 'progress'),('status','=','done')]}" />
-                    <button name="approve" string="Approve" type="object" class="oe_highlight" attrs="{'invisible': ['|',('status', '=', 'draft'),('status','=','done')]}"/>
-                    <button name="cancel" string="Cancel" type="object" class="oe_highlight" attrs="{'invisible': ['|',('status', '=', 'draft'),('status','=','progress')]}"/>
+                    <button name="check" string="Check" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('status', '!=', 'draft')]}"/>
+                    <button name="send_payment_link" string="Send Payment Link"
+                            type="object"
+                            t-att-class="oe_highlight if status == progress"
+                            attrs="{'invisible': [('status', '!=', 'progress')]}"/>
+                    <button name="approve" string="Approve" type="object"
+                            t-att-class="oe_highlight'"
+                            attrs="{'invisible': [('status', '!=', 'progress')]}"/>
+                    <button name="cancel" string="Cancel" type="object"
+                            t-att-class="oe_highlight"
+                            attrs="{'invisible': [('status', '!=', 'done')]}"/>
 
-<!--                    add buttom to change state to inprogress visibility-->
-                    <field name="status" widget="statusbar" statusbar_visible="draft,progress,done"/>
+                    <!--                    add buttom to change state to inprogress visibility-->
+                    <field name="status" widget="statusbar"
+                           statusbar_visible="draft,progress,paid,done"/>
                 </header>
                 <sheet>
                     <group>
@@ -21,6 +32,7 @@
                             <field name="district_id"/>
                             <field name="panchayat_id"/>
                             <field name="location"/>
+                            <field name="renewal"/>
                         </group>
                         <group>
                             <field name="mobile"/>
@@ -51,17 +63,22 @@
 
                         <div t-attf-class="oe_kanban_global_click oe_kanban_color_#{kanban_getcolor(record.color.raw_value)}">
                             <div class="row">
-                            <div class="col">
-                                <h1><field name="application_sequence"/> </h1>
+                                <div class="col">
+                                    <h1>
+                                        <field name="application_sequence"/>
+                                    </h1>
+                                </div>
                             </div>
-                        </div>
                             <div class="oe_kanban_details">
                                 <strong class="o_kanban_record_title">
                                     <field name="name"/>
                                 </strong>
                             </div>
-                            <style style="display:none">.o_kanban_view .o_kanban_record::after { content: ""; position:
-                                absolute; top: -2px; left: 90%; bottom: 0; right: auto; width: 20px; height: 32px; }
+                            <style style="display:none">.o_kanban_view
+                                .o_kanban_record::after { content: "";
+                                position:
+                                absolute; top: -2px; left: 90%; bottom: 0;
+                                right: auto; width: 20px; height: 32px; }
                             </style>
 
                             <div class="oe_kanban_details">
@@ -93,7 +110,8 @@
             </tree>
         </field>
     </record>
-    <record id="action_view_franchise_application" model="ir.actions.act_window">
+    <record id="action_view_franchise_application"
+            model="ir.actions.act_window">
         <field name="name">Franchise Applications</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">franchise.application.partner</field>

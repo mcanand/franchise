@@ -1,6 +1,13 @@
 from odoo import fields, models, api, _
 
 
+class ResCompanyInherit(models.Model):
+    _inherit = "res.company"
+
+    month_renew_amount = fields.Float(string="Monthly Renewal Amount(RS)")
+    year_renew_amount = fields.Float(string="Yearly Renewal Amount(RS)")
+
+
 class ProductCategory(models.Model):
     _inherit = 'product.category'
 
@@ -57,7 +64,7 @@ class FranchiseApplicationPartners(models.Model):
     location = fields.Char(string="Location prefered")
     known_by = fields.Char(string="Known through")
     status = fields.Selection(
-        [('draft', "Draft"), ('progress', 'In Progress'),
+        [('draft', "Draft"), ('progress', 'In Progress'), ('paid', 'Paid'),
          ('done', 'Approved')], default='draft')
     color = fields.Integer('Color', compute='_get_color', store=True)
     local_body = fields.Selection(
@@ -65,6 +72,9 @@ class FranchiseApplicationPartners(models.Model):
          ("corporation", "Corporation")])
     my_referal = fields.Char()
     referd_by = fields.Char()
+    payment_link = fields.Char(string="payment link")
+    renewal = fields.Selection([('month', 'Monthly'), ('year', 'Yearly')],
+                               default="month")
 
     @api.model
     def create(self, vals):
@@ -86,9 +96,15 @@ class FranchiseApplicationPartners(models.Model):
                 rec.color = 10
 
     def check(self):
-        print("h")
         if self.status == 'draft':
             self.status = 'progress'
+
+    def send_payment_link(self):
+        vals = {'application_id': self.id,
+                'acquirer': 'razorpay'}
+        pay_link = self.env['payment.details'].create_payment_link(vals)
+        if pay_link:
+            print('done')
 
     def approve(self):
         invoice = self.env.ref("account.group_account_manager")
@@ -96,7 +112,7 @@ class FranchiseApplicationPartners(models.Model):
         action = self.env['ir.actions.actions'].browse(336)
         res_users = self.env['res.users'].create({
             'name': self.name,
-            'login': self.mobile,
+            'login': self.email,
             'sel_groups_1_9_10': '1',
             'panchayat_admin': True,
             'district_id': self.district_id.id,

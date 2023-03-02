@@ -109,7 +109,7 @@ class FranchiseApplicationPartners(models.Model):
     def approve(self):
         invoice = self.env.ref("account.group_account_manager")
         sale = self.env.ref("sales_team.group_sale_manager")
-        action = self.env['ir.actions.actions'].browse(336)
+        action = self.env['ir.actions.actions'].search([('name', '=', 'Franchise Dashboard')])
         res_users = self.env['res.users'].create({
             'name': self.name,
             'login': self.email,

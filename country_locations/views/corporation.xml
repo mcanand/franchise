@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <record id="view_country_state_district_corparation_tree" model="ir.ui.view">
-            <field name="name">res.country.state.district.corparation.tree</field>
-            <field name="model">res.country.state.district.corparation</field>
+        <record id="view_country_state_district_corporation_tree" model="ir.ui.view">
+            <field name="name">res.country.state.district.corporation.tree</field>
+            <field name="model">res.country.state.district.corporation</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
@@ -12,11 +12,11 @@
                 </tree>
             </field>
         </record>
-        <record id="view_country_state_district_corparation_form" model="ir.ui.view">
-            <field name="name">res.country.state.district.corparation.form</field>
-            <field name="model">res.country.state.district.corparation</field>
+        <record id="view_country_state_district_corporation_form" model="ir.ui.view">
+            <field name="name">res.country.state.district.corporation.form</field>
+            <field name="model">res.country.state.district.corporation</field>
             <field name="arch" type="xml">
-                <form string="Corparation">
+                <form string="Corporation">
                     <sheet>
                         <group>
                             <field name="name"/>
@@ -28,19 +28,19 @@
             </field>
         </record>
 
-        <record id="action_country_state_district_corparation" model="ir.actions.act_window">
-            <field name="name">Corparation</field>
-            <field name="res_model">res.country.state.district.corparation</field>
+        <record id="action_country_state_district_corporation" model="ir.actions.act_window">
+            <field name="name">corporation</field>
+            <field name="res_model">res.country.state.district.corporation</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
-                    Create a Corparation
+                    Create a Corporation
                 </p>
             </field>
         </record>
 
-        <menuitem id="res_country_state_district_corparation_menu" name="Corparation"
-                  action="action_country_state_district_corparation" parent="contacts.menu_localisation"
+        <menuitem id="res_country_state_district_corporation_menu" name="Corporation"
+                  action="action_country_state_district_corporation" parent="contacts.menu_localisation"
                   sequence="11"/>
     </data>
 </odoo>

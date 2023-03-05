@@ -5,7 +5,7 @@
     'website': '',
     'category': '',
     'author': 'ANAND MC',
-    'summary': 'website links and categories',
+    'summary': 'Franchise Application',
     'description': """add website links and its categories""",
     'depends': ['base', 'country_locations', 'sale', 'account', 'raz_pay'],
     'data': [

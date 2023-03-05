@@ -10,7 +10,6 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
     var qweb = core.qweb;
     var AbstractAction = require('web.AbstractAction');
     var rpc = require('web.rpc');
-    console.log('hai');
     var utils = require('web.utils');
 
     var FranchiseDashboard = AbstractAction.extend({
@@ -38,6 +37,7 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
             'click .customer_save': '_click_save_customer',
             'mouseover .sale_line_view': '_hover_sale_line_view',
             'mouseout .sale_line_view': '_hoverout_sale_line_view',
+            'keyup #mobile':'_keyup_input_mobile',
         },
         init: function(parent, context) {
             this._super(parent, context);
@@ -57,7 +57,6 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                 self.user = result[0]
                 self.categories = result[1]
                 self.current_order_detail = false
-                console.log(self.categories)
                 $('.f_dash').prepend(qweb.render('dash_board', {
                     widget: self
                 }))
@@ -89,7 +88,6 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                          self.order = result.order
                          self.order_lines = result.lines
                          self.invoice = result.invoice
-                         console.log('anand',self)
                          if(result.lines != false){
                             self.line_length = result.lines.length
                          }
@@ -134,6 +132,24 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                 });
             }
         },
+        _keyup_input_mobile:function(event){
+            var number = $(event.target).val()
+            if(number.length > 4){
+                this._rpc({
+                    route: '/find/customer/address',
+                    params: {number: number}
+                }).then(function(result){
+                    if(result != false){
+                        $("input[name='name']").val(result.name)
+//                        $("input[name='mobile']").val(result.mobile)
+                        $("input[name='street']").val(result.street)
+                        $("input[name='street2']").val(result.street2)
+                        $("input[name='email']").val(result.email)
+                    }
+                })
+            }
+
+        },
         /*_click_side_nav_open:function(){
             if($('#mySidenav').hasClass('opened')){
                 $('.user_detail').animate({opacity:'0'})
@@ -160,14 +176,12 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
         _click_link_select:function(event){
             var self = this
             var product_id = $(event.target).val()
-            console.log('product_id',product_id)
             if(this.order != false){
                 /*if current_order_detail present*/
-
                 self.current_product_id = product_id
-                var vals = {'order_id':this.current_order_detail.order_id,'product_id':product_id}
+                var vals = {'order_id':this.order.id,'product_id':product_id}
                 this._rpc({
-                    model: 'product.template',
+                    model: 'product.product',
                     method: 'get_product_create_line',
                     args: [[],vals],
                 }).then(function(result) {
@@ -177,7 +191,6 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                         }));
                         $('.content_load').children().remove()
 //                        $('.content_load').append('<iframe src="'+result.url+'"></iframe>')
-                        console.log('sad',result.url)
                         window.open(result.url, '_blank');
                         $('.link_pop_up_check').removeClass('d-none')
                         $('.continue_session').removeClass('d-none')
@@ -187,7 +200,6 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
             }
             else{
                self.current_product_id = product_id
-               console.log('link select else', self)
                $('.dash_link_popup').prepend(qweb.render('link_pop_up', {
                         widget: self
                }));
@@ -197,25 +209,29 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
         _click_submit_values:function(){
             var name = $("input[name='name']").val()
             var mobile = $("input[name='mobile']").val()
-            var address = $("input[name='address']").val()
-            var age = $("input[name='age']").val()
-            var zip = $("input[name='zip']").val()
-            var location = $("input[name='location']").val()
             var street = $("input[name='street']").val()
+            var street2 = $("input[name='street2']").val()
+            var email = $("input[name='email']").val()
             var self = this
             var vals = {name:name,
                         mobile:mobile,
-                        address:address,
-                        age:age,
-                        zip:zip,
-                        location:location,
-                        street:street}
-            if(!name || !mobile || !street || !zip){
-                $('.errors').html('Please Fill up the fields')
+                        street:street,
+                        street2:street2,
+                        email:email}
+            if(!name ){
+                $('.errors').html('Please Fill up customer name')
+                $("input[name='name']").addClass('border_red')
+            }
+            else if(!mobile){
+                $('.errors').html('Please Fill up customer address')
+                $("input[name='mobile']").addClass('border_red')
+            }
+            else if(!street){
+                ('.errors').html('Please Fill up customer Mobile Number')
+                $("input[name='street']").addClass('border_red')
             }
             else{
                 vals['product_id'] = self.current_product_id
-                console.log('sadsad',vals)
                 this._rpc({
                     route: '/save/customer/create/order',
                     params: {vals: vals}
@@ -225,6 +241,7 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                         $('.customer_id').val(result.customer_id)
                         $('.content_load').children().remove()
 //                        $('.content_load').append('<iframe src="'+result.product_url+'"></iframe>')
+
                         window.open(result.product_url, '_blank');
                         $('.link_pop_up_check').removeClass('d-none')
                         $('.continue_session').removeClass('d-none')

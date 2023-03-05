@@ -24,7 +24,7 @@
                         </h1>
                     </div>
                 </section>
-                <div class="container-fluid cf-s-contailner">
+                <div class="container-fluid cf-s-contailner pt-3 pb-3">
                     <section class="s_website_form" data-vcss="001"
                              data-snippet="s_website_form">
                         <div class="container fran-application-form pt-3 pb-3">
@@ -39,6 +39,8 @@
                                 <div class="row s_row_frst">
                                     <div class="col-md-6">
                                         <div class="mb-3 field-name">
+                                            <label for="name">Your Full Name
+                                            </label>
                                             <input type="text" name="name"
                                                    class="form-control form-control-sm"
                                                    placeholder="Name"
@@ -49,6 +51,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 field-dob">
+                                            <label for="dob">Your Date of
+                                                Birth
+                                            </label>
                                             <input type="date" name="dob"
                                                    id="dob"
                                                    class="form-control form-control-sm"
@@ -60,6 +65,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 field-email">
+                                            <label for="email">Your email
+                                                address
+                                            </label>
                                             <input type="email" name="email"
                                                    id="email"
                                                    class="form-control form-control-sm"
@@ -72,6 +80,9 @@
 
                                     <div class="col-md-6">
                                         <div class="mb-3 field-phone">
+                                            <label for="name">Your mobile
+                                                number
+                                            </label>
                                             <input type="text" name="phone"
                                                    id="phone"
                                                    class="form-control form-control-sm"
@@ -85,6 +96,9 @@
 
                                     <div class="col-md-6">
                                         <div class="mb-3 local_Body">
+                                            <label for="local_body">Local
+                                                body
+                                            </label>
                                             <select class="form-control"
                                                     name="local_body">
                                                 <option t-att-value="panchayath">
@@ -101,6 +115,7 @@
                                     </div>
 
                                     <div class="col-md-6">
+                                        <label for="district">District</label>
                                         <select name="district"
                                                 t-attf-class="form-control"
                                                 required="1">
@@ -114,6 +129,8 @@
                                     </div>
 
                                     <div class="col-md-6">
+                                        <label for="panchayat">Panchayath
+                                        </label>
                                         <div class="mb-3 field-panchayath">
                                             <select class='form-select form-control-md form-control'
                                                     aria-label='select'
@@ -122,6 +139,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 field-location">
+                                            <label for="location">Preferred
+                                                Location
+                                            </label>
                                             <input type="text" name="location"
                                                    id="location"
                                                    class="form-control form-control-sm"
@@ -133,11 +153,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 field-about">
+                                            <label for="known_by">Known by
+                                                medium
+                                            </label>
                                             <input type="text" name="known_by"
                                                    id="known_by"
                                                    class="form-control form-control-sm"
                                                    autofocus="autofocus"
-                                                   placeholder="How did you hear about us:"
+                                                   placeholder="eg: facebook, friend"
                                                    autocapitalize="off"
                                                    required="required"/>
                                         </div>
@@ -145,6 +168,9 @@
 
                                     <div class="col-md-6">
                                         <div class="mb-3 field-referal">
+                                            <label for="referd_by">Referal
+                                                code
+                                            </label>
                                             <input type="text" name="referd_by"
                                                    id="referd_by"
                                                    class="form-control form-control-sm referd-by"
@@ -154,6 +180,21 @@
                                                    maxlength="8"/>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <label for="Renewal">Renewal
+                                        </label>
+                                        <div class="mb-3 field-Renewal">
+                                            <select class='form-select form-control-md form-control'
+                                                    aria-label='select'
+                                                    name='renewal'>
+                                                <option value="month">Monthly
+                                                </option>
+                                                <option value="year">Yearly
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
 
                                     <div id="myModal" class="popup-modal">
                                         <!-- Modal content -->
@@ -169,10 +210,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-12 text-center"
+                                    <div class="form-group col-12 text-center mt-3"
                                          data-name="Submit Button">
                                         <div class="s_website_form_label"/>
                                         <button type="button"
+                                                style="width:50%;"
                                                 class="btn btn-primary btn-form-submit">
                                             Submit
                                         </button>

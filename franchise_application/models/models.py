@@ -20,6 +20,12 @@ class ProductTemplateInherit(models.Model):
     link_url = fields.Text(string='Link url')
 
 
+class ProductProductInherit(models.Model):
+    _inherit = 'product.product'
+
+    link_url = fields.Text(string='Link url')
+
+
 class ResPartnerInherit(models.Model):
     _inherit = 'res.partner'
 

@@ -19,7 +19,7 @@ SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error',
                           'redirect', 'redirect_hostname', 'email', 'name',
                           'partner_id',
                           'password', 'confirm_password', 'city', 'country_id',
-                          'lang', 'phone'}
+                          'lang', 'phone','renewal'}
 
 
 class RegistrationController(http.Controller):
@@ -49,6 +49,7 @@ class RegistrationController(http.Controller):
             'franchise.application.partner'].sudo().create({
             "name": args.get('name'),
             "dob": args.get('dob'),
+            "renewal":args.get('renewal'),
             "email": args.get('email'),
             "mobile": args.get('phone'),
             "local_body": args.get('local_body'),

@@ -39,7 +39,7 @@ class FranchiseDashboard(models.Model):
 
 
 class ProductTemplateInherit(models.Model):
-    _inherit = 'product.template'
+    _inherit = 'product.product'
 
     def get_product_create_line(self, vals):
         """get product details and create order line for the current order"""

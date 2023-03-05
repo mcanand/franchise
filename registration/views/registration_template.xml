@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="registration_menu" model="website.menu">
+        <field name="name">Apply Now</field> <!-- Name of the menu-->
+        <field name="url">/registration/franchise</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">80</field>
+    </record>
     <template id="franchise_registration" name="Registrasion">
         <t t-call="website.layout">
             <div id="wrap" class="oe_structure oe_empty">
-                <section class="s_title pb152 o_colored_level o_cc o_cc4 pt104" data-vcss="001"
+                <section class="s_title pb152 o_colored_level o_cc o_cc4 pt104"
+                         data-vcss="001"
                          data-oe-shape-data="{&quot;shape&quot;:&quot;web_editor/Airy/13_001&quot;,&quot;colors&quot;:{&quot;c1&quot;:&quot;#FFFFFF&quot;,&quot;c4&quot;:&quot;#FFFFFF&quot;},&quot;flip&quot;:[]}"
-                         data-snippet="s_title" data-name="Title" style="position: relative;" data-original-title=""
+                         data-snippet="s_title" data-name="Title"
+                         style="position: relative;" data-original-title=""
                          title=""
                          aria-describedby="tooltip914380">
                     <div class="o_we_shape o_web_editor_Airy_13_001"
@@ -17,16 +25,22 @@
                     </div>
                 </section>
                 <div class="container-fluid cf-s-contailner">
-                    <section class="s_website_form" data-vcss="001" data-snippet="s_website_form">
+                    <section class="s_website_form" data-vcss="001"
+                             data-snippet="s_website_form">
                         <div class="container fran-application-form pt-3 pb-3">
-                            <form action="/registration/franchise" method="post" enctype="multipart/form-data"
-                                  class="o_mark_required s_website_form_input" id="form_input_id" data-mark="*" data-model_name=""
+                            <form action="/registration/franchise"
+                                  method="post" enctype="multipart/form-data"
+                                  class="o_mark_required s_website_form_input"
+                                  id="form_input_id" data-mark="*"
+                                  data-model_name=""
                                   data-success-page="">
-                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="csrf_token"
+                                       t-att-value="request.csrf_token()"/>
                                 <div class="row s_row_frst">
                                     <div class="col-md-6">
                                         <div class="mb-3 field-name">
-                                            <input type="text" name="name" class="form-control form-control-sm"
+                                            <input type="text" name="name"
+                                                   class="form-control form-control-sm"
                                                    placeholder="Name"
                                                    required="required"
                                                    t-att-readonly="'readonly' if only_passwords else None"
@@ -35,45 +49,63 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 field-dob">
-                                            <input type="date" name="dob" id="dob"
+                                            <input type="date" name="dob"
+                                                   id="dob"
                                                    class="form-control form-control-sm"
-                                                   autofocus="autofocus" placeholder="Date of Birth"
-                                                   autocapitalize="off" required="required"/>
+                                                   autofocus="autofocus"
+                                                   placeholder="Date of Birth"
+                                                   autocapitalize="off"
+                                                   required="required"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 field-email">
-                                            <input type="email" name="email" id="email"
+                                            <input type="email" name="email"
+                                                   id="email"
                                                    class="form-control form-control-sm"
-                                                   autofocus="autofocus" placeholder="Email"
-                                                   autocapitalize="off" required="required"/>
+                                                   autofocus="autofocus"
+                                                   placeholder="Email"
+                                                   autocapitalize="off"
+                                                   required="required"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="mb-3 field-phone">
-                                            <input type="text" name="phone" id="phone"
+                                            <input type="text" name="phone"
+                                                   id="phone"
                                                    class="form-control form-control-sm"
-                                                   autofocus="autofocus" placeholder="Phone Number"
-                                                   autocapitalize="off" required="required"
+                                                   autofocus="autofocus"
+                                                   placeholder="Phone Number"
+                                                   autocapitalize="off"
+                                                   required="required"
                                                    maxlength="10"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="mb-3 local_Body">
-                                            <select class="form-control" name="local_body">
-                                                <option t-att-value="panchayath">panchayath</option>
-                                                <option t-att-value="municipality">municipality</option>
-                                                <option t-att-value="corporation">corporation</option>
+                                            <select class="form-control"
+                                                    name="local_body">
+                                                <option t-att-value="panchayath">
+                                                    panchayath
+                                                </option>
+                                                <option t-att-value="municipality">
+                                                    municipality
+                                                </option>
+                                                <option t-att-value="corporation">
+                                                    corporation
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <select name="district" t-attf-class="form-control"
+                                        <select name="district"
+                                                t-attf-class="form-control"
                                                 required="1">
-                                            <t t-foreach="districts or []" t-as="district">
+                                            <t t-foreach="districts or []"
+                                               t-as="district">
                                                 <option t-att-value="district.id">
                                                     <t t-esc="district.name"/>
                                                 </option>
@@ -83,49 +115,71 @@
 
                                     <div class="col-md-6">
                                         <div class="mb-3 field-panchayath">
-                                            <select class='form-select form-control-md form-control' aria-label='select' name='panchayat'/>
+                                            <select class='form-select form-control-md form-control'
+                                                    aria-label='select'
+                                                    name='panchayat'/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 field-location">
-                                            <input type="text" name="location" id="location"
+                                            <input type="text" name="location"
+                                                   id="location"
                                                    class="form-control form-control-sm"
-                                                   autofocus="autofocus" placeholder="Preferred Location:"
-                                                   autocapitalize="off" required="required"/>
+                                                   autofocus="autofocus"
+                                                   placeholder="Preferred Location:"
+                                                   autocapitalize="off"
+                                                   required="required"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 field-about">
-                                            <input type="text" name="known_by" id="known_by"
+                                            <input type="text" name="known_by"
+                                                   id="known_by"
                                                    class="form-control form-control-sm"
-                                                   autofocus="autofocus" placeholder="How did you hear about us:"
-                                                   autocapitalize="off" required="required"/>
+                                                   autofocus="autofocus"
+                                                   placeholder="How did you hear about us:"
+                                                   autocapitalize="off"
+                                                   required="required"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="mb-3 field-referal">
-                                            <input type="text" name="referd_by" id="referd_by"
+                                            <input type="text" name="referd_by"
+                                                   id="referd_by"
                                                    class="form-control form-control-sm referd-by"
-                                                   autofocus="autofocus" placeholder="Referal Code:"
-                                                   autocapitalize="off" maxlength="8"/>
+                                                   autofocus="autofocus"
+                                                   placeholder="Referal Code:"
+                                                   autocapitalize="off"
+                                                   maxlength="8"/>
                                         </div>
                                     </div>
 
                                     <div id="myModal" class="popup-modal">
                                         <!-- Modal content -->
                                         <div class="modal-content">
-                                            <span class="close"><i class="fa fa-times"></i></span>
-                                            <p><h6 id="msg-cls">Email/Phone is Alredy Exist</h6></p>
+                                            <span class="close">
+                                                <i class="fa fa-times"></i>
+                                            </span>
+                                            <p>
+                                                <h6 id="msg-cls">Email/Phone is
+                                                    Alredy Exist
+                                                </h6>
+                                            </p>
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-12 text-center" data-name="Submit Button">
+                                    <div class="form-group col-12 text-center"
+                                         data-name="Submit Button">
                                         <div class="s_website_form_label"/>
-                                        <button type="button" class="btn btn-primary btn-form-submit">Submit</button>
+                                        <button type="button"
+                                                class="btn btn-primary btn-form-submit">
+                                            Submit
+                                        </button>
                                     </div>
 
-                                    <p class="alert alert-danger" t-if="error" role="alert">
+                                    <p class="alert alert-danger" t-if="error"
+                                       role="alert">
                                         <t t-esc="error"/>
                                     </p>
 

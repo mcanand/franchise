@@ -7,7 +7,7 @@
     'author': 'ANAND MC',
     'summary': 'website links and categories',
     'description': """add website links and its categories""",
-    'depends': ['base', 'country_locations', 'sale', 'account'],
+    'depends': ['base', 'country_locations', 'sale', 'account', 'raz_pay'],
     'data': [
         'security/ir.model.access.csv',
         'views/franchise_applications.xml',

@@ -8,7 +8,6 @@
                 <field name="acquirer_id"/>
                 <field name="mobile"/>
                 <field name="email"/>
-                <field name="franchise_application_id"/>
                 <field name="payment_link"/>
             </form>
         </field>
@@ -17,25 +16,24 @@
         <field name="name">payment details</field>
         <field name="model">payment.details</field>
         <field name="arch" type="xml">
-            <tree string="Details" create="True">
+            <tree string="Details" create="False">
                 <field name="acquirer_id"/>
                 <field name="mobile"/>
                 <field name="email"/>
-                <field name="franchise_application_id"/>
                 <field name="payment_link"/>
             </tree>
         </field>
     </record>
-    <record id="action_payment_details" model="ir.actions.act_window">
-        <field name="name">Payment details</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">payment.details</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-    <menuitem name="Applications"
-              sequence="0"
-              parent="payment.payment_transaction_menu"
-              id="menu_payment_details"
-              action="action_payment_details"
-    />
+<!--    <record id="action_payment_details" model="ir.actions.act_window">-->
+<!--        <field name="name">Payment details</field>-->
+<!--        <field name="type">ir.actions.act_window</field>-->
+<!--        <field name="res_model">payment.details</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--    </record>-->
+<!--    <menuitem name="Applications"-->
+<!--              sequence="0"-->
+<!--              parent="payment.payment_transaction_menu"-->
+<!--              id="menu_payment_details"-->
+<!--              action="action_payment_details"-->
+<!--    />-->
 </odoo>

@@ -4,7 +4,7 @@
     'category': 'Accounting/Payment Providers',
     'sequence': 1,
     'summary': "Razor Pay payment aquirer",
-    'depends': ['payment', 'franchise_application'],
+    'depends': ['payment'],
     'data': [
         'security/ir.model.access.csv',
         'data/payment_acquirer.xml',

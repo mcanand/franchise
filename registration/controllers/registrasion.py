@@ -23,12 +23,19 @@ SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error',
 
 
 class RegistrationController(http.Controller):
+    @http.route('/franchise/applied', type="http", auth="public", website=True)
+    def registration_redirect(self, **kwargs):
+        template = 'registration.register_redirect_template'
+        if kwargs:
+            franchise = request.env['franchise.application.partner']
+            details = franchise.search([('id', '=', kwargs.get('id'))])
+            return request.render(template, {'details': details})
+        return request.render(template)
+
     @http.route('/registration/franchise', type="http", auth="public",
                 website=True)
     def registration_franchise(self, **args):
-        """
-        register franhchise application users
-        """
+        """register franhchise application users"""
         if not args:
             district = request.env['res.country.state.district'].search([])
             value = {}
@@ -38,7 +45,8 @@ class RegistrationController(http.Controller):
             return request.render("registration.franchise_registration", value)
         referal_code = self.get_referal_code()
         get_ref = args.get("referd_by")
-        request.env['franchise.application.partner'].sudo().create({
+        application_id = request.env[
+            'franchise.application.partner'].sudo().create({
             "name": args.get('name'),
             "dob": args.get('dob'),
             "email": args.get('email'),
@@ -51,7 +59,8 @@ class RegistrationController(http.Controller):
             "my_referal": referal_code,
             "referd_by": get_ref
         })
-        return request.redirect('/')
+        val = application_id.id
+        return request.redirect('/franchise/applied?id=%s' % val)
 
     def get_referal_code(self):
         """create referal code for users"""

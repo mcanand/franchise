@@ -36,7 +36,7 @@ class HideMenuUser(models.Model):
 
     hide_menu_ids = fields.Many2many('ir.ui.menu', string="Menu", store=True,
                                      help='Select menu items that needs to be '
-                                          'hidden to this user ')
+                                          'hidden to this user')
     is_admin = fields.Boolean(compute=_get_is_admin)
 
 

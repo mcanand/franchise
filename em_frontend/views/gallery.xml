@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <record id="gallery_menu" model="website.menu">
+        <field name="name">Gallery</field> <!-- Name of the menu-->
+        <field name="url">/gallery</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">81</field>
+    </record>
     <template id="em_gallery" name="gallery">
         <t t-call="website.layout">
         <section class="s_title pb152 o_colored_level o_cc o_cc4 pt104" data-vcss="001"

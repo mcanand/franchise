@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="register_redirect_template">
+        <t t-call="website.layout">
+            <div class="container">
+                <t t-if="details">
+                    <div class="row text-center">
+                        <div class="col-12">
+                            <h1 class="mt-5">
+                                Hi,
+                                <t t-esc="details.name"/>
+                            </h1>
+                        </div>
+                        <div class="col-12">
+                            <h6>
+                                <t t-esc="details.email"/>
+                                <br/>
+                                <t t-esc="details.mobile"/>
+                            </h6>
+                        </div>
+                    </div>
+                </t>
+                <div class="pl-5 pb-5 pt-2 pr-5 row">
+                    <div class="col-12 text-center p-5">
+                        <h1>
+                            <i class="text-success fa fa-check"/>
+                        </h1>
+                        <h1>Your Application has been successfully submitted
+                        </h1>
+                        <h5>"We will verify your details and contact you back
+                            in 4 working days"
+                        </h5>
+                        <a class="mt-5 btn btn-primary" href="/">Back To Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

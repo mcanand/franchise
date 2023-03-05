@@ -33,12 +33,19 @@ class ResPartnerInherit(models.Model):
 class ResUserInherit(models.Model):
     _inherit = 'res.users'
 
+    local_body = fields.Selection(
+        [("panchayath", "Panchayath"), (" municipality", "Municipality"),
+         ("corporation", "Corporation")])
     panchayat_admin = fields.Boolean(string='Panchayat Admin')
     panchayat_id = fields.Many2one('res.country.state.district.panchayat',
                                    string='Panchayt')
+    municipality_id = fields.Many2one(
+        'res.country.state.district.municipality', string="Municipality")
+    corporation_id = fields.Many2one('res.country.state.district.corporation',
+                                     string="Corporation")
     district_id = fields.Many2one('res.country.state.district',
                                   string='District')
-    reference = fields.Char(string="Reference Code")
+    reference = fields.Char(string="Reference Code", readonly=True)
     referd_by_id = fields.Many2one('res.users',
                                    string="Referenced By")
 
@@ -75,6 +82,9 @@ class FranchiseApplicationPartners(models.Model):
     payment_link = fields.Char(string="payment link")
     renewal = fields.Selection([('month', 'Monthly'), ('year', 'Yearly')],
                                default="month")
+    payment_details_ids = fields.One2many('payment.details',
+                                          'franchise_application_id',
+                                          string="Payment Details")
 
     @api.model
     def create(self, vals):
@@ -106,21 +116,39 @@ class FranchiseApplicationPartners(models.Model):
         if pay_link:
             print('done')
 
+    def hide_menus(self, res_users):
+        menus = []
+        menus.append(self.env.ref('base.menu_management').id)
+        menus.append(self.env.ref('franchise_application.menu_franchisee').id)
+        menus.append(self.env.ref('contacts.menu_contacts').id)
+        menus.append(self.env.ref('sale.sale_menu_root').id)
+        menus.append(self.env.ref('account.menu_finance').id)
+        menus.append(self.env.ref('website.menu_website_configuration').id)
+        menus.append(self.env.ref('utm.menu_link_tracker_root').id)
+        menus.append(self.env.ref('base.menu_administration').id)
+        for rec in menus:
+            res_users.write({'hide_menu_ids': [(4, rec)]})
+
     def approve(self):
         invoice = self.env.ref("account.group_account_manager")
         sale = self.env.ref("sales_team.group_sale_manager")
-        action = self.env['ir.actions.actions'].search([('name', '=', 'Franchise Dashboard')])
+        action = self.env['ir.actions.actions'].search(
+            [('name', '=', 'Franchise Dashboard')])
         res_users = self.env['res.users'].create({
             'name': self.name,
             'login': self.email,
+            'email': self.email,
             'sel_groups_1_9_10': '1',
             'panchayat_admin': True,
+            'local_body': self.local_body,
             'district_id': self.district_id.id,
             'panchayat_id': self.panchayat_id.id,
             'reference': self.my_referal,
             'groups_id': [(4, invoice.id), (4, sale.id)],
             'action_id': action.id,
         })
+        if res_users:
+            self.hide_menus(res_users)
         if self.referd_by:
             referense_user = self.env['res.users'].search(
                 [('reference', '=', self.referd_by)]
@@ -135,3 +163,10 @@ class FranchiseApplicationPartners(models.Model):
     def cancel(self):
         if self.status == 'done':
             self.status = 'draft'
+
+
+class PaymentDetailsInherit(models.Model):
+    _inherit = 'payment.details'
+
+    franchise_application_id = fields.Many2one('franchise.application.partner',
+                                               string="franchise application")

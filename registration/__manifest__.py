@@ -10,6 +10,7 @@
     'depends': ['website', 'country_locations', 'web', 'franchise_application','em_frontend'],
     'data': [
         'views/registration_template.xml',
+        'views/register_redirect.xml',
     ],
     'assets': {
         'web.assets_frontend': [

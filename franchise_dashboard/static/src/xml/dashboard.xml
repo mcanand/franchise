@@ -10,28 +10,27 @@
           @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&amp;display=swap')
         </style>
         <div class="row">
-            <div class="col p-3 sidenav" id="mySidenav">
-                <span class="harmburger"><i class="fa fa-bars"/></span>
+            <div class="col p-3 sidenav shadow-lg" id="mySidenav">
+                <!--<span class="harmburger"><i class="fa fa-bars"/></span>-->
                 <!--                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>-->
                 <!--                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>-->
                 <ul class="">
                         <li class="p-1 d-block home_run menu_item">
                             <div class="categ_menu active p-2">
-                            <span class="pr-3"><i class="fa fa-home"/></span>
                                 <span class="menu_text">Home</span></div>
                         </li>
                     <t t-foreach="widget['categories']" t-as="categories">
-                            <li class="d-block p-1 menu_item" t-att-value="categories.id">
-                                <div class="categ_menu active p-2" t-att-value="categories.id">
-                                    <span class="pr-3" t-att-value="categories.id"><i t-att-class="categories.icon"/></span>
-                                    <span class="menu_text" t-att-value="categories.id"><t t-esc="categories.name"/></span>
+                            <li class="d-block p-1 menu_item"
+                                t-att-value="categories.id">
+                                <div class="categ_menu active p-2"
+                                     t-att-value="categories.id">
+                                    <span class="menu_text"
+                                          t-att-value="categories.id"><t t-esc="categories.name"/></span>
                                 </div>
                             </li>
                         </t>
                     <li class="p-1 d-block menu_item">
-                            <div class="categ_menu active p-2">
-                            <span class="pr-3"><i class="fa fa-gear"/></span>
-                                <span class="menu_text">Settings</span></div>
+                            <div class="categ_menu active p-2"><span class="menu_text">Settings</span></div>
                         </li>
                     </ul>
             </div>
@@ -45,7 +44,7 @@
             <div class="row p-3">
                 <div class="col-md-6 home_left p-2">
                         <h1 class="poppins_400">Hey <b class="clr_com"><t t-esc="widget['user'].name"/></b></h1>
-                        <div class="row mt-5">
+                    <div class="row mt-5">
                             <div class="col-md-6 p-3">
                                 <table class="w-100 poppins_500 text-center">
                                     <tr>
@@ -63,7 +62,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="col-md-6 p-3 ">
+                        <div class="col-md-6 p-3 ">
                                 <table class="w-100 poppins_500 text-center">
                                     <tr>
                                         <td>
@@ -80,23 +79,26 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="col-md-4 align-self-center mt-3">
-                                <button class="w-100 f_15 clr_com home_menu" value="partner">Customer</button>
+                        <div class="col-md-4 align-self-center mt-3">
+                                <button class="w-100 f_15 clr_com home_menu"
+                                        value="partner">Customer</button>
                             </div>
-                            <div class="col-md-4 align-self-center mt-3">
-                                <button class="w-100 f_15 clr_com home_menu" value="sales">Sales</button>
+                        <div class="col-md-4 align-self-center mt-3">
+                                <button class="w-100 f_15 clr_com home_menu"
+                                        value="sales">Sales</button>
                             </div>
-                            <div class="col-md-4 align-self-center mt-3">
-                                <button class="w-100 f_15 clr_com home_menu" value="invoice">Invoices</button>
+                        <div class="col-md-4 align-self-center mt-3">
+                                <button class="w-100 f_15 clr_com home_menu"
+                                        value="invoice">Invoices</button>
                             </div>
-                            <div class="col-md-12">
-                                <div class="content_card mt-4" style="background-image:url('/franchise_dashboard/static/src/image/20667.jpg')">
+                        <div class="col-md-12">
+                                <div class="content_card mt-4">
                                 </div>
                             </div>
                         </div>
                 </div>
                 <div class="col-md-6 p-2">
-                    <div class="home_right bg-white">
+                    <div class="home_right">
                         <t t-if="widget['order'] != false ">
                         <div class="row poppins_400">
                             <div class="col-12 content_card_right">
@@ -136,8 +138,9 @@
                                                         </button>
                                                     </t>
                                                     <t t-if="widget['invoice'].pay_state == 'paid'">
-                                                        <a t-att-href="widget['invoice'].download_url" class="ml-2 order_invoice_download btn btn-success"
-                                                                t-att-data-id="widget['invoice'].id">
+                                                        <a t-att-href="widget['invoice'].download_url"
+                                                           class="ml-2 order_invoice_download btn btn-success"
+                                                           t-att-data-id="widget['invoice'].id">
                                                             download
                                                         </a>
                                                     </t>
@@ -147,37 +150,46 @@
                                                 <t t-if="widget['invoice'].pay_state != 'paid'">
                                                 <button t-att-data-id="widget['order'].id"
                                                         class="mt-1 btn bg-danger float-right delete_order">
-                                                    <i t-att-data-id="widget['order'].id" class="fa fa-trash"/>
+                                                    <i t-att-data-id="widget['order'].id"
+                                                       class="fa fa-trash"/>
                                                 </button>
                                                 </t>
                                                 <t t-else="">
                                                     <button t-att-data-id="widget['order'].id"
                                                             class="mt-1 order_complete btn btn-success float-right align-self-center">
-                                                        <i t-att-data-id="widget['order'].id" class="fa fa-check"/>
+                                                        <i t-att-data-id="widget['order'].id"
+                                                           class="fa fa-check"/>
                                                     </button>
                                                 </t>
                                             </div>
                                         </div>
                                     </div>
-                                    <t t-if="widget['invoice'].pay_state == 'paid'">
-                                        <iframe id="invoice_html" class="mt8 mb8" width="100%" height="87%"
+                                <t t-if="widget['invoice'].pay_state == 'paid'">
+                                        <iframe id="invoice_html"
+                                                class="mt8 mb8" width="100%"
+                                                height="87%"
                                                 frameborder="0"
                                                 t-att-src="widget['invoice'].html"/>
 
                                     </t>
-                                    <t t-else="">
+                                <t t-else="">
                                             <div class="order_info">
-                                        <p class="mt-4" style="font-size:18px;"><t t-esc="widget['order'].c_name"/> </p>
-                                        <p><t t-esc="widget['order'].c_street"/>,
-                                        <t t-if="widget['order'].c_street2"><t t-esc="widget['order'].c_street2"/></t>
-                                        ,<t t-esc="widget['order'].c_zip"/></p>
-                                        <p><t t-esc="widget['order'].c_mobile"/></p>
-                                        <h3 class="mt-3">Services</h3>
-                                        <div class="order_line mt-4">
-                                            <t t-foreach="widget['line_length']" t-as="l">
+                                        <p class="mt-4"
+                                           style="font-size:18px;"><t t-esc="widget['order'].c_name"/> </p>
+                                                <p><t t-esc="widget['order'].c_street"/>
+                                                    ,
+                                                    <t t-if="widget['order'].c_street2"><t t-esc="widget['order'].c_street2"/></t>
+                                                    ,
+                                                    <t t-esc="widget['order'].c_zip"/></p>
+                                                <p><t t-esc="widget['order'].c_mobile"/></p>
+                                                <h3 class="mt-3">Services</h3>
+                                                <div class="order_line mt-4">
+                                            <t t-foreach="widget['line_length']"
+                                               t-as="l">
                                                 <div class="row line mt-2">
                                                     <div class="col-6"><t t-esc="widget['order_lines'][l].product_name"/></div>
-                                                    <div class="col-2 text-right"><span class="ml-2">₹</span> <t t-esc="widget['order_lines'][l].price"/></div>
+                                                    <div class="col-2 text-right"><span class="ml-2">₹</span>
+                                                        <t t-esc="widget['order_lines'][l].price"/></div>
                                                     <div class="col-2 p-0 text-right"><t t-esc="widget['order_lines'][l].tax"/></div>
                                                     <div class="col-2 text-right">
                                                         <button id="delete_order_line"
@@ -190,13 +202,13 @@
                                                 </div>
                                             </t>
                                         </div>
-                                        <div class="row total_amount">
+                                                <div class="row total_amount">
                                             <div class="col-md-6">Amount untaxed</div>
-                                            <div class="col-md-6 text-right"><t t-esc="widget['order'].amount_untaxed"/></div>
-                                            <div class="col-md-6">Amount Tax</div>
-                                            <div class="col-md-6 text-right"><t t-esc="widget['order'].amount_tax"/></div>
-                                            <div class="col-md-6">Amount Total</div>
-                                            <div class="col-md-6 text-right"><t t-esc="widget['order'].amount_total"/></div>
+                                                    <div class="col-md-6 text-right"><t t-esc="widget['order'].amount_untaxed"/></div>
+                                                    <div class="col-md-6">Amount Tax</div>
+                                                    <div class="col-md-6 text-right"><t t-esc="widget['order'].amount_tax"/></div>
+                                                    <div class="col-md-6">Amount Total</div>
+                                                    <div class="col-md-6 text-right"><t t-esc="widget['order'].amount_total"/></div>
                                         </div>
                                     </div>
                                     </t>
@@ -220,7 +232,8 @@
             <div class="row">
                 <t t-foreach="widget['products']" t-as="product">
                     <div class="col-md-3 mt-3">
-                        <button class="w-100 clr_com f_15 link_select" t-att-value="product.id">
+                        <button class="w-100 clr_com f_15 link_select"
+                                t-att-value="product.id">
                             <span><i class="fa fa-link"/></span>
                             <t t-esc="product.name"/>
                         </button>
@@ -252,7 +265,7 @@
               </div>
               <div class="content_load">
                   <div class="user_detail_form p-5">
-                      <h1 class="text-center poppins_400">Enter Customer Details</h1>
+                      <h1 class="text-center clr_com poppins_400">Enter Customer Details</h1>
                       <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group pt-2">
@@ -263,21 +276,24 @@
                             </div>
                           <div class="col-md-6">
                                 <div class="form-group pt-2">
-                                    <input type="text" name="mobile" id="mobile"
+                                    <input type="text" name="mobile"
+                                           id="mobile"
                                            class="form-control"
                                            placeholder="mobile..."/>
                                 </div>
                             </div>
                           <div class="col-md-6">
                                 <div class="form-group pt-2">
-                                    <input type="text" name="location" id="location"
+                                    <input type="text" name="location"
+                                           id="location"
                                            class="form-control"
                                            placeholder="location..."/>
                                 </div>
                             </div>
                           <div class="col-md-6">
                                 <div class="form-group pt-2">
-                                    <input type="text" name="street" id="street"
+                                    <input type="text" name="street"
+                                           id="street"
                                            class="form-control"
                                            placeholder="street..."/>
                                 </div>
@@ -299,9 +315,9 @@
                           <div class="col-md-12">
                               <div class="errors text-danger"></div>
                           </div>
-                          <div class="col-md-12">
+                          <div class="col-md-12 text-center">
                               <div class="pt-2">
-                                <button class="btn btn-secondary border_radius_20 p-2 w-100">Next <i
+                                <button class="btn btn-secondary border_radius_20 p-2">Next <i
                                         class="ml-2 fa fa-arrow-right"/> </button>
                               </div>
                           </div>
@@ -311,9 +327,9 @@
           </div>
         </div>
         <style>
-            <!--.content_load{
-                background-image:url("/franchise_dashboard/static/src/image/5172658.jpg");
-            }-->
+            .modal-content{
+                background-image:url("/franchise_dashboard/static/src/image/bg01.jpg");
+            }
             .buttons_space{
             position:fixed;
             top:3px;
@@ -323,14 +339,17 @@
             border-radius:10px;
             }
             .buttons_space button{
-            border-radius:10px;
-            border:none;
-            background:#333;
-            color:white
+                border-radius:10px;
+                border:none;
+                background:#333;
+                color:white
             }
             .buttons_space button:focus{
             border:0px;
             outline:none;
+            }
+            .user_detail_form button{
+                width:50%;
             }
             .user_detail_form {
             margin: auto;
@@ -338,7 +357,6 @@
             padding: 46px;
             margin-top: 16vw;
             border-radius: 20px;
-            box-shadow: 2px 4px 7px -2px;
             }
             .user_detail_form input {
             padding: 14px;
@@ -448,19 +466,25 @@
                     <th scope="col">Mobile</th>
                     <th scope="col">Email</th>
                 </tr>
-                <t t-foreach="widget['customers']" t-as="customer">
+            <t t-foreach="widget['customers']" t-as="customer">
                     <tr t-att-class="'customer_' + customer.id">
                         <td><input name="name" t-att-value="customer.name" readonly="readonly"/></td>
                         <td>
-                            <input name="street" t-att-value="customer.street" readonly="readonly"/>
-                            <input name="street2" t-att-value="customer.street2" readonly="readonly"/>
-                            <input name="city" t-att-value="customer.city" readonly="readonly"/>
+                            <input name="street" t-att-value="customer.street"
+                                   readonly="readonly"/>
+                            <input name="street2"
+                                   t-att-value="customer.street2"
+                                   readonly="readonly"/>
+                            <input name="city" t-att-value="customer.city"
+                                   readonly="readonly"/>
                         </td>
                         <td><input name="mobile" t-att-value="customer.mobile" readonly="readonly"/> </td>
                         <td><input name="email" t-att-value="customer.email" readonly="readonly"/> </td>
                         <td>
-                            <i t-att-data-id="customer.id" class="fa fa-pencil clr_com customer_edit c_pointer"/>
-                            <i t-att-data-id="customer.id" class="fa fa-upload clr_com customer_save c_pointer d-none"/>
+                            <i t-att-data-id="customer.id"
+                               class="fa fa-pencil clr_com customer_edit c_pointer"/>
+                            <i t-att-data-id="customer.id"
+                               class="fa fa-upload clr_com customer_save c_pointer d-none"/>
                         </td>
                     </tr>
                 </t>
@@ -475,7 +499,7 @@
                     <th scope="col">Total</th>
                     <th scope="col">Services</th>
                 </tr>
-                <t t-foreach="widget['sale_orders']" t-as="order">
+            <t t-foreach="widget['sale_orders']" t-as="order">
                     <tr t-att-class="'sale_order_' + order.id">
                         <td><t t-esc="order.name"/></td>
                         <td>
@@ -490,7 +514,7 @@
                     </tr>
                 </t>
             </table>
-            <div class="order_line_pop_up_space">
+        <div class="order_line_pop_up_space">
 
             </div>
 
@@ -525,7 +549,7 @@
                     <th scope="col">Total Services</th>
                     <th scope="col">Origin</th>
                 </tr>
-                <t t-foreach="widget['invoice_details']" t-as="invoice">
+            <t t-foreach="widget['invoice_details']" t-as="invoice">
                     <tr t-att-class="'invoice_' + invoice.id">
                         <td><t t-esc="invoice.name"/></td>
                         <td>

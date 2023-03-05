@@ -1,12 +1,12 @@
 from odoo import fields, models, api, _
 import razorpay
+from odoo.exceptions import MissingError, UserError, ValidationError, \
+    AccessError
 
 
-class PaymentTransactionInherit(models.Model):
+class PaymentDetails(models.Model):
     _name = 'payment.details'
 
-    franchise_application_id = fields.Many2one('franchise.application.partner',
-                                               string="franchise application", )
     acquirer_id = fields.Many2one('payment.acquirer', string="acquirer")
     payment_link = fields.Char(string="payment link")
     razor_pay_id = fields.Char(string="razor pay id")
@@ -15,23 +15,18 @@ class PaymentTransactionInherit(models.Model):
     state = fields.Selection([('draft', 'Draft'), ('done', 'Done')],
                              default='draft')
 
-    @api.onchange('franchise_application_id')
-    def onchange_application_id(self):
-        """onchange application id in the field email and mobile number
-        fields will be filled with franchise email and mobile number"""
-        vals = {'email': self.franchise_application_id.email,
-                'mobile': self.franchise_application_id.mobile, }
-        self.write(vals)
-
     def create_payment_link(self, vals):
         acquirer = self.get_acquirer(vals)
         vals['acquirer_id'] = acquirer.id
         details = self.create_payment_detail(vals)
+        if not details.acquirer_id.razorpay_api_key and not details.acquirer_id.razorpay_secret_key:
+            raise ValidationError(
+                _('Add Razor pay payment Acquirer api and secret Keys'))
         if details:
             vals = {'api_key': details.acquirer_id.razorpay_api_key,
                     'secret_key': details.acquirer_id.razorpay_secret_key,
                     'amount': self.get_renew_amount(details),
-                    'eamil': details.franchise_application_id.email,
+                    'email': details.franchise_application_id.email,
                     'mobile': details.franchise_application_id.mobile,
                     'name': details.franchise_application_id.name,
                     'call_back_url': self.get_base_url_new() + "/payment/razorpay/return"}
@@ -43,12 +38,16 @@ class PaymentTransactionInherit(models.Model):
 
     def get_renew_amount(self, details):
         company = self.env.company
-        if details.franchise_application_id.renewal == 'month':
-            amount = company.month_renew_amount
-            return amount
-        elif details.franchise_application_id.renewal == 'year':
-            amount = company.year_renew_amount
-            return amount
+        if company.month_renew_amount and company.year_renew_amount:
+            if details.franchise_application_id.renewal == 'month':
+                amount = company.month_renew_amount
+                return amount
+            elif details.franchise_application_id.renewal == 'year':
+                amount = company.year_renew_amount
+                return amount
+        else:
+            raise ValidationError(
+                _('Amount Can not found, Add it in company'))
 
     def get_base_url_new(self):
         return self.env['ir.config_parameter'].sudo().get_param('web.base.url')
@@ -104,7 +103,14 @@ class PaymentTransactionInherit(models.Model):
 
     def create_payment_detail(self, vals):
         """create a payment transaction"""
-        val = {'franchise_application_id': vals.get('application_id'),
-               'acquirer_id': vals.get('acquirer_id')}
-        details = self.env['payment.details'].create(val)
-        return details if details else False
+        application = self.env['franchise.application.partner'].search(
+            [('id', '=', vals.get('application_id'))])
+        if application:
+            val = {'franchise_application_id': application.id,
+                   'email': application.email,
+                   'mobile': application.mobile,
+                   'acquirer_id': vals.get('acquirer_id')}
+            details = self.env['payment.details'].create(val)
+            return details if details else False
+        else:
+            raise ValidationError(_("Some error occurs Please try again"))

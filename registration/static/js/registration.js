@@ -41,10 +41,14 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
                     });
                 });
     },
-
+    _get_age:function(dateString){
+       var birthday = +new Date(dateString);
+        return ~~((Date.now() - birthday) / (31557600000));
+    },
     _checkpartner:function(){
         var self = this;
         var email = $('input[name="email"]').val()
+        var dob = $('input[name="dob"]').val()
         var phone = $('input[name="phone"]').val()
         var referal = $('input[name="referd_by"]').val()
         var msg = $('#msg-cls')
@@ -52,6 +56,14 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
         var checkdotsymbol = email.includes(".");
         if(!this.isEmail(email)){
             msg.html("Check your email address")
+            self.show_popup()
+        }
+        if(!dob){
+            msg.html("Enter Your Date Of Birth")
+            self.show_popup()
+        }
+        if(this._get_age(dob)<18){
+            msg.html("You Are not able apply because you are below 18")
             self.show_popup()
         }
         if(phone.length < 10){

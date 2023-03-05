@@ -8,11 +8,29 @@
             <field name="login" position="after">
                 <group>
                     <field name="panchayat_admin" string="Panchayat Admin"/>
-                    <field name="district_id"/>
-                    <field name="reference"/>
-                    <field name="referd_by_id"/>
                 </group>
             </field>
+            <xpath expr="//notebook" position="inside">
+                <page string="Account Details">
+                    <group>
+                        <group>
+                            <field name="local_body"/>
+                            <field name="district_id"/>
+                            <field name="municipality_id"
+                                   attrs="{'invisible':[('local_body','!=','municipality')]}"/>
+                            <field name="corporation_id"
+                                   attrs="{'invisible':[('local_body','!=','corporation')]}"/>
+                            <field name="panchayat_id"
+                                   attrs="{'invisible':[('local_body','!=','panchayath')]}"/>
+                        </group>
+                        <group>
+                            <field name="reference"/>
+                            <field name="referd_by_id"/>
+                        </group>
+                    </group>
+
+                </page>
+            </xpath>
         </field>
     </record>
 </odoo>

@@ -18,7 +18,7 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
         events: {
             'click .home_run' : '_render_dash_home',
             'click .menu_item' : '_render_links_space',
-            'click .harmburger': '_click_side_nav_open',
+//            'click .harmburger': '_click_side_nav_open',
             'click .link_select': '_click_link_select',
             'click .user_detail_form button': '_click_submit_values',
             'click .link_pop_up_close': '_click_popup_close',
@@ -134,7 +134,7 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                 });
             }
         },
-        _click_side_nav_open:function(){
+        /*_click_side_nav_open:function(){
             if($('#mySidenav').hasClass('opened')){
                 $('.user_detail').animate({opacity:'0'})
                 $('#mySidenav').removeClass('opened')
@@ -156,7 +156,7 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                 $('#mySidenav').css({'width':'250px'})
                 $('#main').css({'margin-left':'250px'})
             }
-        },
+        },*/
         _click_link_select:function(event){
             var self = this
             var product_id = $(event.target).val()
@@ -176,9 +176,12 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                             widget: self
                         }));
                         $('.content_load').children().remove()
-                        $('.content_load').append('<iframe src="'+result.url+'"></iframe>')
+//                        $('.content_load').append('<iframe src="'+result.url+'"></iframe>')
+                        console.log('sad',result.url)
+                        window.open(result.url, '_blank');
                         $('.link_pop_up_check').removeClass('d-none')
                         $('.continue_session').removeClass('d-none')
+                        self._render_dash_home()
                     }
                 });
             }
@@ -221,9 +224,11 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                         self.current_order_detail = result
                         $('.customer_id').val(result.customer_id)
                         $('.content_load').children().remove()
-                        $('.content_load').append('<iframe src="'+result.product_url+'"></iframe>')
+//                        $('.content_load').append('<iframe src="'+result.product_url+'"></iframe>')
+                        window.open(result.product_url, '_blank');
                         $('.link_pop_up_check').removeClass('d-none')
                         $('.continue_session').removeClass('d-none')
+                        self._render_dash_home()
                     }
                 });
             }

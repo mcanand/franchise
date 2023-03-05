@@ -1,0 +1,95 @@
+.o_main_navbar, .o_control_panel, .breadcrumb,
+.o_searchview, .o_searchview_input, .o_facet_values, .dropdown-menu,tr,th,table, .o_list_view, .o_kanban_view
+,.o_activity_view, .o_calendar_sidebar_container, .o_content, canvas, .modal-header, .modal-footer, .modal-content,
+.o_form_statusbar, .searchInput, .app_settings_block, .o_form_sheet_bg, .o_form_view, .o_form_sheet,.o_Chatter,.o_MessageList
+,.o_Message.o-not-discussion,.o_Composer,.o_Composer_coreMain{
+    background-color:#515151 !important;
+    color:white;
+    border:none !important;
+    background-image:none !important;
+}
+.text-muted{
+    color:white !important;
+}
+.fa-external-link{
+    background: inherit !important;
+}
+.close, .modal-header h4, .o_form_label, .breadcrumb > li a,.o_notebook a,.o_horizontal_separator,.o_field_widget,
+.oe_button_box .o_stat_info span,.o_Activity_tools button i{
+    color:white !important;
+}
+.btn-link, .o_field_widget a, .o_field_widget span{
+    color:#087db4 !important;
+}
+.o_notebook_headers .active, .o_form_sheet input,.o_form_sheet select,.o_ComposerTextInput_textarea,.o_Composer_buttons,
+.o_Composer_toolButtons,.oe_form_field_html .note-editable,.o_input{
+    background-color:#888888 !important;
+    color:white !important;
+    border-radius: 0px;
+}
+.o_base_settings .o_setting_container .settings > .app_settings_block h2{
+        background-color:#515151 !important;
+    color:white;
+}
+.o_control_panel, .o_form_sheet_bg{
+    border-bottom: 10px solid #888 !important;
+}
+.custom-control-label:after{
+    background-color:#087db4 !important;
+}
+.o_field_widget .o_input_dropdown > input, .o_required_modifier.o_input, .o_required_modifier .o_input{
+    background-color:#888 !important;
+    border:1px solid white;
+}
+.custom-control-label:before{
+    background-color:white !important;
+}
+.modal-content{
+    border-radius:0px !important;
+}
+/*table, tr,th, td{
+    background-color:#515151 !important;
+    color:white;
+    border-bottom:1px solid white !important;
+}*/
+table{
+    border-top: 1px solid white;
+}
+tr:hover{
+    color:white !important;
+}
+.o_main_navbar{
+    border:none !important;
+}
+.text-900{
+    color:white !important;
+}
+.btn-primary{
+    background-color:#087db4 !important;
+    border-radius:0px !important;
+    border:none !important;
+}
+.btn-secondary{
+    background-color:#087db4 !important;
+    border-radius:0px !important;
+    color:white !important;
+    border:none !important;
+}
+.btn-fill-light, .btn-light{
+    background-color:#515151 !important;
+    color:white;
+    border-radius:0px !important;
+    border:none;
+}
+.btn-fill-light:not(:disabled):not(.disabled):active, .btn-light:not(:disabled):not(.disabled):active, .btn-fill-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled).active, .show > .btn-fill-light.dropdown-toggle, .show > .dropdown-toggle.btn-light{
+    color:#087db4 !important;
+}
+.dropdown-menu{
+    border:none !important;
+}
+.dropdown-menu a, .dropdown-menu div, .dropdown-menu button, .dropdown-menu span{
+    color:white !important;
+}
+.o_searchview .o_searchview_facet .o_searchview_facet_label{
+    background-color:#087db4 !important;
+}

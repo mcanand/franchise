@@ -1,11 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <record id="action_product_link_view" model="ir.actions.act_window">
+        <field name="name">Links</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Link
+            </p>
+        </field>
+    </record>
+    <record id="action_website_users_franchise" model="ir.actions.act_window">
+        <field name="name">Website Users</field>
+        <field name="res_model">res.users</field>
+        <field name="domain">[('is_admin','=',False)]</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new User
+            </p>
+        </field>
+    </record>
+    <record id="action_companies_franchise" model="ir.actions.act_window">
+        <field name="name">Companies</field>
+        <field name="res_model">res.company</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Company
+            </p>
+        </field>
+    </record>
+    <record id="action_customers_franchise" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">res.partner</field>
+        <field name="domain">[('type','=','invoice')]</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new customer
+            </p>
+        </field>
+    </record>
+    <record id="action_companies_franchise" model="ir.actions.act_window">
+        <field name="name">Companies</field>
+        <field name="res_model">res.company</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Company
+            </p>
+        </field>
+    </record>
+    <record id="action_invoice_franchise" model="ir.actions.act_window">
+        <field name="name">Invoices</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Invoices
+            </p>
+        </field>
+    </record>
+    <record id="action_services_provided_franchise"
+            model="ir.actions.act_window">
+        <field name="name">Services</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Services
+            </p>
+        </field>
+    </record>
+    <record id="action_product_link_view_categories"
+            model="ir.actions.act_window">
+        <field name="name">Link Categories</field>
+        <field name="res_model">product.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Category
+            </p>
+        </field>
+    </record>
+    <record id="action_payment_acquirer_franchise"
+            model="ir.actions.act_window">
+        <field name="name">Payment Acquirer</field>
+        <field name="res_model">payment.acquirer</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+
+            </p>
+        </field>
+    </record>
+
     <menuitem id="menu_franchisee" name="Franchise">
         <menuitem name="Applications"
                   sequence="0"
-                  id="menu_franchise_applications_partners"
-                  action="action_view_franchise_application"
-        />
+                  id="menu_franchise_applications">
+            <menuitem name="Franchises"
+                      sequence="0"
+                      id="menu_franchise_applications_partners"
+                      action="action_view_franchise_application"/>
+            <menuitem name="applications pending to check"
+                      sequence="0"
+                      id="menu_franchise_applications_draft"
+                      action="action_view_franchise_application_draft"/>
+            <menuitem name="Checked Application"
+                      sequence="0"
+                      id="menu_franchise_applications_checked"
+                      action="action_view_franchise_application_progress"/>
+        </menuitem>
+        <menuitem id="franchise_services" name="Services">
+            <menuitem id="links_add_view" name="Web Links"
+                      action="action_product_link_view"/>
+            <menuitem id="links_add_view_categories" name="Link Categories"
+                      action="action_product_link_view_categories"/>
+            <menuitem id="franchise_sales_menu" name="Services Provided"
+                      action="action_services_provided_franchise"/>
+            <menuitem id="franchise_invoice_menu" name="Invoices"
+                      action="action_invoice_franchise"/>
+        </menuitem>
+
+        <menuitem id="website_users_partner_menu" name="Users &amp; Companies">
+            <menuitem id="website_users_menu_franchise" name="Users"
+                      action="action_website_users_franchise"/>
+            <menuitem id="website_users_customers_menu_franchise"
+                      name="User Customers"
+                      action="action_customers_franchise"/>
+            <menuitem id="companies_menu_franchise" name="Companies"
+                      action="action_companies_franchise"/>
+        </menuitem>
+        <menuitem id="franchise_config" name="configuration">
+            <menuitem id="payment_acquirer_franchise_menu" action="action_payment_acquirer_franchise" name="payment acquirer"/>
+            <menuitem id="payment_detail_franchise_menu" name="Payment Details"
+                      action="raz_pay.action_payment_details_franchise"/>
+            <menuitem id="franchise_district" action="country_locations.action_country_state_district" name="Districts"/>
+            <menuitem id="franchise_panchayat" action="country_locations.action_country_state_district_panchayat" name="Panchayats"/>
+            <menuitem id="franchise_municipality" action="country_locations.action_country_state_district_municipality" name="Municipality"/>
+            <menuitem id="franchise_corporation" action="country_locations.action_country_state_district_corporation" name="Corporations"/>
+        </menuitem>
     </menuitem>
 
 </odoo>

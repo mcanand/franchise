@@ -93,3 +93,16 @@ tr:hover{
 .o_searchview .o_searchview_facet .o_searchview_facet_label{
     background-color:#087db4 !important;
 }
+
+.oe_kanban_global_click span,.o_kanban_record_title span{
+    color:white !important;
+}
+.o_kanban_view .o_kanban_record, .o_kanban_view .o_kanban_quick_create{
+    background-color:#515151 !important;
+}
+.o_search_panel{
+    background-color:#515151 !important;
+}
+.list-group-item{
+    background-color:#888888 !important;
+}

@@ -1,39 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="view_payment_details_form" model="ir.ui.view">
-        <field name="name">payment details</field>
+        <field name="name">Payment details</field>
         <field name="model">payment.details</field>
         <field name="arch" type="xml">
-            <form string="Details" create="True">
-                <field name="acquirer_id"/>
-                <field name="mobile"/>
-                <field name="email"/>
-                <field name="payment_link"/>
+            <form edit="0" create="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="acquirer_id"
+                                   readonly="True"/>
+                            <!--                        <field name="franchise_application_id"-->
+                            <!--                               readonly="True"/>-->
+                            <field name="mobile"
+                                   readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="razor_pay_id"
+                                   readonly="True"/>
+                            <field name="state"
+                                   readonly="True"/>
+                            <field name="payment_link"
+                                   readonly="True"/>
+                        </group>
+                    </group>
+                </sheet>
             </form>
         </field>
     </record>
-    <record id="view_payment_details" model="ir.ui.view">
-        <field name="name">payment details</field>
+    <record id="view_payment_details_tree" model="ir.ui.view">
+        <field name="name">Payment details</field>
         <field name="model">payment.details</field>
         <field name="arch" type="xml">
-            <tree string="Details" create="False">
-                <field name="acquirer_id"/>
-                <field name="mobile"/>
-                <field name="email"/>
-                <field name="payment_link"/>
+            <tree default_order="id desc" create="0" limit="50">
+                <field name="acquirer_id" readonly="True"/>
+                <!--                <field name="franchise_application_id"/>-->
+                <field name="mobile" readonly="True"/>
+                <field name="email" readonly="True"/>
+                <field name="razor_pay_id" readonly="True"/>
+                <field name="state" readonly="True"/>
             </tree>
         </field>
     </record>
-<!--    <record id="action_payment_details" model="ir.actions.act_window">-->
-<!--        <field name="name">Payment details</field>-->
-<!--        <field name="type">ir.actions.act_window</field>-->
-<!--        <field name="res_model">payment.details</field>-->
-<!--        <field name="view_mode">tree,form</field>-->
-<!--    </record>-->
-<!--    <menuitem name="Applications"-->
-<!--              sequence="0"-->
-<!--              parent="payment.payment_transaction_menu"-->
-<!--              id="menu_payment_details"-->
-<!--              action="action_payment_details"-->
-<!--    />-->
+    <record id="action_payment_details_franchise"
+            model="ir.actions.act_window">
+        <field name="name">Payment Transaction Details</field>
+        <field name="res_model">payment.details</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Services
+            </p>
+        </field>
+    </record>
 </odoo>

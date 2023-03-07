@@ -13,7 +13,12 @@ class FranchiseDashboard(models.Model):
             'email': usr.login,
             'phone': usr.mobile,
             'image': usr.image_1024,
-            'panchayat': usr.panchayat_id.name
+            'district': usr.district_id.name,
+            'local_body': usr.local_body,
+            'panchayat': usr.panchayat_id.name,
+            'municipality': usr.municipality_id.name,
+            'corporation': usr.corporation_id.name,
+            'refer_code': usr.reference
         }
         categ = self.env['product.category'].search([])
         categories = []
@@ -24,7 +29,8 @@ class FranchiseDashboard(models.Model):
 
     def get_products(self, category_id):
         products = self.env['product.product'].search([('sale_ok', '=', True),
-                                                        ('categ_id', '=', category_id)])
+                                                       ('categ_id', '=',
+                                                        category_id)])
         product_vals = []
         for val in products:
             product = {
@@ -43,9 +49,12 @@ class ProductTemplateInherit(models.Model):
 
     def get_product_create_line(self, vals):
         """get product details and create order line for the current order"""
-        product = self.env['product.product'].search([('id', '=', int(vals.get('product_id')))], limit=1)
+        product = self.env['product.product'].search(
+            [('id', '=', int(vals.get('product_id')))], limit=1)
         if product:
-            self.env['sale.order.line'].create({'product_id': product.id, 'order_id': int(vals.get('order_id'))})
+            self.env['sale.order.line'].create({'product_id': product.id,
+                                                'order_id': int(
+                                                    vals.get('order_id'))})
             vals = {
                 'id': product.id,
                 'name': product.name,
@@ -66,13 +75,16 @@ class SaleOrderInherit(models.Model):
     def delete_current_order(self, order_id):
         """delete current sale order"""
         user_id = self.env.user.id
-        order = self.env['sale.order'].search([('id', '=', int(order_id)), ('user_id', '=', user_id)])
+        order = self.env['sale.order'].search(
+            [('id', '=', int(order_id)), ('user_id', '=', user_id)])
         order.unlink()
         return True
 
     def get_sale_order_details(self, vals):
         user_id = self.env.user.id
-        order = self.env['sale.order'].search([('id', '=', int(vals.get('order_id'))), ('user_id', '=', user_id)])
+        order = self.env['sale.order'].search(
+            [('id', '=', int(vals.get('order_id'))),
+             ('user_id', '=', user_id)])
         value = {}
         if order:
             orders = self.get_order_vals(order)
@@ -90,9 +102,12 @@ class SaleOrderInherit(models.Model):
         invoice = order.invoice_ids
         return {'id': invoice.id if invoice else False,
                 'pay_state': invoice.payment_state if invoice else 'draft',
-                'html': invoice.get_portal_url(report_type='html') if invoice else False,
-                'download_url': invoice.get_portal_url(report_type='pdf', download=True) if invoice else False,
-                'print_url': invoice.get_portal_url(report_type='pdf') if invoice else False}
+                'html': invoice.get_portal_url(
+                    report_type='html') if invoice else False,
+                'download_url': invoice.get_portal_url(report_type='pdf',
+                                                       download=True) if invoice else False,
+                'print_url': invoice.get_portal_url(
+                    report_type='pdf') if invoice else False}
 
     def get_order_vals(self, order):
         partner = order.partner_id
@@ -120,17 +135,18 @@ class SaleOrderInherit(models.Model):
 
     def get_total_customers(self):
         user_id = self.env.user.id
-        customers = self.env['res.partner'].search([('user_id','=',user_id)])
+        customers = self.env['res.partner'].search([('user_id', '=', user_id)])
         return len(customers)
 
     def get_total_orders(self):
         user_id = self.env.user.id
-        order = self.env['sale.order'].search([('user_id','=',user_id)])
+        order = self.env['sale.order'].search([('user_id', '=', user_id)])
         return len(order)
 
     def get_active_order(self):
         user_id = self.env.user.id
-        order = self.env['sale.order'].search([('active_order', '=', True), ('user_id', '=', user_id)], limit=1)
+        order = self.env['sale.order'].search(
+            [('active_order', '=', True), ('user_id', '=', user_id)], limit=1)
         value = {}
         value['total_customers'] = self.get_total_customers()
         value['total_service'] = self.get_total_orders()
@@ -153,7 +169,8 @@ class SaleOrderInherit(models.Model):
 
     def confirm_order(self, order_id):
         user_id = self.env.user.id
-        order = self.search([('id', '=', int(order_id)), ('user_id', '=', user_id)])
+        order = self.search(
+            [('id', '=', int(order_id)), ('user_id', '=', user_id)])
         if order:
             order.action_confirm()
             if order.invoice_ids:
@@ -170,7 +187,8 @@ class SaleOrderInherit(models.Model):
 
     def order_cancel(self, order_id):
         user_id = self.env.user.id
-        order = self.search([('id', '=', int(order_id)), ('user_id', '=', user_id)])
+        order = self.search(
+            [('id', '=', int(order_id)), ('user_id', '=', user_id)])
         if order:
             order.action_cancel()
             return True
@@ -178,34 +196,40 @@ class SaleOrderInherit(models.Model):
 
     def order_set_quotation(self, order_id):
         user_id = self.env.user.id
-        order = self.search([('id', '=', int(order_id)), ('user_id', '=', user_id)])
+        order = self.search(
+            [('id', '=', int(order_id)), ('user_id', '=', user_id)])
         if order:
             order.action_draft()
             return True
         return False
 
-    def complete_order(self,order_id):
+    def complete_order(self, order_id):
         user_id = self.env.user.id
-        order = self.search([('id', '=', int(order_id)), ('user_id', '=', user_id)])
+        order = self.search(
+            [('id', '=', int(order_id)), ('user_id', '=', user_id)])
         order.write({'active_order': False})
         return True
 
     def get_values(self, val):
         user_id = self.env.user.id
         if val == 'partner':
-            partners = self.env['res.partner'].search_read([('user_id', '=', user_id)])
+            partners = self.env['res.partner'].search_read(
+                [('user_id', '=', user_id)])
             return partners
         elif val == 'sales':
-            sales = self.env['sale.order'].search_read([('user_id', '=', user_id)])
+            sales = self.env['sale.order'].search_read(
+                [('user_id', '=', user_id)])
             return sales
         elif val == 'invoice':
-            invoices = self.env['account.move'].search_read([('invoice_user_id', '=', user_id)])
+            invoices = self.env['account.move'].search_read(
+                [('invoice_user_id', '=', user_id)])
             return invoices
         else:
             return False
 
-    def get_sale_order_lines(self,order_id):
-        lines = self.env['sale.order.line'].search_read([('order_id','=',int(order_id))])
+    def get_sale_order_lines(self, order_id):
+        lines = self.env['sale.order.line'].search_read(
+            [('order_id', '=', int(order_id))])
         return lines
 
 
@@ -213,15 +237,18 @@ class AccountMoveInherit(models.Model):
     _inherit = 'account.move'
 
     def order_paid(self, invoice_id):
-        invoice = self.env['account.move'].search([('id', '=', int(invoice_id))])
+        invoice = self.env['account.move'].search(
+            [('id', '=', int(invoice_id))])
         if invoice.payment_state != 'paid':
-            journal_id = self.env['account.journal'].search([('type', '=', 'bank')]).id
+            journal_id = self.env['account.journal'].search(
+                [('type', '=', 'bank')]).id
             vals = {'journal_id': journal_id,
                     'amount': invoice.amount_total,
                     'payment_date': invoice.invoice_date,
                     'communication': invoice.name}
             payment_register = self.env['account.payment.register']
-            payments = payment_register.with_context(active_model='account.move', active_ids=invoice.id).create(
+            payments = payment_register.with_context(
+                active_model='account.move', active_ids=invoice.id).create(
                 vals)._create_payments()
             invoice.write({'payment_state': 'paid'})
             return True
@@ -241,5 +268,6 @@ class ResPartnerInherit(models.Model):
     _inherit = 'res.partner'
 
     def update_partner(self, vals, customer_id):
-        partner = self.env['res.partner'].search([('id', '=', int(customer_id))])
+        partner = self.env['res.partner'].search(
+            [('id', '=', int(customer_id))])
         return True if partner.write(vals) else False

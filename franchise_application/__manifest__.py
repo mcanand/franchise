@@ -7,7 +7,8 @@
     'author': 'ANAND MC',
     'summary': 'Franchise Application',
     'description': """add website links and its categories""",
-    'depends': ['base', 'country_locations', 'sale', 'account', 'raz_pay'],
+    'depends': ['base', 'country_locations', 'sale', 'product',
+                'account', 'raz_pay', 'hide_menu_user'],
     'data': [
         'security/ir.model.access.csv',
         'views/franchise_applications.xml',
@@ -16,7 +17,6 @@
         'views/res_partner.xml',
         'views/res_users.xml',
         'views/res_company.xml',
-
     ],
     'installable': True,
     'application': True,

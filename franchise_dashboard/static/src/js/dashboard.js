@@ -17,6 +17,7 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
         events: {
             'click .home_run' : '_render_dash_home',
             'click .menu_item' : '_render_links_space',
+            'click .f_settings':'_render_settings',
 //            'click .harmburger': '_click_side_nav_open',
             'click .link_select': '_click_link_select',
             'click .user_detail_form button': '_click_submit_values',
@@ -111,6 +112,14 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                         }))
                     }
                 });
+        },
+        _render_settings:function(){
+            var self = this
+            console.log('settings0, this',this)
+            $('.action_space').html('')
+            $('.action_space').prepend(qweb.render('franchise_settings', {
+                widget: self
+            }))
         },
         _render_links_space:function(events){
             var self = this

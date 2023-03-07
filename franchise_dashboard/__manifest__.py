@@ -16,6 +16,7 @@
         ],
         'web.assets_qweb': [
             '/franchise_dashboard/static/src/xml/dashboard.xml',
+            '/franchise_dashboard/static/src/xml/settings.xml',
         ],
     },
     'license': "AGPL-3",

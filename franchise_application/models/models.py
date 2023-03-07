@@ -56,6 +56,10 @@ class ResUserInherit(models.Model):
                                    string="Referenced By")
 
 
+class InheritPaymentDetails(models.Model):
+    _inherit = 'payment.details'
+
+
 class FranchiseApplicationPartners(models.Model):
     _name = 'franchise.application.partner'
     _description = 'user application for registration'

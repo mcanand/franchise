@@ -62,3 +62,10 @@ class SaveCustomerOrderCreation(http.Controller):
             return vals
         else:
             return False
+
+    @http.route('/load/settings', type='json', auth="user")
+    def load_settings(self):
+        user_id = request.env.user.id
+        user = request.env['res.users'].sudo().search_read(
+            [('id', '=', user_id)])
+        return user

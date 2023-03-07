@@ -47,7 +47,7 @@
                         <page string="payment details">
                             <!--                            <field name="payment_details_ids" widget="one2many"/>-->
                             <field name="payment_details_ids">
-                                <tree create="false" readonly="True"
+                               <!-- <tree create="false" readonly="True"
                                       default_order="id desc" delete="false"
                                       limit="5" edit="False">
                                     <field name="acquirer_id"/>
@@ -60,17 +60,23 @@
                                 <form edit="0" create="0">
                                     <group>
                                         <group>
-                                            <field name="acquirer_id" readonly="True"/>
-                                            <field name="franchise_application_id" readonly="True"/>
-                                            <field name="mobile" readonly="True"/>
+                                            <field name="acquirer_id"
+                                                   readonly="True"/>
+                                            <field name="franchise_application_id"
+                                                   readonly="True"/>
+                                            <field name="mobile"
+                                                   readonly="True"/>
                                         </group>
                                         <group>
-                                            <field name="razor_pay_id" readonly="True"/>
-                                            <field name="state" readonly="True"/>
-                                            <field name="payment_link" readonly="True"/>
+                                            <field name="razor_pay_id"
+                                                   readonly="True"/>
+                                            <field name="state"
+                                                   readonly="True"/>
+                                            <field name="payment_link"
+                                                   readonly="True"/>
                                         </group>
                                     </group>
-                                </form>
+                                </form>-->
                             </field>
                         </page>
                     </notebook>
@@ -107,11 +113,18 @@
                                     <field name="name"/>
                                 </strong>
                             </div>
-                            <style style="display:none">.o_kanban_view
-                                .o_kanban_record::after { content: "";
-                                position:
-                                absolute; top: -2px; left: 90%; bottom: 0;
-                                right: auto; width: 20px; height: 32px; }
+                            <style style="display:none">
+                                .o_kanban_view .o_kanban_record::after {
+                                    content: "";
+                                    position:absolute;
+                                    top: -2px;
+                                    left: 90%;
+                                    bottom: 0;
+                                    right: auto;
+                                    width: 20px;
+                                    height: 32px;
+                                }
+
                             </style>
 
                             <div class="oe_kanban_details">
@@ -146,9 +159,26 @@
     </record>
     <record id="action_view_franchise_application"
             model="ir.actions.act_window">
-        <field name="name">Franchise Applications</field>
+        <field name="name">Registered Franchise</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">franchise.application.partner</field>
+        <field name="domain">[('status','=','done')]</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+    <record id="action_view_franchise_application_draft"
+            model="ir.actions.act_window">
+        <field name="name">Pending Franchise</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">franchise.application.partner</field>
+        <field name="domain">[('status','=','draft')]</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+    <record id="action_view_franchise_application_progress"
+            model="ir.actions.act_window">
+        <field name="name">Checked Applications</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">franchise.application.partner</field>
+        <field name="domain">[('status','=','progress')]</field>
         <field name="view_mode">kanban,tree,form</field>
     </record>
     <data>

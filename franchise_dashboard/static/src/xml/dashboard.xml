@@ -29,9 +29,9 @@
                                 </div>
                             </li>
                         </t>
-                    <li class="p-1 d-block menu_item">
-                            <div class="categ_menu active p-2"><span class="menu_text">Settings</span></div>
-                        </li>
+<!--                    <li class="p-1 d-block f_settings menu_item d-none">-->
+<!--                            <div class="categ_menu active p-2"><span class="menu_text">Settings</span></div>-->
+<!--                        </li>-->
                     </ul>
             </div>
             <div class="col action_space" id="main">

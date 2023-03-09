@@ -46,37 +46,37 @@
                     <notebook>
                         <page string="payment details">
                             <!--                            <field name="payment_details_ids" widget="one2many"/>-->
-                            <field name="payment_details_ids">
-                               <!-- <tree create="false" readonly="True"
-                                      default_order="id desc" delete="false"
-                                      limit="5" edit="False">
-                                    <field name="acquirer_id"/>
-                                    <field name="franchise_application_id"/>
-                                    <field name="mobile"/>
-                                    <field name="email"/>
-                                    <field name="razor_pay_id"/>
+                            <field name="payment_details_ids"  widget="one2many"/>
+                        </page>
+                        <page string="Renewals">
+                            <field name="payment_renewal_ids" >
+                                <tree edit="False" create="0">
+                                    <field name="renewal"/>
+                                    <field name="renewal_date"/>
+                                    <field name="application_partner_id"/>
+                                    <field name="payment_success_date"/>
+                                    <field name="user_id" optional="hide"/>
                                     <field name="state"/>
+                                    <field name="payment_details_id"
+                                           optional="hide"/>
                                 </tree>
-                                <form edit="0" create="0">
-                                    <group>
+                                <form>
+                                    <sheet>
                                         <group>
-                                            <field name="acquirer_id"
-                                                   readonly="True"/>
-                                            <field name="franchise_application_id"
-                                                   readonly="True"/>
-                                            <field name="mobile"
-                                                   readonly="True"/>
+                                            <group>
+                                                <field name="application_partner_id"/>
+                                                <field name="user_id"/>
+                                                <field name="renewal"/>
+                                                <field name="payment_success_date"/>
+                                            </group>
+                                            <group>
+                                                <field name="renewal_date"/>
+                                                <field name="payment_details_id"/>
+                                                <field name="state"/>
+                                            </group>
                                         </group>
-                                        <group>
-                                            <field name="razor_pay_id"
-                                                   readonly="True"/>
-                                            <field name="state"
-                                                   readonly="True"/>
-                                            <field name="payment_link"
-                                                   readonly="True"/>
-                                        </group>
-                                    </group>
-                                </form>-->
+                                    </sheet>
+                                </form>
                             </field>
                         </page>
                     </notebook>
@@ -115,14 +115,14 @@
                             </div>
                             <style style="display:none">
                                 .o_kanban_view .o_kanban_record::after {
-                                    content: "";
-                                    position:absolute;
-                                    top: -2px;
-                                    left: 90%;
-                                    bottom: 0;
-                                    right: auto;
-                                    width: 20px;
-                                    height: 32px;
+                                content: "";
+                                position:absolute;
+                                top: -2px;
+                                left: 90%;
+                                bottom: 0;
+                                right: auto;
+                                width: 20px;
+                                height: 32px;
                                 }
 
                             </style>

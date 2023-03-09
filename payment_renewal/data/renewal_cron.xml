@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    <data>
+        <record id="payment_renewal" model="ir.cron">
+            <field name="name">Payment Renewal</field>
+            <field name="model_id" ref="model_payment_renewal"/>
+            <field name="state">code</field>
+            <field name="code">model._run_renew_payment()</field>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+    </data>-->
+    <data>
+        <record id="ir_cron_payment_renewal" model="ir.cron">
+            <field name="name">Payment: Payment Renewal</field>
+            <field name="model_id" ref="model_payment_renewal"/>
+            <field name="state">code</field>
+            <field name="code">model._run_renew_payment()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>

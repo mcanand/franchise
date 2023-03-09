@@ -2,10 +2,12 @@ import logging
 import pprint
 
 import requests
+from datetime import date, datetime, timedelta
 from werkzeug import urls
 from werkzeug.exceptions import Forbidden
 
 from odoo import http
+from odoo.http import request
 from odoo.exceptions import ValidationError
 from odoo.http import request
 
@@ -34,11 +36,30 @@ class CashFreeController(http.Controller):
             pass
         if pdt_data:
             # ''plink_LLxjLZB18ybSkB''
-            details = request.env['payment.details'].sudo().search(
-                [('razor_pay_id', '=', pdt_data['razorpay_payment_link_id'])],
-                limit=1)
-            if details.franchise_application_id.status != 'done':
-                details.franchise_application_id.approve()
-            else:
+            # if the payment status is paid
+            domain = [('razor_pay_id', '=', pdt_data['razorpay_payment_link_id'])]
+            details = request.env['payment.details'].sudo().search(domain,limit=1)
+            if pdt_data.get('razorpay_payment_link_status') == 'paid':
+                if details:
+                    payment_renewal = request.env['payment.renewal']
+                    exist_renewal = payment_renewal.sudo().search([('application_partner_id', '=', details.franchise_application_id.id),
+                                                                   ('state','=','send')],limit=1)
+                    if exist_renewal:
+                        exist_renewal.set_paid()
+                    # if franchise application not done then approve franchise
+                    if details.franchise_application_id.status != 'done':
+                        details.franchise_application_id.approve()
+                    details.set_done()
+                    # create renewal for next renewal date
+                    renewal = payment_renewal.create_renewal_record(details)
                 return request.redirect('/')
+            if pdt_data.get('razorpay_payment_link_status') != 'paid':
+                if details:
+                    payment_renewal = request.env['payment.renewal']
+                    exist_renewal = payment_renewal.sudo().search(
+                        [('franchise_application_id', '=', details.franchise_application_id.id),
+                         ('state', '=', 'send')], limit=1)
+                    details.set_canceled()
+
+
         return request.redirect('/')

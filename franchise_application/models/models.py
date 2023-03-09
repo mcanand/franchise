@@ -60,6 +60,16 @@ class InheritPaymentDetails(models.Model):
     _inherit = 'payment.details'
 
 
+
+class InheritPaymentRenewal(models.Model):
+    _inherit = 'payment.renewal'
+
+    application_partner_id = fields.Many2one('franchise.application.partner',
+                                             string='Application Partner')
+    payment_details_id = fields.Many2one('payment.details',
+                                         string="Payment Detail")
+
+
 class FranchiseApplicationPartners(models.Model):
     _name = 'franchise.application.partner'
     _description = 'user application for registration'
@@ -95,6 +105,9 @@ class FranchiseApplicationPartners(models.Model):
     payment_details_ids = fields.One2many('payment.details',
                                           'franchise_application_id',
                                           string="Payment Details")
+    payment_renewal_ids = fields.One2many('payment.renewal',
+                                          'application_partner_id',
+                                          string="Payment Renewal")
 
     @api.model
     def create(self, vals):

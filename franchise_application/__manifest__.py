@@ -8,7 +8,7 @@
     'summary': 'Franchise Application',
     'description': """add website links and its categories""",
     'depends': ['base', 'country_locations', 'sale', 'product',
-                'account', 'raz_pay', 'hide_menu_user'],
+                'account', 'raz_pay', 'hide_menu_user', 'payment_renewal'],
     'data': [
         'security/ir.model.access.csv',
         'views/franchise_applications.xml',

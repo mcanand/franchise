@@ -12,8 +12,12 @@ class PaymentDetails(models.Model):
     razor_pay_id = fields.Char(string="razor pay id")
     email = fields.Char(string="email")
     mobile = fields.Char(string="mobile")
-    state = fields.Selection([('draft', 'Draft'), ('done', 'Done')],
-                             default='draft')
+    state = fields.Selection(
+        [('draft', 'Draft'), ('done', 'Done'),
+         ('cancel', 'Canceled')],
+        default='draft')
+    franchise_application_id = fields.Many2one('payment.details',
+                                               string="Payment details")
 
     def create_payment_link(self, vals):
         acquirer = self.get_acquirer(vals)
@@ -91,7 +95,6 @@ class PaymentDetails(models.Model):
             },
             "callback_url": vals.get('call_back_url'),
             "callback_method": "get"
-
         })
         return response
 
@@ -114,3 +117,11 @@ class PaymentDetails(models.Model):
             return details if details else False
         else:
             raise ValidationError(_("Some error occurs Please try again"))
+
+    def set_done(self):
+        self.write({'state': 'done'})
+        return True if self.state == 'done' else False
+
+    def set_canceled(self):
+        self.write({'state': 'cancel'})
+        return True if self.state == 'cancel' else False

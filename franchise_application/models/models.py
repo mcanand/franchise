@@ -60,7 +60,6 @@ class InheritPaymentDetails(models.Model):
     _inherit = 'payment.details'
 
 
-
 class InheritPaymentRenewal(models.Model):
     _inherit = 'payment.renewal'
 
@@ -172,6 +171,7 @@ class FranchiseApplicationPartners(models.Model):
         })
         if res_users:
             self.hide_menus(res_users)
+            res_users.action_reset_password()
         if self.referd_by:
             referense_user = self.env['res.users'].search(
                 [('reference', '=', self.referd_by)]

@@ -80,7 +80,7 @@ class FranchiseApplicationPartners(models.Model):
     name = fields.Char(string="Applicant Name")
     district_id = fields.Many2one('res.country.state.district',
                                   string="District")
-    dob = fields.Date(string="Date of Birth", required=True)
+    dob = fields.Date(string="Date of Birth")
     related_users_id = fields.Many2one('res.users', string="Related Users")
     age = fields.Integer(string="AGE", store=True)
     mobile = fields.Char(string="Mobile")

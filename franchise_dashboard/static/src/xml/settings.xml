@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="franchise_settings">
+        <div class="dash_home p-3">
+            <div class="row p-3">
+<!--                <div class="col-2">-->
+<!--                    <img t-att-src="data['widget['user'].image']"/>-->
+<!--                </div>-->
+                <div class="col-12">
+                    <h1><t t-esc="widget['user'].name"/></h1>
+                </div>
+                <div class="col-md-6">
+                    <t t-esc="widget['user'].email"/>
+                </div>
+                <div class="col-md-6">
+                    <t t-esc="widget['user'].phone"/>
+                </div>
+                <div class="col-md-6">
+                    <t t-esc="widget['user'].district"/>
+                </div>
+                <div class="col-md-6">
+                    <t t-esc="widget['user'].local_body"/>
+                </div>
+                <t t-if="widget['user'].local_body == panchayat">
+                    <div class="col-md-6">
+                        <t t-esc="widget['user'].panchayat"/>
+                    </div>
+                </t>
+                <t t-if="widget['user'].local_body == municipality">
+                    <div class="col-md-6">
+                        <t t-esc="widget['user'].municipality"/>
+                    </div>
+                </t>
+                <t t-if="widget['user'].local_body == corporation">
+                    <div class="col-md-6">
+                        <t t-esc="widget['user'].corporation"/>
+                    </div>
+                </t>
+                <div class="col-md-6">
+                    Reference Code : <t t-esc="widget['user'].refer_code"/>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

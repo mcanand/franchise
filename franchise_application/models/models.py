@@ -8,6 +8,13 @@ class ResCompanyInherit(models.Model):
     year_renew_amount = fields.Float(string="Yearly Renewal Amount(RS)")
 
 
+class WebsiteServiceList(models.Model):
+    _name = 'web.service.list'
+
+    name = fields.Char(string="Name")
+    icon = fields.Char(string="icon")
+
+
 class ProductCategory(models.Model):
     _inherit = 'product.category'
 
@@ -29,7 +36,7 @@ class ProductProductInherit(models.Model):
 class ResPartnerInherit(models.Model):
     _inherit = 'res.partner'
 
-    panchayat_admin = fields.Boolean(string='Panchayat Admin')
+    is_franchise = fields.Boolean(string='Panchayat Admin')
     panchayat_id = fields.Many2one('res.country.state.district.panchayat',
                                    string='Panchayt')
     district_id = fields.Many2one('res.country.state.district',
@@ -42,9 +49,11 @@ class ResUserInherit(models.Model):
     local_body = fields.Selection(
         [("panchayath", "Panchayath"), (" municipality", "Municipality"),
          ("corporation", "Corporation")])
-    panchayat_admin = fields.Boolean(string='Panchayat Admin')
+    is_franchise = fields.Boolean(string='Panchayat Admin')
     panchayat_id = fields.Many2one('res.country.state.district.panchayat',
                                    string='Panchayt')
+    application_partner_id = fields.Many2one('franchise.application.partner',
+                                             string='application partner')
     municipality_id = fields.Many2one(
         'res.country.state.district.municipality', string="Municipality")
     corporation_id = fields.Many2one('res.country.state.district.corporation',
@@ -81,7 +90,8 @@ class FranchiseApplicationPartners(models.Model):
     district_id = fields.Many2one('res.country.state.district',
                                   string="District")
     dob = fields.Date(string="Date of Birth")
-    related_users_id = fields.Many2one('res.users', string="Related Users")
+    related_users_id = fields.Many2one('res.users', string="Related Users",
+                                       readonly=True)
     age = fields.Integer(string="AGE", store=True)
     mobile = fields.Char(string="Mobile")
     email = fields.Char(string="Email")
@@ -91,13 +101,13 @@ class FranchiseApplicationPartners(models.Model):
     known_by = fields.Char(string="Known through")
     status = fields.Selection(
         [('draft', "Draft"), ('progress', 'In Progress'), ('paid', 'Paid'),
-         ('done', 'Approved')], default='draft')
+         ('done', 'Approved'), ('inactive', 'Inactive')], default='draft')
     color = fields.Integer('Color', compute='_get_color', store=True)
     local_body = fields.Selection(
         [("panchayath", "Panchayath"), (" municipality", "Municipality"),
          ("corporation", "Corporation")])
     my_referal = fields.Char()
-    referd_by = fields.Char()
+    referd_by = fields.Char(readonly=True)
     payment_link = fields.Char(string="payment link")
     renewal = fields.Selection([('month', 'Monthly'), ('year', 'Yearly')],
                                default="month")
@@ -126,6 +136,8 @@ class FranchiseApplicationPartners(models.Model):
                 rec.color = 7
             elif rec.status == 'done':
                 rec.color = 10
+            elif rec.status == 'inactive':
+                rec.color = 3
 
     def check(self):
         if self.status == 'draft':
@@ -152,40 +164,46 @@ class FranchiseApplicationPartners(models.Model):
             res_users.write({'hide_menu_ids': [(4, rec)]})
 
     def approve(self):
-        invoice = self.env.ref("account.group_account_manager")
-        sale = self.env.ref("sales_team.group_sale_manager")
-        action = self.env['ir.actions.actions'].search(
-            [('name', '=', 'Franchise Dashboard')])
-        res_users = self.env['res.users'].create({
-            'name': self.name,
-            'login': self.email,
-            'email': self.email,
-            'sel_groups_1_9_10': '1',
-            'panchayat_admin': True,
-            'local_body': self.local_body,
-            'district_id': self.district_id.id,
-            'panchayat_id': self.panchayat_id.id,
-            'reference': self.my_referal,
-            'groups_id': [(4, invoice.id), (4, sale.id)],
-            'action_id': action.id,
-        })
-        if res_users:
-            self.hide_menus(res_users)
-            res_users.action_reset_password()
-        if self.referd_by:
-            referense_user = self.env['res.users'].search(
-                [('reference', '=', self.referd_by)]
-            )
-            res_users.write({
-                'referd_by_id': referense_user.id,
-            })
-        self.write({'related_users_id': res_users.id})
-        if self.status == 'progress':
+        if self.related_users_id:
+            self.related_users_id.write({'active': True})
             self.status = 'done'
+        else:
+            invoice = self.env.ref("account.group_account_manager")
+            sale = self.env.ref("sales_team.group_sale_manager")
+            action = self.env['ir.actions.actions'].search(
+                [('name', '=', 'Franchise Dashboard')])
+            res_users = self.env['res.users'].create({
+                'name': self.name,
+                'login': self.email,
+                'email': self.email,
+                'sel_groups_1_9_10': '1',
+                'application_partner_id': self.id,
+                'is_franchise': True,
+                'local_body': self.local_body,
+                'district_id': self.district_id.id,
+                'panchayat_id': self.panchayat_id.id,
+                'reference': self.my_referal,
+                'groups_id': [(4, invoice.id), (4, sale.id)],
+                'action_id': action.id,
+            })
+            # if res_users:
+                # self.hide_menus(res_users)
+                # res_users.action_reset_password()
+            if self.referd_by:
+                referense_user = self.env['res.users'].search(
+                    [('reference', '=', self.referd_by)]
+                )
+                res_users.write({
+                    'referd_by_id': referense_user.id,
+                })
+            self.write({'related_users_id': res_users.id})
+            if self.status == 'progress':
+                self.status = 'done'
 
     def cancel(self):
-        if self.status == 'done':
-            self.status = 'draft'
+        if self.status == 'done' and self.related_users_id:
+            self.related_users_id.write({'active': False})
+            self.status = 'inactive'
 
 
 class PaymentDetailsInherit(models.Model):

@@ -10,7 +10,7 @@ class PaymentRenewal(models.Model):
 
     renewal = fields.Selection([('month', 'Monthly'), ('year', 'Yearly')],
                                default="month")
-    payment_success_date = fields.Datetime(string='payment success Date')
+    payment_success_date = fields.Date(string='payment success Date')
     renewal_date = fields.Date(string='Next renewal date')
     # razor_pay_id = fields.Char(string="Raz Payment Id")
     state = fields.Selection(
@@ -36,8 +36,8 @@ class PaymentRenewal(models.Model):
             print(renewal.renewal_date)
             if date.today() < renewal.renewal_date:
                 renewal.application_partner_id.send_payment_link()
+                renewal.application_partner_id.cancel()
                 renewal.set_send()
-                self.archive_user(renewal.user_id.id)
 
     def prepare_renewal_vals(self, record):
         """preparing values to create renewal"""
@@ -61,22 +61,8 @@ class PaymentRenewal(models.Model):
         renewal = self.create(vals)
         renewal.write({'application_partner_id': int(application_id)})
         if renewal:
-            self.un_archive_user(renewal.user_id.id)
+            renewal.application_partner_id.approve()
         return renewal if renewal else False
-
-    def archive_user(self, user_id):
-        """archive a user in res_users"""
-        res_user = self.env['res.users']
-        user = res_user.search([('id', '=', user_id)])
-        user.write({'active': False})
-        return True if not user.active else False
-
-    def un_archive_user(self, user_id):
-        """unarchive user in res_users"""
-        res_user = self.env['res.users']
-        user = res_user.search([('id', '=', user_id)])
-        user.write({'active': True})
-        return True if user.active else False
 
     def get_renewal_date(self, application_partner):
         """return renewal date by month oru by year"""

@@ -52,9 +52,9 @@ class ProductTemplateInherit(models.Model):
         product = self.env['product.product'].search(
             [('id', '=', int(vals.get('product_id')))], limit=1)
         if product:
-            self.env['sale.order.line'].create({'product_id': product.id,
-                                                'order_id': int(
-                                                    vals.get('order_id'))})
+            # self.env['sale.order.line'].create({'product_id': product.id,
+            #                                     'order_id': int(
+            #                                         vals.get('order_id'))})
             vals = {
                 'id': product.id,
                 'name': product.name,

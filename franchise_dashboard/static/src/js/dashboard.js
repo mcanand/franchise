@@ -76,6 +76,15 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
               }
         }, 2000);
         },
+        get_random_color:function() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++ ) {
+                color += letters[Math.round(Math.random() * 15)];
+            }
+            var bg = "background-color:"+color+" !important;"
+            return bg;
+        },
         _render_dash_home:function(){
              var self = this
                 this._rpc({
@@ -185,35 +194,36 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
         _click_link_select:function(event){
             var self = this
             var product_id = $(event.target).val()
-            if(this.order != false){
+//            if(this.order != false){
                 /*if current_order_detail present*/
                 self.current_product_id = product_id
-                var vals = {'order_id':this.order.id,'product_id':product_id}
+//                var vals = {'order_id':this.order.id,'product_id':product_id}
+                var vals = {'product_id':product_id}
                 this._rpc({
                     model: 'product.product',
                     method: 'get_product_create_line',
                     args: [[],vals],
                 }).then(function(result) {
                     if(result != false){
-                         $('.dash_link_popup').prepend(qweb.render('link_pop_up', {
-                            widget: self
-                        }));
-                        $('.content_load').children().remove()
+//                         $('.dash_link_popup').prepend(qweb.render('link_pop_up', {
+//                            widget: self
+//                        }));
+//                        $('.content_load').children().remove()
 //                        $('.content_load').append('<iframe src="'+result.url+'"></iframe>')
                         window.open(result.url, '_blank');
-                        $('.link_pop_up_check').removeClass('d-none')
-                        $('.continue_session').removeClass('d-none')
-                        self._render_dash_home()
+//                        $('.link_pop_up_check').removeClass('d-none')
+//                        $('.continue_session').removeClass('d-none')
+//                        self._render_dash_home()
                     }
                 });
-            }
-            else{
-               self.current_product_id = product_id
-               $('.dash_link_popup').prepend(qweb.render('link_pop_up', {
-                        widget: self
-               }));
+//            }
+//            else{
+//               self.current_product_id = product_id
+//               $('.dash_link_popup').prepend(qweb.render('link_pop_up', {
+//                        widget: self
+//               }));
                /*next button goes to _click_submit_values*/
-            }
+
         },
         _click_submit_values:function(){
             var name = $("input[name='name']").val()

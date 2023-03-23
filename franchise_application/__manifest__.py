@@ -17,7 +17,17 @@
         'views/res_partner.xml',
         'views/res_users.xml',
         'views/res_company.xml',
+        'views/service_list.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            '/franchise_application/static/src/js/*.js',
+            '/franchise_application/static/src/css/*.css',
+        ],
+        'web.assets_qweb': [
+            '/franchise_application/static/src/xml/*.xml',
+        ],
+    },
     'installable': True,
     'application': True,
     'license': 'LGPL-3',

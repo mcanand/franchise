@@ -12,11 +12,11 @@
                     <button name="send_payment_link" string="Send Payment Link"
                             type="object"
                             t-att-class="oe_highlight if status == progress"
-                            attrs="{'invisible': [('status', '!=', 'progress')]}"/>
+                            attrs="{'invisible': [('status', '!=', 'progress'),('status', '!=', 'inactive')]}"/>
                     <button name="approve" string="Approve" type="object"
                             t-att-class="oe_highlight'"
-                            attrs="{'invisible': [('status', '!=', 'progress')]}"/>
-                    <button name="cancel" string="Cancel" type="object"
+                            attrs="{'invisible': [('status', '!=', 'progress'),('status', '!=', 'inactive')]}"/>
+                    <button name="cancel" string="deactivate" type="object"
                             t-att-class="oe_highlight"
                             attrs="{'invisible': [('status', '!=', 'done')]}"/>
 
@@ -39,7 +39,7 @@
                             <field name="mobile"/>
                             <field name="email"/>
                             <field name="known_by"/>
-                            <field name="dob"/>
+                            <field name="dob" required="False"/>
                             <field name="related_users_id"/>
                         </group>
                     </group>
@@ -50,7 +50,7 @@
                         </page>
                         <page string="Renewals">
                             <field name="payment_renewal_ids" >
-                                <tree edit="False" create="0">
+                                <tree>
                                     <field name="renewal"/>
                                     <field name="renewal_date"/>
                                     <field name="application_partner_id"/>
@@ -179,6 +179,14 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">franchise.application.partner</field>
         <field name="domain">[('status','=','progress')]</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+    <record id="action_view_franchise_application_inactive"
+            model="ir.actions.act_window">
+        <field name="name">Inactive Franchise</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">franchise.application.partner</field>
+        <field name="domain">[('status','=','inactive')]</field>
         <field name="view_mode">kanban,tree,form</field>
     </record>
     <data>

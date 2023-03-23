@@ -19,10 +19,21 @@ SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error',
                           'redirect', 'redirect_hostname', 'email', 'name',
                           'partner_id',
                           'password', 'confirm_password', 'city', 'country_id',
-                          'lang', 'phone','renewal'}
+                          'lang', 'phone', 'renewal'}
 
 
 class RegistrationController(http.Controller):
+    @http.route('/our/services', type="http", auth="public", website=True)
+    def render_services(self, **kwargs):
+        template = 'registration.franchise_services'
+        services = request.env['web.service.list'].sudo().search([])
+        return request.render(template, {'services': services})
+
+    @http.route('/our/csps', type="http", auth="public", website=True)
+    def render_csps(self, **kwargs):
+        template = 'registration.franchise_csps_list'
+        return request.render(template, {'district': self.get_district()})
+
     @http.route('/franchise/applied', type="http", auth="public", website=True)
     def registration_redirect(self, **kwargs):
         template = 'registration.register_redirect_template'
@@ -49,7 +60,7 @@ class RegistrationController(http.Controller):
             'franchise.application.partner'].sudo().create({
             "name": args.get('name'),
             "dob": args.get('dob'),
-            "renewal":args.get('renewal'),
+            "renewal": args.get('renewal'),
             "email": args.get('email'),
             "mobile": args.get('phone'),
             "local_body": args.get('local_body'),
@@ -119,3 +130,19 @@ class RegistrationController(http.Controller):
         if not application_user:
             return False
         return True
+
+    @http.route('/get/cpcs', type='json', auth="public")
+    def _get_cpcs(self, id, **args):
+        application = request.env['franchise.application.partner'].sudo()
+        cpcs = application.search_read(
+            [('district_id', '=', int(id)), ('status', '=', 'done')])
+        return cpcs if cpcs else False
+
+    def get_district(self, **args):
+        country = request.env['res.country'].sudo(). \
+            search([('code', '=', 'IN')])
+        state = request.env['res.country.state'].sudo(). \
+            search([('name', '=', 'Kerala')], limit=1)
+        district = request.env['res.country.state.district'].sudo(). \
+            search([('state_id', '=', state.id)])
+        return district if district else False

@@ -265,16 +265,23 @@ body .f_dash table,body .f_dash tr,body .f_dash th, body .f_dash td{
 .c_pointer{
     cursor:pointer;
 }
-.link_select{
-    height: 10vh;
-    outline: none;
-    border:none;
-    border-radius:50px;
-    transition:0.3s;
+.link_select {
+	outline: none;
+	border: none;
+	border-radius: 0px;
+	transition: 0.3s;
+	font-size: 27px;
+	line-break: anywhere;
+	padding: 18px;
+	height: 20vh;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
-.link_select:hover{
+.dash_home .link_select:hover{
     transition:0.3s;
     box-shadow:3px 3px 7px -3px #333;
+    background-color:white !important;
 }
 
 /*customers view*/

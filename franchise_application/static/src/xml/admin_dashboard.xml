@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="admin_dashboard">
+        <div class="bg-dark w-100" style="height:100vw;">
+            <style>
+                .o_action_manager{
+                    background-color:#343a40 !important;
+                }
+            </style>
+        <div class="admin_dash container">
+
+        </div>
+        </div>
+    </t>
+    <t t-name="dash_views">
+        <div class="row mt-5">
+                <div class="col-md-4 text-center p-2" >
+                    <button data-val="active" id="fb" class="shadow p-5 bg-light btn rounded-0 w-100 text-primary">
+                        <h1 data-val="active"><t t-esc="widget.dash_details.active_franchise"/></h1>
+                        <h2 data-val="active">Active Franchises</h2>
+                    </button>
+                </div>
+                <div class="col-md-4 text-center p-2">
+                    <button data-val="inactive" id="fb" class="shadow p-5 bg-light btn w-100 rounded-0 text-primary">
+                        <h1 data-val="inactive"><t t-esc="widget.dash_details.inactive_franchise"/> </h1>
+                        <h2 data-val="inactive">Inactive Franchises</h2>
+                    </button>
+                </div>
+                <div class="col-md-4 text-center p-2">
+                    <button data-val="renewal" id="fb" class="shadow p-5 w-100 btn bg-light rounded-0 text-primary">
+                        <h1 data-val="renewal"><t t-esc="widget.dash_details.renew_in_3"/></h1>
+                        <h2 data-val="renewal">Renewal in 3 days</h2>
+                    </button>
+                </div>
+
+            </div>
+        <div class="record_tables">
+
+        </div>
+    </t>
+    <t t-name="admin_dash_table">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Place</th>
+                <th>District</th>
+                <th>Mobile</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody style="height:auto;overflow-y:scroll;">
+            <t t-if="widget.record">
+                <t t-foreach="widget.record" t-as="rec">
+                    <tr>
+                        <td><t t-esc="rec.name"/></td>
+                        <td><t t-esc="rec.location"/></td>
+                        <td><t t-esc="rec.district_id[1]"/> </td>
+                        <td><t t-esc="rec.mobile"/></td>
+                        <td><t t-esc="rec.email"/></td>
+                        <td><button t-att-data-id="rec.id" class="btn-primary f_details">details</button></td>
+                        <t t-if="widget.fb_select == 'renewal'">
+                        <td><button t-att-data-id="rec.id" class="btn-primary f_send_link">send payment link</button></td>
+                        </t>
+                    </tr>
+                </t>
+            </t>
+            </tbody>
+        </table>
+    </t>
+</templates>

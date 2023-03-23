@@ -7,16 +7,19 @@
     'summary': 'Registration',
     'description': """register a franchise in emithram(form)""",
     'category': '',
-    'depends': ['website', 'country_locations', 'web', 'franchise_application','em_frontend'],
+    'depends': ['website', 'country_locations', 'web', 'franchise_application',
+                'em_frontend'],
     'data': [
         'views/registration_template.xml',
         'views/register_redirect.xml',
+        'views/csps.xml',
+        'views/service.xml',
     ],
     'assets': {
         'web.assets_frontend': [
             '/registration/static/css/registration.css',
             '/registration/static/css/popup.css',
-            '/registration/static/js/registration.js',
+            '/registration/static/js/*.js',
         ],
     },
     'demo': [],

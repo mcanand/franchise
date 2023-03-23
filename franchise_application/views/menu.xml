@@ -95,23 +95,43 @@
             </p>
         </field>
     </record>
-
+    <record id="action_web_service_list"
+            model="ir.actions.act_window">
+        <field name="name">Web Service LIst</field>
+        <field name="res_model">web.service.list</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                create new service list
+            </p>
+        </field>
+    </record>
+    <record id="action_admin_dashboard" model="ir.actions.client">
+        <field name="name">Admin Dashboard</field>
+        <field name="tag">admin_dashboard_tag</field>
+    </record>
     <menuitem id="menu_franchisee" name="Franchise">
+        <menuitem name="Dashboard" id="admin_dashboard_franchise" sequence="1"
+                  action="action_admin_dashboard"/>
         <menuitem name="Applications"
-                  sequence="0"
+                  sequence="2"
                   id="menu_franchise_applications">
             <menuitem name="Franchises"
                       sequence="0"
                       id="menu_franchise_applications_partners"
                       action="action_view_franchise_application"/>
             <menuitem name="applications pending to check"
-                      sequence="0"
+                      sequence="1"
                       id="menu_franchise_applications_draft"
                       action="action_view_franchise_application_draft"/>
             <menuitem name="Checked Application"
-                      sequence="0"
+                      sequence="2"
                       id="menu_franchise_applications_checked"
                       action="action_view_franchise_application_progress"/>
+            <menuitem name="Inactive Franchise"
+                      sequence="3"
+                      id="menu_franchise_applications_inactive"
+                      action="action_view_franchise_application_inactive"/>
         </menuitem>
         <menuitem id="franchise_services" name="Services">
             <menuitem id="links_add_view" name="Web Links"
@@ -122,6 +142,8 @@
                       action="action_services_provided_franchise"/>
             <menuitem id="franchise_invoice_menu" name="Invoices"
                       action="action_invoice_franchise"/>
+            <menuitem id="franchise_web_service_list" name="web Service List"
+                      action="action_web_service_list"/>
         </menuitem>
 
         <menuitem id="website_users_partner_menu" name="Users &amp; Companies">
@@ -134,13 +156,23 @@
                       action="action_companies_franchise"/>
         </menuitem>
         <menuitem id="franchise_config" name="configuration">
-            <menuitem id="payment_acquirer_franchise_menu" action="action_payment_acquirer_franchise" name="payment acquirer"/>
+            <menuitem id="payment_acquirer_franchise_menu"
+                      action="action_payment_acquirer_franchise"
+                      name="payment acquirer"/>
             <menuitem id="payment_detail_franchise_menu" name="Payment Details"
                       action="raz_pay.action_payment_details_franchise"/>
-            <menuitem id="franchise_district" action="country_locations.action_country_state_district" name="Districts"/>
-            <menuitem id="franchise_panchayat" action="country_locations.action_country_state_district_panchayat" name="Panchayats"/>
-            <menuitem id="franchise_municipality" action="country_locations.action_country_state_district_municipality" name="Municipality"/>
-            <menuitem id="franchise_corporation" action="country_locations.action_country_state_district_corporation" name="Corporations"/>
+            <menuitem id="franchise_district"
+                      action="country_locations.action_country_state_district"
+                      name="Districts"/>
+            <menuitem id="franchise_panchayat"
+                      action="country_locations.action_country_state_district_panchayat"
+                      name="Panchayats"/>
+            <menuitem id="franchise_municipality"
+                      action="country_locations.action_country_state_district_municipality"
+                      name="Municipality"/>
+            <menuitem id="franchise_corporation"
+                      action="country_locations.action_country_state_district_corporation"
+                      name="Corporations"/>
         </menuitem>
     </menuitem>
 

@@ -18,6 +18,8 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
             'click .home_run' : '_render_dash_home',
             'click .menu_item' : '_render_links_space',
             'click .f_settings':'_render_settings',
+            'click .f_download':'_render_downloads',
+            'click .file_download':'_file_download',
 //            'click .harmburger': '_click_side_nav_open',
             'click .link_select': '_click_link_select',
             'click .user_detail_form button': '_click_submit_values',
@@ -129,6 +131,36 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
             $('.action_space').prepend(qweb.render('franchise_settings', {
                 widget: self
             }))
+        },
+        _render_downloads:function(){
+            var self = this
+            this._rpc({
+                    route: '/franchise/files',
+                    params: {}
+                }).then(function(result){
+                    if(result){
+                        self.files = result
+                        $('.action_space').html('')
+                        $('.action_space').prepend(qweb.render('downloads', {
+                            widget: self
+                        }))
+                    }
+                });
+        },
+        _file_download:function(events){
+            var self = this
+            this.modelName = 'franchise.files'
+            this.id = $(events.target).attr('data-id')
+            var file_id = $(events.target).attr('data-id')
+            window.location = `/web/content/${this.modelName}/${this.id}/file?download=true`;
+//            alert(file_id)
+//            this._rpc({
+//                    route: '/files/download',
+//                    params: {file_id:file_id}
+//                }).then(function(result){
+////                    self.do_action({type: 'ir.actions.act_url', url: result});
+//
+//                });
         },
         _render_links_space:function(events){
             var self = this

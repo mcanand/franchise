@@ -3,7 +3,7 @@ import json
 
 from odoo import http
 from odoo.http import request
-
+import base64
 
 class SaveCustomerOrderCreation(http.Controller):
     @http.route('/save/customer/create/order', type='json', auth="user")
@@ -69,3 +69,28 @@ class SaveCustomerOrderCreation(http.Controller):
         user = request.env['res.users'].sudo().search_read(
             [('id', '=', user_id)])
         return user
+
+    @http.route('/franchise/files', type='json', auth="user")
+    def Load_download_files(self):
+        files = request.env['franchise.files'].sudo().search_read([])
+        return files
+
+    @http.route('/file/download', type='json', auth="user")
+    def download(self, file_id):
+        return self.download_file(file_id)
+
+    def download_file(self, file_id):
+        files = request.env['franchise.files'].sudo().search(
+            [('id', '=', int(file_id))])
+        result = base64.b64encode(files.file.read())
+        base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        attachment_obj = request.env['ir.attachment'].sudo()
+        attachment_id = attachment_obj.create(
+            {'name': files.name, 'datas_fname': files.name, 'datas': result})
+        download_url = '/web/content/' + str(attachment_id.id) + '?download=true'
+        # url = str(base_url)+"web/content/?model=franchise.files&id="+str(files.id)+"&filename_field=file&field=file&download=true&name="+files.file,
+        return {
+            "type": "ir.actions.act_url",
+            "url": str(base_url) + str(download_url),
+            "target": "new",
+        }

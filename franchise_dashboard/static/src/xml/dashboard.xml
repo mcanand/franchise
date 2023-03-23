@@ -29,9 +29,12 @@
                                 </div>
                             </li>
                         </t>
-<!--                    <li class="p-1 d-block f_settings menu_item d-none">-->
-<!--                            <div class="categ_menu active p-2"><span class="menu_text">Settings</span></div>-->
-<!--                        </li>-->
+                    <!--                    <li class="p-1 d-block f_settings menu_item d-none">-->
+                    <!--                            <div class="categ_menu active p-2"><span class="menu_text">Settings</span></div>-->
+                    <!--                        </li>-->
+                    <li class="p-1 d-block f_download menu_item d-none">
+                            <div class="categ_menu p-2"><span class="menu_text">Download</span></div>
+                        </li>
                     </ul>
             </div>
             <div class="col action_space" id="main">
@@ -79,18 +82,18 @@
                                     </tr>
                                 </table>
                             </div>
-<!--                        <div class="col-md-4 align-self-center mt-3">-->
-<!--                                <button class="w-100 f_15 clr_com home_menu"-->
-<!--                                        value="partner">Customer</button>-->
-<!--                            </div>-->
-<!--                        <div class="col-md-4 align-self-center mt-3">-->
-<!--                                <button class="w-100 f_15 clr_com home_menu"-->
-<!--                                        value="sales">Sales</button>-->
-<!--                            </div>-->
-<!--                        <div class="col-md-4 align-self-center mt-3">-->
-<!--                                <button class="w-100 f_15 clr_com home_menu"-->
-<!--                                        value="invoice">Invoices</button>-->
-<!--                            </div>-->
+                        <!--                        <div class="col-md-4 align-self-center mt-3">-->
+                        <!--                                <button class="w-100 f_15 clr_com home_menu"-->
+                        <!--                                        value="partner">Customer</button>-->
+                        <!--                            </div>-->
+                        <!--                        <div class="col-md-4 align-self-center mt-3">-->
+                        <!--                                <button class="w-100 f_15 clr_com home_menu"-->
+                        <!--                                        value="sales">Sales</button>-->
+                        <!--                            </div>-->
+                        <!--                        <div class="col-md-4 align-self-center mt-3">-->
+                        <!--                                <button class="w-100 f_15 clr_com home_menu"-->
+                        <!--                                        value="invoice">Invoices</button>-->
+                        <!--                            </div>-->
                         <!--<div class="col-md-12 text-center align-self-center">
                                 <div class="content_card mt-5">
                                     <i class="fa fa-gear"/>
@@ -237,7 +240,8 @@
             <div class="row">
                 <t t-foreach="widget['products']" t-as="product">
                     <div class="col-md-4 mt-3">
-                        <button class="w-100 clr_com f_15 link_select bg-white" t-att-value="product.id">
+                        <button class="w-100 clr_com f_15 link_select bg-white"
+                                t-att-value="product.id">
 <!--                                t-att-style="widget.get_random_color()"-->
                             <span t-att-value="product.id"><i t-att-value="product.id" class="fa fa-link"/></span>
                             <t t-esc="product.name"/>
@@ -563,5 +567,24 @@
                     </tr>
                 </t>
             </table>
+    </t>
+    <t t-name="downloads">
+        <div class="dash_home p-3">
+            <div class="row p-3">
+                <h1 class="text-dark">Downloads</h1>
+                <table class="table">
+                    <tr class="text-dark">
+                        <th>File Name</th>
+                        <th></th>
+                    </tr>
+                    <t t-foreach="widget.files" t-as="files">
+                        <tr class="text-dark">
+                            <td><t t-esc="files.name"/></td>
+                            <td><button class="btn-primary p-2 file_download" t-att-data-id="files.id">Download Now</button></td>
+                        </tr>
+                    </t>
+                </table>
+            </div>
+        </div>
     </t>
 </templates>

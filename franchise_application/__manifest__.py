@@ -18,6 +18,7 @@
         'views/res_users.xml',
         'views/res_company.xml',
         'views/service_list.xml',
+        'views/franchise_files.xml',
     ],
     'assets': {
         'web.assets_backend': [

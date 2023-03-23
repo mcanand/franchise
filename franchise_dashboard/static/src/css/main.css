@@ -268,7 +268,7 @@ body .f_dash table,body .f_dash tr,body .f_dash th, body .f_dash td{
 .link_select {
 	outline: none;
 	border: none;
-	border-radius: 0px;
+	border-radius: 10px;
 	transition: 0.3s;
 	font-size: 27px;
 	line-break: anywhere;
@@ -277,6 +277,7 @@ body .f_dash table,body .f_dash tr,body .f_dash th, body .f_dash td{
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	text-align:left !important;
 }
 .dash_home .link_select:hover{
     transition:0.3s;

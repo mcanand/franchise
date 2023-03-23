@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_franchise_files_form" model="ir.ui.view">
+        <field name="name">Franchisee Files form</field>
+        <field name="model">franchise.files</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="name"/>
+                <field name="file"/>
+            </form>
+        </field>
+    </record>
+    <record id="view_franchise_files_tree" model="ir.ui.view">
+        <field name="name">Franchisee Files</field>
+        <field name="model">franchise.files</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name"/>
+                <field name="file"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

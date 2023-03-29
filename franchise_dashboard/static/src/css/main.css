@@ -114,6 +114,7 @@ body .f_dash table,body .f_dash tr,body .f_dash th, body .f_dash td{
   transition: 0.5s;
   padding-top: 60px;
     background-image:url("/franchise_dashboard/static/src/image/bg01.jpg");
+    background-size:cover;
 }
 .sidenav .harmburger{
     font-size:30px;
@@ -159,6 +160,7 @@ body .f_dash table,body .f_dash tr,body .f_dash th, body .f_dash td{
     height:100%;
     overflow-y:scroll;
     overflow-x:hidden;
+    background-size:cover;
     background-image:url("/franchise_dashboard/static/src/image/bg01.jpg");
 }
 .dash_home::-webkit-scrollbar {

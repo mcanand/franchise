@@ -20,7 +20,7 @@
                          style="background-image: url(&quot;/web_editor/shape/web_editor/Airy/13_001.svg?c1=%23FFFFFF&amp;c4=%23FFFFFF&quot;);"></div>
                     <div class="s_allow_columns container">
                         <h1 style="text-align: center;">
-                            E-Mitram Registration
+                            Digigramam-Registration
                         </h1>
                     </div>
                 </section>
@@ -49,20 +49,20 @@
                                                    t-att-autofocus="'autofocus' if login and not only_passwords else None"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3 field-dob">
-                                            <label for="dob">Your Date of
-                                                Birth
-                                            </label>
-                                            <input type="date" name="dob"
-                                                   id="dob"
-                                                   class="form-control form-control-sm"
-                                                   autofocus="autofocus"
-                                                   placeholder="Date of Birth"
-                                                   autocapitalize="off"
-                                                   required="required"/>
-                                        </div>
-                                    </div>
+<!--                                    <div class="col-md-6">-->
+<!--                                        <div class="mb-3 field-dob">-->
+<!--                                            <label for="dob">Your Date of-->
+<!--                                                Birth-->
+<!--                                            </label>-->
+<!--                                            <input type="date" name="dob"-->
+<!--                                                   id="dob"-->
+<!--                                                   class="form-control form-control-sm"-->
+<!--                                                   autofocus="autofocus"-->
+<!--                                                   placeholder="Date of Birth"-->
+<!--                                                   autocapitalize="off"-->
+<!--                                                   required="required"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                     <div class="col-md-6">
                                         <div class="mb-3 field-email">
                                             <label for="email">Your email
@@ -94,25 +94,25 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="mb-3 local_Body">
-                                            <label for="local_body">Local
-                                                body
-                                            </label>
-                                            <select class="form-control"
-                                                    name="local_body">
-                                                <option t-att-value="panchayath">
-                                                    panchayath
-                                                </option>
-                                                <option t-att-value="municipality">
-                                                    municipality
-                                                </option>
-                                                <option t-att-value="corporation">
-                                                    corporation
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
+<!--                                    <div class="col-md-6">-->
+<!--                                        <div class="mb-3 local_Body">-->
+<!--                                            <label for="local_body">Local-->
+<!--                                                body-->
+<!--                                            </label>-->
+<!--                                            <select class="form-control"-->
+<!--                                                    name="local_body">-->
+<!--                                                <option t-att-value="panchayath">-->
+<!--                                                    panchayath-->
+<!--                                                </option>-->
+<!--                                                <option t-att-value="municipality">-->
+<!--                                                    municipality-->
+<!--                                                </option>-->
+<!--                                                <option t-att-value="corporation">-->
+<!--                                                    corporation-->
+<!--                                                </option>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
 
                                     <div class="col-md-6">
                                         <label for="district">District</label>
@@ -128,15 +128,15 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <label for="panchayat">Panchayath
-                                        </label>
-                                        <div class="mb-3 field-panchayath">
-                                            <select class='form-select form-control-md form-control'
-                                                    aria-label='select'
-                                                    name='panchayat'/>
-                                        </div>
-                                    </div>
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label for="panchayat">Panchayath-->
+<!--                                        </label>-->
+<!--                                        <div class="mb-3 field-panchayath">-->
+<!--                                            <select class='form-select form-control-md form-control'-->
+<!--                                                    aria-label='select'-->
+<!--                                                    name='panchayat'/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                     <div class="col-md-6">
                                         <div class="mb-3 field-location">
                                             <label for="location">Preferred

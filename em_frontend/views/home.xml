@@ -64,7 +64,87 @@
                 </section>
 
                 <t t-call="em_frontend.masonry_custom"/>
-                <t t-call="em_frontend.brands_custom"/>
+<!--                <t t-call="em_frontend.brands_custom"/>-->
+                <section class="s_references pt48 pb32 o_cc o_cc2 o_colored_level" data-snippet="s_references"
+                 data-name="References" style="background-image: none;background-color:#FFFFFF;">
+            <div class="container">
+                <h2 style="text-align: center;" class="o_default_snippet_text">Our Associates</h2>
+                <div class="row">
+                    <div class="col-lg-2 col-6 pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_demo_image_1" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="97"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_1.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                    <div class="col-lg-2 col-6 pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_demo_image_2" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="98"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_2.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                    <div class="col-lg-2 col-6 pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_demo_image_3" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="99"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_3.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                    <div class="col-lg-2 col-6 pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_demo_image_4" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="100"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_4.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                    <div class="col-lg-2 col-6 pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_demo_image_5" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="101"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_5.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                    <div class="col-lg-2 col-6  pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_default_image_6" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="102"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_6.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                    <div class="col-lg-2 col-6  pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_default_image_6" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="102"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_6.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                    <div class="col-lg-2 col-6  pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_default_image_6" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="102"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_6.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                    <div class="col-lg-2 col-6  pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_default_image_6" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="102"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_6.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                    <div class="col-lg-2 col-6  pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_default_image_6" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="102"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_6.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                    <div class="col-lg-2 col-6  pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_default_image_6" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="102"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_6.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                    <div class="col-lg-2 col-6  pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_default_image_6" class="img img-fluid mx-auto" alt=""
+                             loading="lazy" data-original-id="102"
+                             data-original-src="/website/static/src/img/snippets_demo/s_references_6.png"
+                             data-mimetype="image/png" style=""/>
+                    </div>
+                </div>
+            </div>
+        </section>
                 <t t-call="em_frontend.header_flip"/>
             </div>
         </xpath>

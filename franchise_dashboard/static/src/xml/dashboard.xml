@@ -331,7 +331,8 @@
         </div>
         <style>
             .modal-content{
-                background-image:url("/franchise_dashboard/static/src/image/bg01.jpg");
+                background-image:url("/franchise_dashboard/static/src/image/bg01.jpg") !important;
+
             }
             .buttons_space{
             position:fixed;

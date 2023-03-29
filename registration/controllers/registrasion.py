@@ -59,13 +59,13 @@ class RegistrationController(http.Controller):
         application_id = request.env[
             'franchise.application.partner'].sudo().create({
             "name": args.get('name'),
-            "dob": args.get('dob'),
+            # "dob": args.get('dob'),
             "renewal": args.get('renewal'),
             "email": args.get('email'),
             "mobile": args.get('phone'),
-            "local_body": args.get('local_body'),
+            # "local_body": args.get('local_body'),
             "district_id": args.get('district'),
-            "panchayat_id": args.get('panchayat'),
+            # "panchayat_id": args.get('panchayat'),
             "location": args.get('location'),
             "known_by": args.get('known_by'),
             "my_referal": referal_code,

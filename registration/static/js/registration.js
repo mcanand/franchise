@@ -48,7 +48,7 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
     _checkpartner:function(){
         var self = this;
         var email = $('input[name="email"]').val()
-        var dob = $('input[name="dob"]').val()
+//        var dob = $('input[name="dob"]').val()
         var phone = $('input[name="phone"]').val()
         var referal = $('input[name="referd_by"]').val()
         var msg = $('#msg-cls')
@@ -58,14 +58,14 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
             msg.html("Check your email address")
             self.show_popup()
         }
-        if(!dob){
-            msg.html("Enter Your Date Of Birth")
-            self.show_popup()
-        }
-        if(this._get_age(dob)<18){
-            msg.html("You Are not able apply because you are below 18")
-            self.show_popup()
-        }
+//        if(!dob){
+//            msg.html("Enter Your Date Of Birth")
+//            self.show_popup()
+//        }
+//        if(this._get_age(dob)<18){
+//            msg.html("You Are not able apply because you are below 18")
+//            self.show_popup()
+//        }
         if(phone.length < 10){
             msg.html("Check your mobile number")
             self.show_popup()
@@ -74,7 +74,7 @@ publicWidget.registry.change_panchayath_filter = publicWidget.Widget.extend ({
             msg.html("please enter valid email")
             this.show_popup()
         }
-        if ($('input[name="name"]').val() == "" || $('input[name="dob"]').val() =="" || phone=="" ||
+        if ($('input[name="name"]').val() == "" || phone=="" ||
             $('input[name="location"]').val() == "" || email==""){
                     msg.html("Required Details Not Filled")
                     self.show_popup()

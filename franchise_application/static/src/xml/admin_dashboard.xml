@@ -39,7 +39,7 @@
         </div>
     </t>
     <t t-name="admin_dash_table">
-        <table class="table">
+        <table class="table admin_dash_details_table" >
             <thead>
             <tr>
                 <th>Name</th>

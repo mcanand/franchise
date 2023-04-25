@@ -236,8 +236,24 @@
         </div>
     </t>
     <t t-name="dash_links">
+        <style>
+            .search{
+                padding:8px;
+                font-size: 16px;
+                border-radius:10px;
+                border:none;
+            }
+        </style>
         <div class="dash_home p-5">
             <div class="row">
+                <div class="col"></div>
+                <div class="col">
+                    <input type="text" class="product_search_b_catefg search" placeholder="search..."/>
+                    <input type="hidden" class="category_id" t-att-value="widget['category_id']"/>
+                </div>
+            </div>
+            <t t-if="widget['products']">
+                <div class="row process_links">
                 <t t-foreach="widget['products']" t-as="product">
                     <div class="col-md-4 mt-3">
                         <button class="w-100 clr_com f_15 link_select bg-white"
@@ -249,6 +265,7 @@
                     </div>
                 </t>
             </div>
+            </t>
         </div>
         <div class="dash_link_popup"/>
     </t>

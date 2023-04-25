@@ -41,6 +41,7 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
             'mouseover .sale_line_view': '_hover_sale_line_view',
             'mouseout .sale_line_view': '_hoverout_sale_line_view',
             'keyup #mobile':'_keyup_input_mobile',
+            'keyup .product_search_b_catefg': '_search_product_by_category',
         },
         init: function(parent, context) {
             this._super(parent, context);
@@ -173,6 +174,7 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                 }).then(function(result) {
                     if(result){
                           self.products = result
+                          self.category_id = category_id
                          $('.action_space').html('')
                          $('.action_space').prepend(qweb.render('dash_links', {
                                 widget: self
@@ -529,6 +531,30 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                 }
             });
 
+        },
+        _search_product_by_category:function(event){
+            var input_val = $(event.target).val()
+            var category_id = this.category_id
+            var self = this
+            var vals = {
+                'input_val':input_val,
+                'category_id':category_id
+            }
+//
+//            process_links
+            this._rpc({
+                    route: '/search/product',
+                    params: {vals: vals}
+                }).then(function(result) {
+                    self.products = result
+//                    $(".process_links").load(location.href + " .process_links");
+                    $('.action_space').html('')
+                     $('.action_space').prepend(qweb.render('dash_links', {
+                            widget: self
+                     }))
+                     $('.product_search_b_catefg').val(input_val)
+                     $('.product_search_b_catefg').focus()
+                });
         },
     });
 

@@ -5,6 +5,7 @@ from odoo import http
 from odoo.http import request
 import base64
 
+
 class SaveCustomerOrderCreation(http.Controller):
     @http.route('/save/customer/create/order', type='json', auth="user")
     def save_customer_create_order(self, vals):
@@ -62,6 +63,26 @@ class SaveCustomerOrderCreation(http.Controller):
             return vals
         else:
             return False
+
+    @http.route('/search/product', type='json', auth='user')
+    def search_product(self, vals):
+        categ_id = request.env['product.category'].sudo().search(
+            [('id', '=', int(vals.get('category_id')))])
+        products = request.env['product.product'].sudo().search(
+            [('categ_id.id', '=', categ_id.id),
+             ('name', 'ilike', vals.get('input_val'))])
+        product_vals = []
+        for val in products:
+            product = {
+                'id': val.id,
+                'name': val.name,
+                'url': val.link_url,
+                'image': val.image_1920,
+                'categ': val.categ_id.name
+            }
+            product_vals.append(product)
+        print(product_vals)
+        return product_vals
 
     @http.route('/load/settings', type='json', auth="user")
     def load_settings(self):

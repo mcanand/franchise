@@ -41,6 +41,7 @@
                             <field name="known_by"/>
                             <field name="dob" required="False"/>
                             <field name="related_users_id"/>
+                            <field name="company_id"/>
                         </group>
                     </group>
                     <notebook>

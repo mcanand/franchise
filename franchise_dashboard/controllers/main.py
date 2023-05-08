@@ -11,7 +11,7 @@ class SaveCustomerOrderCreation(http.Controller):
     def save_customer_create_order(self, vals):
         customer_id = self.create_customer(vals)
         product_url = request.env['product.product'].sudo().search(
-            [('id', '=', int(vals.get('product_id')))]).link_url
+            [('id', '=', int(vals.get('product_id'))), ('company_id', '=', request.env.company.id)]).link_url
         sale_order = request.env['sale.order'].sudo()
         order_line = request.env['sale.order.line'].sudo()
         active_order = sale_order.search([('active_order', '=', True)])
@@ -70,7 +70,7 @@ class SaveCustomerOrderCreation(http.Controller):
             [('id', '=', int(vals.get('category_id')))])
         products = request.env['product.product'].sudo().search(
             [('categ_id.id', '=', categ_id.id),
-             ('name', 'ilike', vals.get('input_val'))])
+             ('name', 'ilike', vals.get('input_val')), ('company_id', '=', request.env.company.id)])
         product_vals = []
         for val in products:
             product = {
@@ -93,7 +93,7 @@ class SaveCustomerOrderCreation(http.Controller):
 
     @http.route('/franchise/files', type='json', auth="user")
     def Load_download_files(self):
-        files = request.env['franchise.files'].sudo().search_read([])
+        files = request.env['franchise.files'].sudo().search_read([('company_id', '=', request.env.company.id)])
         return files
 
     @http.route('/file/download', type='json', auth="user")
@@ -102,7 +102,7 @@ class SaveCustomerOrderCreation(http.Controller):
 
     def download_file(self, file_id):
         files = request.env['franchise.files'].sudo().search(
-            [('id', '=', int(file_id))])
+            [('id', '=', int(file_id)),('company_id', '=', request.env.company.id)])
         result = base64.b64encode(files.file.read())
         base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
         attachment_obj = request.env['ir.attachment'].sudo()

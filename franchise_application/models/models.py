@@ -6,6 +6,7 @@ class ResCompanyInherit(models.Model):
 
     month_renew_amount = fields.Float(string="Monthly Renewal Amount(RS)")
     year_renew_amount = fields.Float(string="Yearly Renewal Amount(RS)")
+    franchise_bg_image = fields.Binary()
 
 
 class WebsiteServiceList(models.Model):
@@ -114,6 +115,7 @@ class FranchiseApplicationPartners(models.Model):
     payment_details_ids = fields.One2many('payment.details',
                                           'franchise_application_id',
                                           string="Payment Details")
+    company_id = fields.Many2one('res.company')
     payment_renewal_ids = fields.One2many('payment.renewal',
                                           'application_partner_id',
                                           string="Payment Renewal")
@@ -124,7 +126,9 @@ class FranchiseApplicationPartners(models.Model):
             vals['application_sequence'] = self.env[
                                                'ir.sequence'].next_by_code(
                 'franchise.application.partner') or _('New')
+        vals['company_id'] = self.env.company.id
         result = super(FranchiseApplicationPartners, self).create(vals)
+
         return result
 
     @api.depends('status')
@@ -187,8 +191,8 @@ class FranchiseApplicationPartners(models.Model):
                 'action_id': action.id,
             })
             # if res_users:
-                # self.hide_menus(res_users)
-                # res_users.action_reset_password()
+            # self.hide_menus(res_users)
+            # res_users.action_reset_password()
             if self.referd_by:
                 referense_user = self.env['res.users'].search(
                     [('reference', '=', self.referd_by)]

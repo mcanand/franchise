@@ -12,7 +12,7 @@
         'web.assets_backend': [
             '/franchise_dashboard/static/src/js/*.js',
             'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap',
-            '/franchise_dashboard/static/src/css/*.css',
+            '/franchise_dashboard/static/src/css/main.css',
         ],
         'web.assets_qweb': [
             '/franchise_dashboard/static/src/xml/dashboard.xml',

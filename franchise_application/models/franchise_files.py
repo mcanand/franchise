@@ -6,3 +6,4 @@ class FranchiseDashboard(models.Model):
 
     name = fields.Char(string="Name")
     file = fields.Binary(string="Files")
+    company_id = fields.Many2one('res.company')

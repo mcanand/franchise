@@ -96,6 +96,10 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                     args: [[]],
                 }).then(function(result) {
                     if(result != false){
+                         var binary = result.bg_image.replace(/(..)/gim,'%$1');
+                         console.log('anand',typeof(binary),binary)
+                         self.bg_image = binary
+
                          self.total_customers = result.total_customers
                          self.total_services = result.total_service
                          self.order = result.order
@@ -109,9 +113,11 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                          }
                          self.active_order = true
                          $('.action_space').html('')
+
                          $('.action_space').prepend(qweb.render('dash_home', {
                                 widget: self
                          }))
+//                         $('.dash_home').css({"background-image":" url('data:image/png;base64,"self.bg_image+"');)"})
                     }
                     else{
                         self.order = false

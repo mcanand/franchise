@@ -15,6 +15,9 @@
                     </group>
                 </page>
             </xpath>
+            <field name="favicon" position="after">
+                <field name="franchise_bg_image" widget="image" class="float-left oe_avatar"/>
+            </field>
         </field>
     </record>
 </odoo>

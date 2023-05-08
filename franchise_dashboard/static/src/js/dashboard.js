@@ -96,9 +96,9 @@ odoo.define('franchise_dashboard.dashboard', function(require) {
                     args: [[]],
                 }).then(function(result) {
                     if(result != false){
-                         var binary = result.bg_image.replace(/(..)/gim,'%$1');
-                         console.log('anand',typeof(binary),binary)
-                         self.bg_image = binary
+//                         var binary = result.bg_image.replace(/(..)/gim,'%$1');
+//                         console.log('anand',typeof(binary),binary)
+                         self.bg_image = result.bg_image
 
                          self.total_customers = result.total_customers
                          self.total_services = result.total_service
